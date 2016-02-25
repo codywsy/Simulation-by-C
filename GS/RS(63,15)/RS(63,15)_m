@@ -1,0 +1,20 @@
+﻿  RS(63,15)_m=1.cpp
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(93): warning C4305: “初始化”: 从“double”到“float”截断
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(141): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(304) : 参见“scanf”的声明
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(143): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(304) : 参见“scanf”的声明
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(145): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(304) : 参见“scanf”的声明
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(150): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(122): warning C4101: “ferror”: 未引用的局部变量
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(119): warning C4101: “count”: 未引用的局部变量
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(119): warning C4101: “s”: 未引用的局部变量
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(259): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(295): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(296): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(312): warning C4305: “=”: 从“double”到“float”截断
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(313): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(317): warning C4305: “=”: 从“double”到“float”截断
+e:\cody\simulation by c\rs(63,15)\rs(63,15)_m=1\rs(63,15)_m=1.cpp(516): warning C4101: “check”: 未引用的局部变量
+  RS(63,15)_m=1.vcxproj -> E:\Cody\Simulation by C\RS(63,15)\RS(63,15)_m=1\Debug\RS(63,15)_m=1.exe

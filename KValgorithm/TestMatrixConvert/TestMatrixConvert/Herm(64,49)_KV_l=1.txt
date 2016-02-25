@@ -1,0 +1,29 @@
+Progress=100.0, SNR=0.00, aver_iterNum=150.34
+Progress=100.0, SNR=1.00, aver_iterNum=150.37
+Progress=100.0, SNR=2.00, aver_iterNum=150.40
+Progress=100.0, SNR=3.00, aver_iterNum=150.43
+Progress=100.0, SNR=4.00, aver_iterNum=150.43
+Progress=100.0, SNR=5.00, aver_iterNum=150.26
+Progress=100.0, SNR=6.00, aver_iterNum=150.07
+Progress=100.0, SNR=7.00, aver_iterNum=150.01
+Progress=100.0, SNR=0.00, aver_iterNum=306.72
+Progress=100.0, SNR=1.00, aver_iterNum=306.82
+Progress=100.0, SNR=2.00, aver_iterNum=306.88
+Progress=100.0, SNR=3.00, aver_iterNum=306.95
+Progress=100.0, SNR=4.00, aver_iterNum=306.98
+Progress=100.0, SNR=5.00, aver_iterNum=307.00
+Progress=100.0, SNR=6.00, aver_iterNum=307.00
+Progress=100.0, SNR=7.00, aver_iterNum=306.69
+Progress=100.0, SNR=0.00, aver_iterNum=150.34, aver_Max_m=2.00
+Progress=100.0, SNR=2.00, aver_iterNum=150.40, aver_Max_m=2.00
+Progress=100.0, SNR=3.00, aver_iterNum=150.42, aver_Max_m=2.00
+Progress=100.0, SNR=4.00, aver_iterNum=150.43, aver_Max_m=2.00
+Progress=100.0, SNR=5.00, aver_iterNum=150.25, aver_Max_m=2.00
+Progress=100.0, SNR=6.00, aver_iterNum=150.07, aver_Max_m=2.00
+Progress=100.0, SNR=7.00, aver_iterNum=150.01, aver_Max_m=2.00
+Progress=100.0, SNR=2.00, aver_iterNum=150.40, Max_m=2
+Progress=100.0, SNR=3.00, aver_iterNum=150.42, Max_m=2
+Progress=100.0, SNR=4.00, aver_iterNum=150.43, Max_m=2
+Progress=100.0, SNR=5.00, aver_iterNum=150.25, Max_m=2
+Progress=100.0, SNR=6.00, aver_iterNum=150.07, Max_m=2
+Progress=100.0, SNR=7.00, aver_iterNum=150.01, Max_m=2

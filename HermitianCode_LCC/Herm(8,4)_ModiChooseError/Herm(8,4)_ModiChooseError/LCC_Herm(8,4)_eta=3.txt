@@ -1,0 +1,3 @@
+Progress=3.1, SNR=0.00, Bit Errors=621, BER=1.252016E-001, Frame Errors=131, FER=4.225806E-001, Choice Errors= 2, CWR=1.047120E-002, channelError_count=2.35, successError_count=1.61
+Progress=4.7, SNR=0.00, Bit Errors=1002, BER=1.323996E-001, Frame Errors=210, FER=4.439746E-001, Choice Errors= 2, CWR=7.092199E-003, channelError_count=2.38, successError_count=1.55
+Progress=100.0, SNR=4.00, Bit Errors=54, BER=6.750000E-003, Frame Errors=15, FER=3.000000E-002, Choice Errors= 0, CWR=0.000000E+000, channelError_count=0.91, successError_count=0.85

@@ -1,0 +1,6 @@
+修改前：
+Progress=100.0, SNR=6.00, Bit Errors=66540, BER=3.696667E-004, Frame Errors=4005, FER=1.335000E-003, addNum=6911.98, mulNum=4964.14, total_num=11876.12
+Progress=100.0, SNR=6.00, Bit Errors=76650, BER=4.258333E-004, Frame Errors=1381, FER=4.603333E-004, addNum=7215.91, mulNum=5310.49, total_num=12526.40
+修改后：
+Progress=20.7, SNR=6.00, Bit Errors=2373, BER=6.374354E-005, Frame Errors=310, FER=4.996333E-004, addNum=7216.16, mulNum=5310.61, total_num=12526.78
+Progress=20.7, SNR=6.00, Bit Errors=2373, BER=6.374354E-005, Frame Errors=310, FER=4.996333E-004, addNum=7216.16, mulNum=5310.61, total_num=12526.78, CWR=0.000000E+000

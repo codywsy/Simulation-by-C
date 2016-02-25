@@ -1,0 +1,54 @@
+//condition
+seq_num_Now==160
+
+//interpoint
+x_order[]               (0,1)   (2,2)   (3,3)   (0,0)   (1,2)   (3,2)   (1,3)   (2,3)
+
+large_vec_order[]       1       1       2       2       1       1       3       3
+
+large_vec2_order[]      3       3       3       0       0       3       2       2
+
+
+//chosen polynomial
+Q_interpoly[7][0][0][0]=1
+Q_interpoly[7][0][1][0]=3
+Q_interpoly[7][0][1][1]=1
+Q_interpoly[7][0][2][0]=1
+Q_interpoly[7][1][0][0]=3
+Q_interpoly[7][1][0][1]=2
+
+//Q0
+Q_uncom_elem[7][0][0][0][0]=2
+Q_uncom_elem[7][0][0][0][1]=3
+Q_uncom_elem[7][0][0][1][0]=1
+Q_uncom_elem[7][0][0][1][1]=2
+Q_uncom_elem[7][0][0][2][0]=2
+Q_uncom_elem[7][0][0][2][1]=3
+Q_uncom_elem[7][0][1][0][0]=1
+Q_uncom_elem[7][0][1][0][1]=2
+
+//Q1
+Q_uncom_elem[7][1][0][0][0]=3
+Q_uncom_elem[7][1][0][0][1]=2
+Q_uncom_elem[7][1][0][0][2]=1
+Q_uncom_elem[7][1][0][1][1]=2
+Q_uncom_elem[7][1][0][1][2]=1
+Q_uncom_elem[7][1][0][2][0]=2
+Q_uncom_elem[7][1][0][2][1]=1
+Q_uncom_elem[7][1][0][3][0]=3
+Q_uncom_elem[7][1][1][0][0]=2
+Q_uncom_elem[7][1][1][0][1]=3
+Q_uncom_elem[7][1][1][0][2]=1
+
+//Q2
+Q_uncom_elem[7][2][0][0][0]=1
+Q_uncom_elem[7][2][0][1][0]=3
+Q_uncom_elem[7][2][0][1][1]=1
+Q_uncom_elem[7][2][0][2][0]=1
+Q_uncom_elem[7][2][1][0][0]=3
+Q_uncom_elem[7][2][1][0][1]=2
+
+//Q3
+Q_uncom_elem[7][3][1][1][0]=1
+
+

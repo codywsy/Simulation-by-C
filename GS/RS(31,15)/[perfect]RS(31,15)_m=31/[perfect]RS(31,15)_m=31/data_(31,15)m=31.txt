@@ -1,0 +1,2 @@
+Progress=100.0, SNR=5.0, Bit Errors=36, BER=2.322581E-003
+Progress=100.0, SNR=6.0, Bit Errors=11, BER=7.096774E-004

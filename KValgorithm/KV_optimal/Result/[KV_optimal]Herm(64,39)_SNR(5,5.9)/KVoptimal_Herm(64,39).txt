@@ -1,0 +1,2 @@
+Progress=0.0, SNR=5.00, Bit Errors=3253, BER=3.326030E-005, Frame Errors=210, FER=5.496692E-004
+Progress=0.4, SNR=5.30, Bit Errors=3189, BER=4.275464E-006, Frame Errors=210, FER=7.207556E-005

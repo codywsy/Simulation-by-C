@@ -1,0 +1,11 @@
+Progress=0.0, SNR=-4.00, Bit Errors=13097, BER=2.436198E-001, Frame Errors=210, FER=1.000000E+000, addNum=34175.72, mulNum=44114.50, total_num=78290.23, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=-3.00, Bit Errors=11692, BER=2.174851E-001, Frame Errors=210, FER=1.000000E+000, addNum=34280.71, mulNum=44190.61, total_num=78471.32, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=-2.00, Bit Errors=10379, BER=1.930618E-001, Frame Errors=210, FER=1.000000E+000, addNum=34337.64, mulNum=44237.67, total_num=78575.31, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=-1.00, Bit Errors=8814, BER=1.639509E-001, Frame Errors=210, FER=1.000000E+000, addNum=34318.14, mulNum=44213.22, total_num=78531.36, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=0.00, Bit Errors=7350, BER=1.367188E-001, Frame Errors=210, FER=1.000000E+000, addNum=34349.67, mulNum=44240.50, total_num=78590.17, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=1.00, Bit Errors=5743, BER=1.068266E-001, Frame Errors=210, FER=1.000000E+000, addNum=34340.85, mulNum=44247.64, total_num=78588.49, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=2.00, Bit Errors=4404, BER=8.153140E-002, Frame Errors=210, FER=9.952607E-001, addNum=34499.67, mulNum=44383.75, total_num=78883.42, Choice Errors= 1, CWR=1.000000E+000
+Progress=0.0, SNR=3.00, Bit Errors=3454, BER=5.396875E-002, Frame Errors=210, FER=8.400000E-001, addNum=37911.96, mulNum=47548.18, total_num=85460.14, Choice Errors=31, CWR=7.750000E-001
+Progress=0.0, SNR=4.00, Bit Errors=2857, BER=1.638789E-002, Frame Errors=210, FER=3.083700E-001, addNum=54916.80, mulNum=63140.59, total_num=118057.39, Choice Errors=418, CWR=8.874735E-001
+Progress=0.0, SNR=5.00, Bit Errors=2626, BER=1.192076E-003, Frame Errors=210, FER=2.440442E-002, addNum=67216.40, mulNum=74023.71, total_num=141240.11, Choice Errors=8234, CWR=9.808219E-001
+Progress=0.1, SNR=6.00, Bit Errors=2476, BER=1.077037E-005, Frame Errors=210, FER=2.338509E-004, addNum=65799.17, mulNum=72267.52, total_num=138066.69, Choice Errors=897397, CWR=9.995534E-001

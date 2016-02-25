@@ -1,0 +1,3 @@
+start SNR:0
+finish SNR:5
+seq_num:800000000

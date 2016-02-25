@@ -1,0 +1,9 @@
+some Question for the SourceCode of ZH program
+
+CFiniteField2::Malloc(int m)
+1. Exp和Log两个数组代表什么？
+	A：Exp代表有限域元素的指数形式，而Log代表有限域元素对应本原元的次方数
+	
+2. m_gen_poly是代表该构造的有限域的本原多项式的多项式表达法？
+3. 
+

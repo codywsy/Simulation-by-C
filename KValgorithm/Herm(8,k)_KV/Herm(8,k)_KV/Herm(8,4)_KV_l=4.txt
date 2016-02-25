@@ -1,0 +1,21 @@
+Progress=100.0, SNR=3.00, Bit Errors=388, BER=2.425000E-002, Frame Errors=110, FER=1.100000E-001, addNum=9167.02, mulNum=12802.87, total_num=21969.89, Choice Errors= 5, CWR=5.586592E-003, Max_M=0
+Progress=100.0, SNR=4.00, Bit Errors=109, BER=6.812500E-003, Frame Errors=30, FER=3.000000E-002, addNum=8527.09, mulNum=11927.79, total_num=20454.88, Choice Errors= 4, CWR=4.106776E-003, Max_M=0
+Progress=100.0, SNR=5.00, Bit Errors=60, BER=3.750000E-003, Frame Errors=15, FER=1.500000E-002, addNum=7730.33, mulNum=10921.57, total_num=18651.90, Choice Errors= 1, CWR=1.014199E-003, Max_M=0
+Progress=100.0, SNR=6.00, Bit Errors=10, BER=6.250000E-004, Frame Errors= 2, FER=2.000000E-003, addNum=6726.90, mulNum=9564.16, total_num=16291.06, Choice Errors= 0, CWR=0.000000E+000, Max_M=0
+Progress=100.0, SNR=7.00, Bit Errors= 3, BER=1.875000E-004, Frame Errors= 1, FER=1.000000E-003, addNum=5951.89, mulNum=8462.61, total_num=14414.50, Choice Errors= 0, CWR=0.000000E+000, Max_M=0
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=2.500000E-004, Frame Errors= 1, FER=1.000000E-003, addNum=5861.69, mulNum=8311.25, total_num=14172.94, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=8.333333E-005, Frame Errors= 1, FER=3.333333E-004, addNum=5838.97, mulNum=8286.16, total_num=14125.13, Choice Errors= 0, CWR=0.000000E+000, Max_M=0
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=2.500000E-004, Frame Errors= 1, FER=1.000000E-003, addNum=5861.69, mulNum=8311.25, total_num=14172.94, Choice Errors= 0, CWR=0.000000E+000, Max_M=0
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=5.230126E-004, Frame Errors= 1, FER=2.092050E-003, addNum=5850.34, mulNum=8307.65, total_num=14157.99, Choice Errors= 0, CWR=0.000000E+000, Max_M=0
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=2.500000E-004, Frame Errors= 1, FER=1.000000E-003, addNum=5861.69, mulNum=8311.25, total_num=14172.94, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=2.500000E-004, Frame Errors= 1, FER=1.000000E-003, addNum=5861.69, mulNum=8311.25, total_num=14172.94, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=2.500000E-004, Frame Errors= 1, FER=1.000000E-003, addNum=5861.69, mulNum=8311.25, total_num=14172.94, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=2.500000E-004, Frame Errors= 1, FER=1.000000E-003, addNum=5861.69, mulNum=8311.25, total_num=14172.94, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, SNR=5.00, Bit Errors=37, BER=2.312500E-003, Frame Errors=11, FER=1.100000E-002, addNum=7670.47, mulNum=10821.31, total_num=18491.78, Choice Errors= 2, CWR=2.018163E-003, Max_M=4
+Progress=100.0, SNR=5.00, Bit Errors=37, BER=2.312500E-003, Frame Errors=11, FER=1.100000E-002, addNum=7670.47, mulNum=10821.31, total_num=18491.78, Choice Errors= 2, CWR=2.018163E-003, Max_M=4
+Progress=100.0, SNR=5.00, Bit Errors=37, BER=2.312500E-003, Frame Errors=11, FER=1.100000E-002, addNum=7670.47, mulNum=10821.31, total_num=18491.78, Choice Errors= 2, CWR=2.018163E-003, Max_M=4
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=3.597122E-004, Frame Errors= 1, FER=1.438849E-003, addNum=5892.64, mulNum=8352.89, total_num=14245.53, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=3.597122E-004, Frame Errors= 1, FER=1.438849E-003, addNum=5892.64, mulNum=8352.89, total_num=14245.53, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=3.597122E-004, Frame Errors= 1, FER=1.438849E-003, addNum=5892.64, mulNum=8352.89, total_num=14245.53, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, SNR=7.00, Bit Errors= 4, BER=3.597122E-004, Frame Errors= 1, FER=1.438849E-003, addNum=5892.64, mulNum=8352.89, total_num=14245.53, Choice Errors= 0, CWR=0.000000E+000, Max_M=4
+Progress=100.0, seqNum=16600, SNR=5.00, Bit Errors=689, BER=2.594127E-003, Frame Errors=195, FER=1.174699E-002, addNum=7672.08, mulNum=10831.38, total_num=18503.46, Choice Errors=21, CWR=1.278461E-003, Max_M=4

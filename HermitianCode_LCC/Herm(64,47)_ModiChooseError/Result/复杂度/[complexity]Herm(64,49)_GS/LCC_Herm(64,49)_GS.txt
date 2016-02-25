@@ -1,0 +1,1 @@
+Progress=39.2, SNR=6.00, Bit Errors=1669, BER=5.549954E-004, Frame Errors=310, FER=2.638972E-002, addNum=35333.40, mulNum=59346.63, total_num=94680.02, Choice Errors= 0, CWR=0.000000E+000, Time=97.71

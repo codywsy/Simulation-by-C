@@ -1,0 +1,16 @@
+修改前
+Progress=0.0, SNR=1.00, Bit Errors=2923, BER=1.817786E-001, Frame Errors=210, FER=7.835821E-001, addNum=4829.38, mulNum=2608.02, total_num=7437.40
+Progress=0.0, SNR=2.00, Bit Errors=3310, BER=1.407313E-001, Frame Errors=210, FER=5.357143E-001, addNum=4743.26, mulNum=2613.67, total_num=7356.93
+Progress=0.0, SNR=3.00, Bit Errors=3217, BER=7.120407E-002, Frame Errors=210, FER=2.788845E-001, addNum=4674.15, mulNum=2640.25, total_num=7314.40
+Progress=0.0, SNR=4.00, Bit Errors=2878, BER=2.162609E-002, Frame Errors=210, FER=9.467989E-002, addNum=4490.33, mulNum=2650.65, total_num=7140.98
+Progress=0.0, SNR=5.00, Bit Errors=2601, BER=3.320567E-003, Frame Errors=210, FER=1.608579E-002, addNum=4328.81, mulNum=2649.43, total_num=6978.24
+Progress=0.0, SNR=6.00, Bit Errors=1994, BER=3.205468E-004, Frame Errors=210, FER=2.025522E-003, addNum=4256.31, mulNum=2651.30, total_num=6907.62
+Progress=0.3, SNR=7.00, Bit Errors=1478, BER=1.199747E-005, Frame Errors=210, FER=1.022788E-004, addNum=4233.24, mulNum=2653.19, total_num=6886.43
+修改后
+Progress=0.0, SNR=1.00, Bit Errors=3697, BER=2.232488E-001, Frame Errors=210, FER=7.608696E-001, addNum=4912.87, mulNum=2820.01, total_num=7732.88
+Progress=0.0, SNR=2.00, Bit Errors=4075, BER=1.676955E-001, Frame Errors=210, FER=5.185185E-001, addNum=4841.50, mulNum=2838.61, total_num=7680.11
+Progress=0.0, SNR=3.00, Bit Errors=3683, BER=7.071813E-002, Frame Errors=210, FER=2.419355E-001, addNum=4766.66, mulNum=2868.72, total_num=7635.38
+Progress=0.0, SNR=4.00, Bit Errors=3886, BER=2.270125E-002, Frame Errors=210, FER=7.360673E-002, addNum=4566.66, mulNum=2880.47, total_num=7447.13
+Progress=0.0, SNR=5.00, Bit Errors=3820, BER=3.236740E-003, Frame Errors=210, FER=1.067616E-002, addNum=4366.20, mulNum=2874.56, total_num=7240.76
+Progress=0.0, SNR=6.00, Bit Errors=3696, BER=1.796201E-004, Frame Errors=210, FER=6.123413E-004, addNum=4268.40, mulNum=2871.53, total_num=7139.92
+Progress=1.7, SNR=7.00, Bit Errors=3712, BER=4.621580E-006, Frame Errors=210, FER=1.568748E-005, addNum=4235.66, mulNum=2870.47, total_num=7106.13

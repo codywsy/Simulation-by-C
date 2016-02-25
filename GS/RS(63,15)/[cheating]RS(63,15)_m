@@ -1,0 +1,51 @@
+﻿生成启动时间为 2015/3/25 22:03:59。
+     1>项目“D:\424实验室工作\Simulation by C\RS(63,15)\[cheating]RS(63,15)_m=2\[cheating]RS(63,15)_m=2\[cheating]RS(63,15)_m=2.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug\[cheating]RS(63,15)_m=2.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         e:\tools\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\[cheating]RS(63,15)_m=2.cpp"
+         [cheating]RS(63,15)_m=2.cpp
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(89): warning C4305: “初始化”: 从“double”到“float”截断
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(123): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 e:\tools\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(136): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 e:\tools\microsoft visual studio 10.0\vc\include\stdio.h(304) : 参见“scanf”的声明
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(138): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 e:\tools\microsoft visual studio 10.0\vc\include\stdio.h(304) : 参见“scanf”的声明
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(140): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 e:\tools\microsoft visual studio 10.0\vc\include\stdio.h(304) : 参见“scanf”的声明
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(145): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(231): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 e:\tools\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(119): warning C4101: “ferror”: 未引用的局部变量
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(115): warning C4101: “count”: 未引用的局部变量
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(115): warning C4101: “s”: 未引用的局部变量
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(263): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(310): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(311): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(327): warning C4305: “=”: 从“double”到“float”截断
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(328): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(332): warning C4305: “=”: 从“double”到“float”截断
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(546): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(546): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(546): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(546): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(579): warning C4101: “check”: 未引用的局部变量
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(864): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(864): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(864): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>d:\424实验室工作\simulation by c\rs(63,15)\[cheating]rs(63,15)_m=2\[cheating]rs(63,15)_m=2.cpp(864): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+       Link:
+         e:\tools\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\424实验室工作\Simulation by C\RS(63,15)\[cheating]RS(63,15)_m=2\Debug\[cheating]RS(63,15)_m=2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\[cheating]RS(63,15)_m=2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\424实验室工作\Simulation by C\RS(63,15)\[cheating]RS(63,15)_m=2\Debug\[cheating]RS(63,15)_m=2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\424实验室工作\Simulation by C\RS(63,15)\[cheating]RS(63,15)_m=2\Debug\[cheating]RS(63,15)_m=2.lib" /MACHINE:X86 "Debug\[cheating]RS(63,15)_m=2.obj"
+         LINK : 没有找到 D:\424实验室工作\Simulation by C\RS(63,15)\[cheating]RS(63,15)_m=2\Debug\[cheating]RS(63,15)_m=2.exe 或上一个增量链接没有生成它；正在执行完全链接
+         [cheating]RS(63,15)_m=2.vcxproj -> D:\424实验室工作\Simulation by C\RS(63,15)\[cheating]RS(63,15)_m=2\Debug\[cheating]RS(63,15)_m=2.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"D:\424实验室工作\Simulation by C\RS(63,15)\[cheating]RS(63,15)_m=2\Debug\[cheating]RS(63,15)_m=2.exe.manifest" /manifest "Debug\[cheating]RS(63,15)_m=2.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         正在删除文件“Debug\[cheating]RS(63,15)_m=2.unsuccessfulbuild”。
+         正在对“Debug\[cheating]RS(63,15)_m=2.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“D:\424实验室工作\Simulation by C\RS(63,15)\[cheating]RS(63,15)_m=2\[cheating]RS(63,15)_m=2\[cheating]RS(63,15)_m=2.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.85

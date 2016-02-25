@@ -1,0 +1,31 @@
+//eta=1 normal mode
+Progress=0.0, SNR=-4.00, Bit Errors=651, BER=2.712500E-001, Frame Errors=131, FER=8.733333E-001, channelError_count=3.55, successError_count=1.42
+Progress=0.0, SNR=-3.00, Bit Errors=629, BER=2.536290E-001, Frame Errors=131, FER=8.451613E-001, channelError_count=3.47, successError_count=1.42
+Progress=0.0, SNR=-2.00, Bit Errors=598, BER=2.307099E-001, Frame Errors=131, FER=8.086420E-001, channelError_count=3.17, successError_count=1.29
+Progress=0.0, SNR=-1.00, Bit Errors=537, BER=1.748047E-001, Frame Errors=131, FER=6.822917E-001, channelError_count=2.56, successError_count=1.16
+Progress=0.0, SNR=0.00, Bit Errors=525, BER=1.491477E-001, Frame Errors=131, FER=5.954545E-001, channelError_count=2.32, successError_count=1.20
+Progress=0.0, SNR=1.00, Bit Errors=502, BER=1.132671E-001, Frame Errors=131, FER=4.729242E-001, channelError_count=1.92, successError_count=1.08
+Progress=0.0, SNR=2.00, Bit Errors=461, BER=7.582237E-002, Frame Errors=131, FER=3.447368E-001, channelError_count=1.56, successError_count=0.96
+Progress=0.0, SNR=3.00, Bit Errors=441, BER=4.424157E-002, Frame Errors=131, FER=2.102729E-001, channelError_count=1.18, successError_count=0.81
+Progress=0.0, SNR=4.00, Bit Errors=450, BER=2.156825E-002, Frame Errors=131, FER=1.004601E-001, channelError_count=0.87, successError_count=0.68
+Progress=0.0, SNR=5.00, Bit Errors=413, BER=8.350857E-003, Frame Errors=131, FER=4.238111E-002, channelError_count=0.60, successError_count=0.53
+Progress=0.0, SNR=6.00, Bit Errors=445, BER=2.714474E-003, Frame Errors=131, FER=1.278548E-002, channelError_count=0.38, successError_count=0.35
+Progress=0.1, SNR=7.00, Bit Errors=413, BER=5.110374E-004, Frame Errors=131, FER=2.593546E-003, channelError_count=0.20, successError_count=0.20
+Progress=0.5, SNR=8.00, Bit Errors=426, BER=7.226904E-005, Frame Errors=131, FER=3.555773E-004, channelError_count=0.10, successError_count=0.10
+Progress=7.0, SNR=9.00, Bit Errors=381, BER=4.279759E-006, Frame Errors=131, FER=2.354429E-005, channelError_count=0.04, successError_count=0.04
+
+//eta=1 genius mode
+Progress=0.0, SNR=-4.00, Bit Errors=599, BER=2.495833E-001, Frame Errors=131, FER=8.733333E-001, channelError_count=3.55, successError_count=1.42
+Progress=0.0, SNR=-3.00, Bit Errors=573, BER=2.310484E-001, Frame Errors=131, FER=8.451613E-001, channelError_count=3.47, successError_count=1.42
+Progress=0.0, SNR=-2.00, Bit Errors=533, BER=2.056327E-001, Frame Errors=131, FER=8.086420E-001, channelError_count=3.17, successError_count=1.29
+Progress=0.0, SNR=-1.00, Bit Errors=467, BER=1.520182E-001, Frame Errors=131, FER=6.822917E-001, channelError_count=2.56, successError_count=1.16
+Progress=0.0, SNR=0.00, Bit Errors=440, BER=1.250000E-001, Frame Errors=131, FER=5.954545E-001, channelError_count=2.32, successError_count=1.20
+Progress=0.0, SNR=1.00, Bit Errors=402, BER=9.070397E-002, Frame Errors=131, FER=4.729242E-001, channelError_count=1.92, successError_count=1.08
+Progress=0.0, SNR=2.00, Bit Errors=380, BER=6.250000E-002, Frame Errors=131, FER=3.447368E-001, channelError_count=1.56, successError_count=0.96
+Progress=0.0, SNR=3.00, Bit Errors=352, BER=3.531300E-002, Frame Errors=131, FER=2.102729E-001, channelError_count=1.18, successError_count=0.81
+Progress=0.0, SNR=4.00, Bit Errors=360, BER=1.725460E-002, Frame Errors=131, FER=1.004601E-001, channelError_count=0.87, successError_count=0.68
+Progress=0.0, SNR=5.00, Bit Errors=317, BER=6.409738E-003, Frame Errors=131, FER=4.238111E-002, channelError_count=0.60, successError_count=0.53
+Progress=0.0, SNR=6.00, Bit Errors=325, BER=1.982481E-003, Frame Errors=131, FER=1.278548E-002, channelError_count=0.38, successError_count=0.35
+Progress=0.1, SNR=7.00, Bit Errors=325, BER=4.021481E-004, Frame Errors=131, FER=2.593546E-003, channelError_count=0.20, successError_count=0.20
+Progress=0.5, SNR=8.00, Bit Errors=302, BER=5.123298E-005, Frame Errors=131, FER=3.555773E-004, channelError_count=0.10, successError_count=0.10
+Progress=7.0, SNR=9.00, Bit Errors=296, BER=3.324957E-006, Frame Errors=131, FER=2.354429E-005, channelError_count=0.04, successError_count=0.04

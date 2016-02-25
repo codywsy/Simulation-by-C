@@ -1,0 +1,8 @@
+Progress=0.0, SNR=0.00, Bit Errors=3701, BER=1.095230E-001, Frame Errors=132, FER=1.000000E+000
+Progress=0.0, SNR=1.00, Bit Errors=2920, BER=8.641098E-002, Frame Errors=132, FER=1.000000E+000
+Progress=0.0, SNR=2.00, Bit Errors=2172, BER=6.284722E-002, Frame Errors=132, FER=9.777778E-001
+Progress=0.0, SNR=3.00, Bit Errors=1640, BER=3.768382E-002, Frame Errors=132, FER=7.764706E-001
+Progress=0.0, SNR=4.00, Bit Errors=1403, BER=1.011157E-002, Frame Errors=132, FER=2.435424E-001
+Progress=0.0, SNR=5.00, Bit Errors=1283, BER=5.485682E-004, Frame Errors=132, FER=1.444834E-002
+Progress=0.1, SNR=6.00, Bit Errors=1233, BER=7.854108E-006, Frame Errors=132, FER=2.152523E-004
+Progress=19.9, SNR=6.50, Bit Errors=1223, BER=3.004458E-007, Frame Errors=132, FER=8.301444E-006

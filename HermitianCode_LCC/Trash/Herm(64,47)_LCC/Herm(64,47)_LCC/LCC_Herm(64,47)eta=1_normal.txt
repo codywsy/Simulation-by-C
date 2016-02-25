@@ -1,0 +1,163 @@
+Progress=100.0, SNR=3.00, Bit Errors=101, BER=3.945312E-002, Frame Errors= 9, FER=9.000000E-001, channelError_count=10.00
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=7.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=0.67
+Progress=100.0, SNR=7.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=0.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors=33, BER=4.296875E-002, Frame Errors= 3, FER=1.000000E+000, channelError_count=10.67, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=3.00, Bit Errors=1209, BER=4.722656E-002, Frame Errors=83, FER=8.300000E-001, channelError_count=10.28, successError_count=5.88
+Progress=100.0, SNR=3.00, Bit Errors=1209, BER=4.722656E-002, Frame Errors=83, FER=8.300000E-001, channelError_count=10.28, successError_count=5.88
+Progress=100.0, SNR=3.00, Bit Errors=1209, BER=4.722656E-002, Frame Errors=83, FER=8.300000E-001, channelError_count=10.28, successError_count=5.88
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=2.6, SNR=0.00, Bit Errors=4047, BER=1.206763E-001, Frame Errors=131, FER=1.000000E+000, channelError_count=24.12, successError_count=0.00
+Progress=2.6, SNR=1.00, Bit Errors=2869, BER=8.554986E-002, Frame Errors=131, FER=1.000000E+000, channelError_count=19.19, successError_count=0.00
+Progress=2.6, SNR=2.00, Bit Errors=2269, BER=6.714607E-002, Frame Errors=131, FER=9.924242E-001, channelError_count=14.77, successError_count=5.00
+Progress=2.9, SNR=3.00, Bit Errors=1978, BER=5.403191E-002, Frame Errors=131, FER=9.160839E-001, channelError_count=10.44, successError_count=5.33
+Progress=5.3, SNR=4.00, Bit Errors=1428, BER=2.097039E-002, Frame Errors=131, FER=4.924812E-001, channelError_count=6.78, successError_count=4.79
+Progress=42.8, SNR=5.00, Bit Errors=1365, BER=2.489277E-003, Frame Errors=131, FER=6.115780E-002, channelError_count=3.91, successError_count=3.67
+Progress=100.0, SNR=6.00, Bit Errors=38, BER=2.968750E-005, Frame Errors= 5, FER=1.000000E-003, channelError_count=1.99, successError_count=1.98
+Progress=2.6, SNR=0.00, Bit Errors=3749, BER=1.117903E-001, Frame Errors=131, FER=1.000000E+000, channelError_count=24.12, successError_count=0.00
+Progress=2.6, SNR=1.00, Bit Errors=2869, BER=8.554986E-002, Frame Errors=131, FER=1.000000E+000, channelError_count=19.19, successError_count=0.00
+Progress=2.6, SNR=2.00, Bit Errors=2136, BER=6.321023E-002, Frame Errors=131, FER=9.924242E-001, channelError_count=14.77, successError_count=5.00
+Progress=2.9, SNR=3.00, Bit Errors=1525, BER=4.165756E-002, Frame Errors=131, FER=9.160839E-001, channelError_count=10.44, successError_count=5.33
+Progress=5.3, SNR=4.00, Bit Errors=1192, BER=1.750470E-002, Frame Errors=131, FER=4.924812E-001, channelError_count=6.78, successError_count=4.79
+Progress=2.6, SNR=0.00, Bit Errors=3749, BER=1.117903E-001, Frame Errors=131, FER=1.000000E+000, channelError_count=24.12, successError_count=0.00
+Progress=2.6, SNR=1.00, Bit Errors=2869, BER=8.554986E-002, Frame Errors=131, FER=1.000000E+000, channelError_count=19.19, successError_count=0.00
+Progress=2.6, SNR=2.00, Bit Errors=2136, BER=6.321023E-002, Frame Errors=131, FER=9.924242E-001, channelError_count=14.77, successError_count=5.00
+Progress=2.9, SNR=3.00, Bit Errors=1525, BER=4.165756E-002, Frame Errors=131, FER=9.160839E-001, channelError_count=10.44, successError_count=5.33
+Progress=5.3, SNR=4.00, Bit Errors=1192, BER=1.750470E-002, Frame Errors=131, FER=4.924812E-001, channelError_count=6.78, successError_count=4.79
+Progress=42.8, SNR=5.00, Bit Errors=1030, BER=1.878356E-003, Frame Errors=131, FER=6.115780E-002, channelError_count=3.91, successError_count=3.67
+Progress=3.1, SNR=3.00, Bit Errors=1570, BER=3.982346E-002, Frame Errors=131, FER=8.506494E-001, channelError_count=10.36, successError_count=5.74
+Progress=2.9, SNR=3.00, Bit Errors=1547, BER=4.139020E-002, Frame Errors=131, FER=8.972603E-001, channelError_count=10.45, successError_count=5.20
+Progress=4.7, SNR=4.00, Bit Errors=1143, BER=1.891883E-002, Frame Errors=131, FER=5.550847E-001, channelError_count=6.81, successError_count=4.82
+Progress=27.3, SNR=5.00, Bit Errors=983, BER=2.817200E-003, Frame Errors=131, FER=9.611152E-002, channelError_count=3.97, successError_count=3.61
+Progress=2.9, SNR=3.00, Bit Errors=1547, BER=4.139020E-002, Frame Errors=131, FER=8.972603E-001, channelError_count=10.45, successError_count=5.20
+Progress=100.0, SNR=4.00, Bit Errors= 7, BER=1.367188E-002, Frame Errors= 1, FER=5.000000E-001, channelError_count=6.00, successError_count=5.00
+Progress=100.0, SNR=4.00, Bit Errors= 7, BER=1.367188E-002, Frame Errors= 1, FER=5.000000E-001, channelError_count=6.00, successError_count=5.00
+Progress=100.0, SNR=4.00, Bit Errors= 7, BER=1.367188E-002, Frame Errors= 1, FER=5.000000E-001, channelError_count=6.00, successError_count=5.00
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=4.00, Bit Errors=86, BER=1.679687E-002, Frame Errors=10, FER=5.000000E-001, channelError_count=6.40, successError_count=4.50
+Progress=100.0, SNR=5.00, Bit Errors=20, BER=3.906250E-003, Frame Errors= 2, FER=1.000000E-001, channelError_count=4.05, successError_count=3.39
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=4.00, Bit Errors=86, BER=1.679687E-002, Frame Errors=10, FER=5.000000E-001, channelError_count=6.40, successError_count=4.50
+Progress=100.0, SNR=5.00, Bit Errors=20, BER=3.906250E-003, Frame Errors= 2, FER=1.000000E-001, channelError_count=4.05, successError_count=3.39
+Progress=100.0, SNR=3.00, Bit Errors=207, BER=4.042969E-002, Frame Errors=18, FER=9.000000E-001, channelError_count=10.35, successError_count=4.50
+Progress=100.0, SNR=4.00, Bit Errors=86, BER=1.679687E-002, Frame Errors=10, FER=5.000000E-001, channelError_count=6.40, successError_count=4.50
+Progress=100.0, SNR=5.00, Bit Errors=20, BER=3.906250E-003, Frame Errors= 2, FER=1.000000E-001, channelError_count=4.05, successError_count=3.39
+Progress=100.0, SNR=3.00, Bit Errors=317, BER=4.127604E-002, Frame Errors=28, FER=9.333333E-001, channelError_count=10.37, successError_count=4.50
+Progress=100.0, SNR=4.00, Bit Errors=156, BER=2.031250E-002, Frame Errors=17, FER=5.666667E-001, channelError_count=6.93, successError_count=4.38
+Progress=100.0, SNR=5.00, Bit Errors=13, BER=1.692708E-003, Frame Errors= 2, FER=6.666667E-002, channelError_count=3.60, successError_count=3.39
+Progress=100.0, SNR=3.00, Bit Errors=317, BER=4.127604E-002, Frame Errors=28, FER=9.333333E-001, channelError_count=10.37, successError_count=4.50
+Progress=100.0, SNR=4.00, Bit Errors=156, BER=2.031250E-002, Frame Errors=17, FER=5.666667E-001, channelError_count=6.93, successError_count=4.38
+Progress=100.0, SNR=5.00, Bit Errors=13, BER=1.692708E-003, Frame Errors= 2, FER=6.666667E-002, channelError_count=3.60, successError_count=3.39
+Progress=1.5, SNR=3.00, Bit Errors=1547, BER=4.139020E-002, Frame Errors=131, FER=8.972603E-001, channelError_count=10.45, successError_count=5.20
+Progress=2.4, SNR=4.00, Bit Errors=1143, BER=1.891883E-002, Frame Errors=131, FER=5.550847E-001, channelError_count=6.81, successError_count=4.82
+Progress=13.6, SNR=5.00, Bit Errors=983, BER=2.817200E-003, Frame Errors=131, FER=9.611152E-002, channelError_count=3.97, successError_count=3.61
+Progress=12.5, SNR=5.00, Bit Errors=1000, BER=3.135032E-003, Frame Errors=131, FER=1.051364E-001, channelError_count=4.02, successError_count=3.61
+Progress=12.5, SNR=5.00, Bit Errors=1000, BER=3.135032E-003, Frame Errors=131, FER=1.051364E-001, channelError_count=4.02, successError_count=3.61
+Progress=12.5, SNR=5.00, Bit Errors=1000, BER=3.135032E-003, Frame Errors=131, FER=1.051364E-001, channelError_count=4.02, successError_count=3.61
+Progress=12.5, SNR=5.00, Bit Errors=1000, BER=3.135032E-003, Frame Errors=131, FER=1.051364E-001, channelError_count=4.02, successError_count=3.61
+Progress=12.5, SNR=5.00, Bit Errors=1000, BER=3.135032E-003, Frame Errors=131, FER=1.051364E-001, channelError_count=4.02, successError_count=3.61
+Progress=100.0, SNR=5.00, Bit Errors= 6, BER=2.343750E-003, Frame Errors= 1, FER=1.000000E-001, channelError_count=2.80, successError_count=2.44
+Progress=100.0, SNR=5.00, Bit Errors= 6, BER=2.343750E-003, Frame Errors= 1, FER=1.000000E-001, channelError_count=2.80, successError_count=2.44
+Progress=12.5, SNR=5.00, Bit Errors=1000, BER=3.135032E-003, Frame Errors=131, FER=1.051364E-001, channelError_count=4.02, successError_count=3.61
+Progress=12.5, SNR=5.00, Bit Errors=1000, BER=3.135032E-003, Frame Errors=131, FER=1.051364E-001, channelError_count=4.02, successError_count=3.61
+Progress=1.3, SNR=2.00, Bit Errors=2063, BER=6.151598E-002, Frame Errors=131, FER=1.000000E+000, channelError_count=14.47, successError_count=0.00
+Progress=1.4, SNR=3.00, Bit Errors=1522, BER=4.308197E-002, Frame Errors=131, FER=9.492754E-001, channelError_count=10.54, successError_count=5.43
+Progress=2.2, SNR=4.00, Bit Errors=1108, BER=1.949606E-002, Frame Errors=131, FER=5.900901E-001, channelError_count=6.70, successError_count=4.55
+Progress=9.7, SNR=5.00, Bit Errors=953, BER=3.837790E-003, Frame Errors=131, FER=1.350515E-001, channelError_count=3.96, successError_count=3.48
+Progress=1.3, SNR=2.00, Bit Errors=2063, BER=6.151598E-002, Frame Errors=131, FER=1.000000E+000, channelError_count=14.47, successError_count=0.00
+Progress=1.4, SNR=3.00, Bit Errors=1522, BER=4.308197E-002, Frame Errors=131, FER=9.492754E-001, channelError_count=10.54, successError_count=5.43
+Progress=2.2, SNR=4.00, Bit Errors=1108, BER=1.949606E-002, Frame Errors=131, FER=5.900901E-001, channelError_count=6.70, successError_count=4.55
+Progress=9.7, SNR=5.00, Bit Errors=953, BER=3.837790E-003, Frame Errors=131, FER=1.350515E-001, channelError_count=3.96, successError_count=3.48
+Progress=100.0, SNR=6.00, Bit Errors=378, BER=1.476563E-004, Frame Errors=55, FER=5.500000E-003, channelError_count=1.99, successError_count=1.96
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=100.0, SNR=2.00, Bit Errors=18, BER=7.031250E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=18.00, successError_count=0.00
+Progress=100.0, SNR=3.00, Bit Errors= 7, BER=2.734375E-002, Frame Errors= 1, FER=1.000000E+000, channelError_count=7.00, successError_count=0.00
+Progress=100.0, SNR=4.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=5.00, successError_count=5.00
+Progress=100.0, SNR=5.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=3.00, successError_count=3.00
+Progress=100.0, SNR=6.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, channelError_count=1.00, successError_count=1.00
+Progress=8.6, SNR=5.00, Bit Errors=976, BER=4.422854E-003, Frame Errors=131, FER=1.519722E-001, channelError_count=4.03, successError_count=3.45
+Progress=1.3, SNR=2.00, Bit Errors=2063, BER=6.151598E-002, Frame Errors=131, FER=1.000000E+000, channelError_count=14.47, successError_count=0.00
+Progress=1.4, SNR=3.00, Bit Errors=1522, BER=4.308197E-002, Frame Errors=131, FER=9.492754E-001, channelError_count=10.54, successError_count=5.43
+Progress=2.2, SNR=4.00, Bit Errors=1108, BER=1.949606E-002, Frame Errors=131, FER=5.900901E-001, channelError_count=6.70, successError_count=4.55
+Progress=9.7, SNR=5.00, Bit Errors=953, BER=3.837790E-003, Frame Errors=131, FER=1.350515E-001, channelError_count=3.96, successError_count=3.48
+Progress=0.1, SNR=2.00, Bit Errors=2063, BER=6.151598E-002, Frame Errors=131, FER=1.000000E+000, channelError_count=14.47, successError_count=0.00
+Progress=0.1, SNR=3.00, Bit Errors=1522, BER=4.308197E-002, Frame Errors=131, FER=9.492754E-001, channelError_count=10.54, successError_count=5.43
+Progress=0.2, SNR=4.00, Bit Errors=1108, BER=1.949606E-002, Frame Errors=131, FER=5.900901E-001, channelError_count=6.70, successError_count=4.55
+Progress=1.0, SNR=5.00, Bit Errors=953, BER=3.837790E-003, Frame Errors=131, FER=1.350515E-001, channelError_count=3.96, successError_count=3.48
+Progress=22.2, SNR=6.00, Bit Errors=892, BER=1.569256E-004, Frame Errors=131, FER=5.899838E-003, channelError_count=1.98, successError_count=1.95
+Progress=8.6, SNR=5.00, Bit Errors=976, BER=4.422854E-003, Frame Errors=131, FER=1.519722E-001, channelError_count=4.03, successError_count=3.45
+Progress=8.6, SNR=5.00, Bit Errors=976, BER=4.422854E-003, Frame Errors=131, FER=1.519722E-001, channelError_count=4.03, successError_count=3.45
+Progress=8.6, SNR=5.00, Bit Errors=976, BER=4.422854E-003, Frame Errors=131, FER=1.519722E-001, channelError_count=4.03, successError_count=3.45
+Progress=8.6, SNR=5.00, Bit Errors=976, BER=4.422854E-003, Frame Errors=131, FER=1.519722E-001, channelError_count=4.03, successError_count=3.45
+Progress=8.6, SNR=5.00, Bit Errors=976, BER=4.422854E-003, Frame Errors=131, FER=1.519722E-001, channelError_count=4.03, successError_count=3.45
+Progress=8.6, SNR=5.00, Bit Errors=976, BER=4.422854E-003, Frame Errors=131, FER=1.519722E-001, channelError_count=4.03, successError_count=3.45
+Progress=1.3, SNR=2.00, Bit Errors=2063, BER=6.151598E-002, Frame Errors=131, FER=1.000000E+000, channelError_count=14.47, successError_count=0.00
+Progress=1.4, SNR=3.00, Bit Errors=1522, BER=4.308197E-002, Frame Errors=131, FER=9.492754E-001, channelError_count=10.54, successError_count=5.43
+Progress=2.2, SNR=4.00, Bit Errors=1108, BER=1.949606E-002, Frame Errors=131, FER=5.900901E-001, channelError_count=6.70, successError_count=4.55
+Progress=9.7, SNR=5.00, Bit Errors=953, BER=3.837790E-003, Frame Errors=131, FER=1.350515E-001, channelError_count=3.96, successError_count=3.48
+Progress=9.9, SNR=5.00, Bit Errors=987, BER=3.910212E-003, Frame Errors=131, FER=1.328600E-001, channelError_count=4.04, successError_count=3.54
+Progress=8.6, SNR=5.00, Bit Errors=976, BER=4.422854E-003, Frame Errors=131, FER=1.519722E-001, channelError_count=4.03, successError_count=3.45

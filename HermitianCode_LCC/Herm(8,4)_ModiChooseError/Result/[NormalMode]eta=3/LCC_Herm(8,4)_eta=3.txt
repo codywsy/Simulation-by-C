@@ -1,0 +1,13 @@
+Progress=0.0, SNR=-4.00, Bit Errors=1169, BER=2.767519E-001, Frame Errors=210, FER=7.954545E-001, Choice Errors= 0, CWR=0.000000E+000, channelError_count=3.62, successError_count=1.91
+Progress=0.0, SNR=-3.00, Bit Errors=1132, BER=2.563406E-001, Frame Errors=210, FER=7.608696E-001, Choice Errors= 0, CWR=0.000000E+000, channelError_count=3.51, successError_count=1.95
+Progress=0.0, SNR=-2.00, Bit Errors=1047, BER=1.875000E-001, Frame Errors=210, FER=6.017192E-001, Choice Errors= 0, CWR=0.000000E+000, channelError_count=3.00, successError_count=1.90
+Progress=0.0, SNR=-1.00, Bit Errors=1016, BER=1.541262E-001, Frame Errors=210, FER=5.097087E-001, Choice Errors= 2, CWR=9.389671E-003, channelError_count=2.62, successError_count=1.77
+Progress=0.0, SNR=0.00, Bit Errors=1005, BER=1.176264E-001, Frame Errors=210, FER=3.932584E-001, Choice Errors= 1, CWR=2.949853E-003, channelError_count=2.38, successError_count=1.73
+Progress=0.0, SNR=1.00, Bit Errors=963, BER=7.458178E-002, Frame Errors=210, FER=2.602230E-001, Choice Errors= 1, CWR=1.639344E-003, channelError_count=1.92, successError_count=1.50
+Progress=0.0, SNR=2.00, Bit Errors=958, BER=4.157986E-002, Frame Errors=210, FER=1.458333E-001, Choice Errors= 1, CWR=7.993605E-004, channelError_count=1.59, successError_count=1.32
+Progress=0.0, SNR=3.00, Bit Errors=932, BER=2.274502E-002, Frame Errors=210, FER=8.199922E-002, Choice Errors= 2, CWR=8.396306E-004, channelError_count=1.20, successError_count=1.05
+Progress=0.0, SNR=4.00, Bit Errors=912, BER=8.318739E-003, Frame Errors=210, FER=3.064799E-002, Choice Errors= 3, CWR=4.495729E-004, channelError_count=0.89, successError_count=0.83
+Progress=0.0, SNR=5.00, Bit Errors=867, BER=1.852437E-003, Frame Errors=210, FER=7.178996E-003, Choice Errors= 1, CWR=3.439263E-005, channelError_count=0.59, successError_count=0.58
+Progress=0.2, SNR=6.00, Bit Errors=883, BER=3.623652E-004, Frame Errors=210, FER=1.378876E-003, Choice Errors= 8, CWR=5.258176E-005, channelError_count=0.36, successError_count=0.36
+Progress=2.1, SNR=7.00, Bit Errors=856, BER=3.228197E-005, Frame Errors=210, FER=1.267143E-004, Choice Errors= 7, CWR=4.224168E-006, channelError_count=0.20, successError_count=0.20
+Progress=33.1, SNR=8.00, Bit Errors=840, BER=1.981229E-006, Frame Errors=210, FER=7.924917E-006, Choice Errors= 8, CWR=3.019031E-007, channelError_count=0.10, successError_count=0.10

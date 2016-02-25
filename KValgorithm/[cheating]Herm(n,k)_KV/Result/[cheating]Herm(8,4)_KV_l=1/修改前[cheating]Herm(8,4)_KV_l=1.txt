@@ -1,0 +1,8 @@
+Progress=0.0, SNR=0.00, Bit Errors=626, BER=1.231895E-002, Frame Errors=210, FER=6.612091E-002, addNum=32.00, mulNum=32.00, total_num=64.00
+Progress=0.0, SNR=1.00, Bit Errors=568, BER=8.009928E-003, Frame Errors=210, FER=4.738267E-002, addNum=32.00, mulNum=32.00, total_num=64.00
+Progress=0.0, SNR=2.00, Bit Errors=546, BER=4.872912E-003, Frame Errors=210, FER=2.998715E-002, addNum=32.00, mulNum=32.00, total_num=64.00
+Progress=0.0, SNR=3.00, Bit Errors=518, BER=2.074523E-003, Frame Errors=210, FER=1.345636E-002, addNum=32.00, mulNum=32.00, total_num=64.00
+Progress=0.0, SNR=4.00, Bit Errors=465, BER=5.241492E-004, Frame Errors=210, FER=3.787401E-003, addNum=32.00, mulNum=32.00, total_num=64.00
+Progress=0.0, SNR=5.00, Bit Errors=392, BER=1.093652E-004, Frame Errors=210, FER=9.374163E-004, addNum=32.00, mulNum=32.00, total_num=64.00
+Progress=0.2, SNR=6.00, Bit Errors=398, BER=1.475580E-005, Frame Errors=210, FER=1.245716E-004, addNum=32.00, mulNum=32.00, total_num=64.00
+Progress=2.4, SNR=7.00, Bit Errors=353, BER=1.172630E-006, Frame Errors=210, FER=1.116158E-005, addNum=32.00, mulNum=32.00, total_num=64.00

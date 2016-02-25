@@ -1,0 +1,11 @@
+Progress=0.0, SNR=-4.00, Bit Errors=13097, BER=2.436198E-001, Frame Errors=210, FER=1.000000E+000, addNum=30585.66, mulNum=40108.10, total_num=70693.75, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=-3.00, Bit Errors=11692, BER=2.174851E-001, Frame Errors=210, FER=1.000000E+000, addNum=30533.77, mulNum=40044.02, total_num=70577.80, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=-2.00, Bit Errors=10379, BER=1.930618E-001, Frame Errors=210, FER=1.000000E+000, addNum=30572.61, mulNum=40078.64, total_num=70651.25, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=-1.00, Bit Errors=8814, BER=1.639509E-001, Frame Errors=210, FER=1.000000E+000, addNum=30504.68, mulNum=40010.38, total_num=70515.06, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=0.00, Bit Errors=7350, BER=1.367188E-001, Frame Errors=210, FER=1.000000E+000, addNum=30622.11, mulNum=40111.83, total_num=70733.94, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=1.00, Bit Errors=5743, BER=1.068266E-001, Frame Errors=210, FER=1.000000E+000, addNum=30499.21, mulNum=40017.88, total_num=70517.09, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=2.00, Bit Errors=4395, BER=8.175223E-002, Frame Errors=210, FER=1.000000E+000, addNum=30541.21, mulNum=40036.59, total_num=70577.80, Choice Errors= 0, CWR=-1.#IND00E+000
+Progress=0.0, SNR=3.00, Bit Errors=3389, BER=5.657385E-002, Frame Errors=210, FER=8.974359E-001, addNum=31156.99, mulNum=40538.66, total_num=71695.65, Choice Errors= 0, CWR=0.000000E+000
+Progress=0.0, SNR=4.00, Bit Errors=2697, BER=2.232025E-002, Frame Errors=210, FER=4.449153E-001, addNum=33319.16, mulNum=41870.61, total_num=75189.76, Choice Errors= 0, CWR=0.000000E+000
+Progress=0.0, SNR=5.00, Bit Errors=2388, BER=3.283395E-003, Frame Errors=210, FER=7.391763E-002, addNum=33409.37, mulNum=40676.27, total_num=74085.64, Choice Errors= 0, CWR=0.000000E+000
+Progress=0.0, SNR=6.00, Bit Errors=2215, BER=8.809416E-005, Frame Errors=210, FER=2.138123E-003, addNum=31560.02, mulNum=38080.50, total_num=69640.52, Choice Errors= 0, CWR=0.000000E+000
