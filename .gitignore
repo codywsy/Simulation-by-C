@@ -281,3 +281,16 @@ $RECYCLE.BIN/
 *.lnk
 KValgorithm/Herm(64,49)_KV/Result/【重跑2016.2.23】Herm(64,49)_KV_lm=3_(3, 6.5)/basic_input.txt
 KValgorithm/Herm(64,49)_KV/Result/【重跑2016.2.23】Herm(64,49)_KV_lm=3_(3, 6.5)/basic_input.txt
+
+# Special for 424labwork directory
+*.xls
+*.xlsx
+*.txt
+*.png
+*.suo
+*.sln
+*.sdf
+*.exe
+*.ilk
+*.pdb
+
