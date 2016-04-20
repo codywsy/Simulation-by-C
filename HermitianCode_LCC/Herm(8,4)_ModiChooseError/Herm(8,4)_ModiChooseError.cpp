@@ -354,8 +354,6 @@ void main()
 		fclose(fp);
 
 	}
-
-	getchar();
 	
 }
 
