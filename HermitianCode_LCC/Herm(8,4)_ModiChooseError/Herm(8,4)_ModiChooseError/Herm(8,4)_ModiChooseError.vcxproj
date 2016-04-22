@@ -79,7 +79,7 @@
     <None Include="basic_input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Herm(8,4)_ModiChooseError.cpp" />
+    <ClCompile Include="..\Herm(8,4)_ModiChooseError - 2016.4.22.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

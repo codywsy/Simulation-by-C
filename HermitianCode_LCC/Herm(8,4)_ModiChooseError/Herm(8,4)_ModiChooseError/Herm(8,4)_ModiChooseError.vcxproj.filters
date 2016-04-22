@@ -20,7 +20,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Herm(8,4)_ModiChooseError.cpp">
+    <ClCompile Include="..\Herm(8,4)_ModiChooseError - 2016.4.22.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
