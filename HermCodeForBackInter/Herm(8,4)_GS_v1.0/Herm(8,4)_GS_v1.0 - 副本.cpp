@@ -56,8 +56,8 @@
 #define facpoly_Ysize interpoly_Ysize		// same as the interpoly_Ysize
 #define facpoly_Xsize interpoly_Xsize	// same as the interpoly_Xsize
 //rcs()
-#define rcspoly_Ysize 12	//degY+1, degY = interpoly_Ysize + max(j_1) + w*( (max(i_1)+w)/(w+1) )
-#define rcspoly_Xsize 10	//degX+1, degX = max(i_1) + w
+#define rcspoly_Ysize 11	//degY+1, degY = interpoly_Ysize + max(j_1) + w*( (max(i_1)+w)/(w+1) )
+#define rcspoly_Xsize 6	//degX+1, degX = max(i_1) + w
 #define faiMax_Ysize 2	//change with diff w and k, the max degY of probably used polebasis
 #define faiMax_Xsize 3	//change with diff w and k, the max degX of probably used polebasis
 //expoly()-->expanded polynomial
@@ -98,7 +98,7 @@ int uu;	//factorisation step index
 int l, listNum[test_vec_num];	//candidate output index
 //factorization() and rcs()
 int Q[k][facpoly_Zsize][facpoly_Ysize][facpoly_Xsize];	//sequtial deduction polynomial [number of fac steps=k][rs][y_size][w+1], y_size> maxdeg_y]+rs*(deg_¦µ(k-1))
-//int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
+int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
 int output[lm+1][k], outputList[test_vec_num][lm+1][k];	//the list of candidate message [expeced number of candidate message, >rs][length of message, k]
 int expoly[2][expoly_Ysize][expoly_Xsize];	//expanded polynomial in [z+f_k-1-u*pb_k-1-u]^rs, expoly[rs][3>(max(deg_y) in encoding functions)*(rs-1)][3>(max(deg_x) in encoding functions)*(rs-1)]
 
@@ -1575,9 +1575,9 @@ void factorisation(void)
 					for(z=0;z<facpoly_Xsize;z++)	//w+1
 						Q[j][u][v][z]=0;
 
-//		for(u=0;u<k;u++)	//number of fac steps=k
-//			for(v=0;v<lm+1;v++)	//5>rs=expected number of roots
-//				rootlist[u][v]=-1;	
+		for(u=0;u<k;u++)	//number of fac steps=k
+			for(v=0;v<lm+1;v++)	//5>rs=expected number of roots
+				rootlist[u][v]=-1;	
 
 		for(u=0;u<lm+1;u++)	//5>(rs-1)=expected number of output lists
 			for(v=0;v<k;v++)	//k
@@ -1610,54 +1610,44 @@ void factorisation(void)
 void rcs(int uu)
 {
 	int i, j, u, v, m, z, t, r, i_1, j_1, i_2, j_2, a, b, leadMono, leadMono_temp, alpha, act, temp;
-	int lc[lm+1], q_temp[lm+1][rcspoly_Ysize+w][rcspoly_Xsize];	//q_temp[z-deg+1][y_size>max(deg_y)+1+(rs-1)*(max(deg_y) in encoding functions)][14>w+(rs-1)*w], lc[rs]--leading coefficient polynomial
-	int index_flag;
+	int lc[lm+1], q_temp[lm+1][rcspoly_Ysize][rcspoly_Xsize];	//q_temp[z-deg+1][y_size>max(deg_y)+1+(rs-1)*(max(deg_y) in encoding functions)][14>w+(rs-1)*w], lc[rs]--leading coefficient polynomial
+	int d1,d2,index_flag;
 	int rcspoly_Ysize_1,rcspoly_Xsize_1;	//the q_temp size of the first step of factorization
-	int rootlist[lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
+//	int pbY,pbX;
 
 	//array size initialization
-	rcspoly_Ysize_1= faiMax_Ysize + facpoly_Ysize + 1;	
-	rcspoly_Xsize_1= faiMax_Xsize + lm*facpoly_Xsize + 1;	//ensure the Xsize can let the q_temp mod curve H_w normally
+	rcspoly_Ysize_1= faiMax_Ysize + interpoly_Ysize + 1;
+	rcspoly_Xsize_1= faiMax_Xsize + w + 1;
+//	pbY = rcspoly_Ysize+1;
+//	pbX = w+1;
 
-	if( (rcspoly_Ysize_1>=rcspoly_Ysize) || (rcspoly_Xsize_1>=rcspoly_Xsize) )
-	{
-		printf("\n fac size.0 has error\n");
-	}
-
+	//printf("\nWhen u=%d\n", u);
 	leadMono=0; leadMono_temp=0;	//leading monomial index
 	act=0;	//judge value for recursive search of each f_k-1-u
 
-	//initialization
-	for(v=0;v<lm+1;v++)	//5>rs=expected number of roots
-		rootlist[v]=-1;	
-
+	flag_addNum = 1;
+	flag_mulNum = 1;
 	//find pb_k-1-uu
 	j_1 = tg_order[k-1-uu][1];
 	i_1 = tg_order[k-1-uu][0];
 
 
 	//initialise q_temp
-	//for(i=0;i<lm+1;i++)	//rs
-	//	for(j=0;j<rcspoly_Ysize;j++)	
-	//		for(u=0;u<rcspoly_Xsize;u++)	
-	//			q_temp[i][j][u]=0;
-	memset(q_temp,0,sizeof(q_temp));
+	for(i=0;i<lm+1;i++)	//rs
+		for(j=0;j<rcspoly_Ysize;j++)	//y_size
+			for(u=0;u<rcspoly_Xsize;u++)	//5>w*(rs-1)+w
+				q_temp[i][j][u]=0;
+
 
 	//Calculate q_temp[pb_k-1-u]=q[u][pb_k-1-u]
 	for(i=0;i<facpoly_Zsize;i++)	//rs
 	{
 		for(j=0;j<facpoly_Ysize;j++)	//y_size=max(deg_y) in encoding function*(rs-1), and 31>=max(deg_y)+1
 		{
-			for(u=0;u<facpoly_Xsize;u++)
-				if( Q[uu][i][j][u]!=0 )
-				{
-					q_temp[i][j+i*j_1][u+i*i_1] = Q[uu][i][j][u];	//this time, q_temp size is [rs+1][maxY(j_1)+maxY(Q)][maxX(i_1)+maxX(Q)]
-
-					if( (j+i*j_1) > rcspoly_Ysize )
-					{
-						printf("\n fac size.1 has error__Y\n");
-					}
-				}
+			for(u=0;u<facpoly_Xsize;u++)	//
+			{
+				q_temp[i][j+i*j_1][u+i*i_1] = Q[uu][i][j][u];	//this time, q_temp size is [rs+1][maxY(j_1)+maxY(Q)][maxX(i_1)+maxX(Q)]
+			}
 		}
 	}
 
@@ -1735,19 +1725,22 @@ void rcs(int uu)
 		if(b==0)
 		{
 			act=1;
-			rootlist[u]=root[i];
+			rootlist[uu][u]=root[i];
 			u++;
+#ifndef _NoReduction_
+			break;	//jump out of the loop
+#endif
 		}
-	}		
+	}
 
 	//For each distinct root of rootlist[u]
-	if(act==1)	//act==1 means there is at least one root in rootlist[u];
+	if(act==1)
 	{
 		for(i=0;i<lm+1;i++)	//2>rs
 		{
-			if(rootlist[i]!=-1)
+			if(rootlist[uu][i]!=-1)
 			{	
-				alpha=rootlist[i];
+				alpha=rootlist[uu][i];
 				
 				output[l][k-1-uu]=alpha;	//output[l][k-1-uu]
 					
@@ -1764,34 +1757,32 @@ void rcs(int uu)
 					l++;	//locate next candidate output
 				}
 				else  //update the q[uu+1]
-				{	
+				{
 					r=uu+1;
 
-					//calculate Q[uu+1]
+					//Initialise q_temp
 					for(j=0;j<lm+1;j++)	//rs
+						for(u=0;u<rcspoly_Ysize;u++)	//y_size
+							for(m=0;m<rcspoly_Xsize;m++)	//3>w*(rs-1)+w
+								q_temp[j][u][m]=0;	
+			
+					//q_temp=q[uu][z+f_k-1-u*pb_k-1-u]
+					for(j=0;j<lm+1;j++)	//rs
+					{
+						//calculate (z+f_k-1-u*pb_k-1-u)^j
 						if(j==0)
 						{
-							for(m=0;m<facpoly_Ysize;m++)	//y_size
-								for(z=0;z<facpoly_Xsize;z++)	//w+1
-									Q[r][j][m][z] = Q[uu][j][m][z];
-
-							polyexp1(alpha, i_1, j_1, j, expoly);
-
+							for(m=0;m<facpoly_Ysize;m++)
+								for(z=0;z<facpoly_Xsize;z++)
+									q_temp[j][m][z] = Q[uu][j][m][z];
 						}
 						else if(j>0)
 						{
-							//Initialise q_temp
-							//for(u=0;u<lm+1;u++)	//rs
-							//	for(m=0;m<rcspoly_Ysize+w;m++)	//y_size
-							//		for(z=0;z<rcspoly_Xsize;z++)	//w+1
-							//			q_temp[u][m][z]=0;
-							memset(q_temp,0,sizeof(q_temp));
-
-							//calculate (z+f_k-1-u*pb_k-1-u)^j
 							polyexp1(alpha, i_1, j_1, j, expoly);
-							
-							//calculate q_temp
-							for(u=0;u<j+1;u++)	//rs
+						
+							//calculate q[uu][z+f_k-1-u*pb_k-1-u]
+							//this only can be used in m=1,lm=1
+							for(u=0;u<lm+1;u++)	//rs
 							{
 								for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
 								{
@@ -1806,11 +1797,8 @@ void rcs(int uu)
 													if(Q[uu][j][v][t]!=0)
 													{
 														temp = mul(expoly[u][m][z], Q[uu][j][v][t]);
-
-														//if(q_temp[u][v+m][t+z]!=0)
-														//	printf("\nq_temp[u][v+m][t+z]!=0\n");
-
-														q_temp[u][v+m][t+z] = add( q_temp[u][v+m][t+z],temp ); 													}
+														q_temp[u][v+m][t+z] = add( q_temp[u][v+m][t+z],temp );
+													}
 													// caution overflow problem of q_temp
 													// here q_temp, ysize=exploy_Ysize+facpoly_Ysize-2+1=9, xsize=expoly_Xsize+facpoly_Xsize-2+1=6
 												}
@@ -1820,33 +1808,34 @@ void rcs(int uu)
 								}
 
 								//convert x^w+1=y^w+y, difference with diff code
-								index_flag = rcspoly_Xsize-1;	//the max deg_x for q_temp, rcspoly_Xsize = (expoly_Xsize-1) + (facpoly_Xsize-1) + 1
+								int Ysize_temp = (facpoly_Ysize-1) + (expoly_Ysize-1) + 1;	//keep universality
+								index_flag = (facpoly_Xsize-1) + (expoly_Xsize-1) ;	//the max deg_x for q_temp, rcspoly_Xsize = (expoly_Xsize-1) + (facpoly_Xsize-1) + 1
 								while( index_flag>w )
 								{
 									temp = index_flag-(w+1);	// deg_x - (w+1)
-									for(m=0;m<rcspoly_Ysize;m++)
+									for(m=0;m<Ysize_temp;m++)
 										if( q_temp[u][m][index_flag]!=0 )
 										{
 											q_temp[u][m+1][temp] = add( q_temp[u][m+1][temp],q_temp[u][m][index_flag] );	//y^1
-											q_temp[u][m+w][temp] = add( q_temp[u][m+w][temp],q_temp[u][m][index_flag] );	//y^(w+1), may be overflow!!
+											q_temp[u][m+w][temp] = add( q_temp[u][m+w][temp],q_temp[u][m][index_flag] );	//y^(w+1)
 											q_temp[u][m][index_flag] = 0;
 										}
 									index_flag = index_flag-1;
 								}
 
 							}
-
-							//Q[r] = add( Q[r],q_temp )
-							for(u=0;u<lm+1;u++)	//rs
-								for(m=0;m<facpoly_Ysize;m++)	//y_size
-									for(z=0;z<facpoly_Xsize;z++)	//w+1
-										if( Q[r][u][m][z]!=0 || q_temp[u][m][z]!=0 )
-										{
-											Q[r][u][m][z]=add( Q[r][u][m][z],q_temp[u][m][z] );
-										}
-
 						}
-				
+
+					}
+								
+					//q[u+1]=q_temp
+					for(j=0;j<lm+1;j++)	//rs
+						for(u=0;u<facpoly_Ysize;u++)	//y_size
+							for(m=0;m<facpoly_Xsize;m++)	//w+1
+								Q[r][j][u][m]=q_temp[j][u][m];
+
+					//printf("q[u+1]");
+
 					//next coefficient searching
 					
 					rcs(r);
@@ -1864,14 +1853,16 @@ void rcs(int uu)
 		}
 	}
 
+	flag_addNum = 0;
+	flag_mulNum = 0; 
+	
 }
 
 void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xsize])
 {
 	int u, m, z;	//p1[rs+1][18>(max(deg_y) in encoding functions)*(rs-1)][10>(max(deg_x) in encoding functions)*(rs-1)], p2[rs][26=18+max(deg_y) in encoding functions][14=10+max(deg_x) in encoding functions]
-	int poly_temp[lm+1+1][expoly_Ysize+faiMax_Ysize+w][expoly_Xsize+faiMax_Xsize];
+	int poly_temp[lm+1+1][expoly_Ysize+faiMax_Ysize][expoly_Xsize+faiMax_Xsize];
 	int temp, temp_Ysize, temp_Xsize;
-	int index_flag;
 
 	temp_Ysize = expoly_Ysize+faiMax_Ysize;
 	temp_Xsize = expoly_Xsize+faiMax_Xsize;
@@ -1888,16 +1879,23 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 	}
 	else if(deg_z==1)	//because deg_z is equal to or less than 1, so deg_z>0 <-> deg_z==1
 	{
-		poly[0][0][0]=0;
+		for(u=0;u<lm+1;u++)	//rs
+			for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
+				for(z=0;z<expoly_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
+					poly[u][m][z]=0;
 
 		poly[1][0][0]=1;
 		poly[0][j][i]=c;
 	}
 	else if(deg_z>1)
 	{
+		printf("\n\n expoly has error!!");
+	}
+/*	else if(deg_z>1)	//when lm=1, deg_z<=1
+	{
 		for(u=0;u<lm+1+1;u++)	//rs
-			for(m=0;m<temp_Ysize+w;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
-				for(z=0;z<temp_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
+			for(m=0;m<temp_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
+				for(z=0;z<temp_Ysize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
 				{
 					poly_temp[u][m][z]=0;
 				}
@@ -1913,7 +1911,6 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 	
 		//calculate y^j*x^i*poly
 		for(u=0;u<lm+1;u++)	//rs
-		{
 			for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
 				for(z=0;z<expoly_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
 					if( poly[u][m][z]!=0 )
@@ -1922,23 +1919,6 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 						poly_temp[u][j+m][i+z] = add( poly_temp[u][j+m][i+z],temp );
 					}
 
-			//convert x^w+1=y^w+y, difference with diff code
-			index_flag = temp_Xsize-1;
-			while( index_flag>w )
-			{
-				temp = index_flag-(w+1);
-				for(m=0;m<temp_Ysize;m++)
-					if( poly_temp[u][m][index_flag]!=0 )
-					{
-						poly_temp[u][m+1][temp] = add( poly_temp[u][m+1][temp],poly_temp[u][m][index_flag] );
-						poly_temp[u][m+w][temp] = add( poly_temp[u][m+w][temp],poly_temp[u][m][index_flag] );
-						poly_temp[u][m][index_flag] = 0;
-					}
-				index_flag = index_flag-1;
-			}
-
-		}
-
 		for(u=0;u<lm+1;u++)	//rs
 			for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
 				for(z=0;z<expoly_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
@@ -1946,6 +1926,7 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 					poly[u][m][z] = poly_temp[u][m][z];
 				}
 	}
+	*/
 }
 
 void choose()
@@ -2223,7 +2204,7 @@ void choose()
 	if( epcount1<=able_correct && epcount2!=0)	//this seq_num has chosen the wrong one
 	{
 		ChosenWrong_SeqNum++;
-//		printf("\n\nChoice error\n\n");
+    printf("\n\nDecoding is error\n\n");
 	}
 	
 }
