@@ -65,3 +65,18 @@ int power(int a, int b)
 	}
 
 }
+
+
+int inv(int fac)
+{
+	int i, invresult;
+	if (fac == 0)
+		invresult = 0;
+	else
+		for (i = 0; i<n; i++){
+			if (fac == mularray[i])
+				invresult = mularray[(n - i) % n];
+		}
+
+	return invresult;
+}

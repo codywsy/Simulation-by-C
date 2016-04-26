@@ -5,4 +5,5 @@
 int mul(int, int);
 int add(int, int);
 int power(int, int);
+int inv(int);
 #endif
