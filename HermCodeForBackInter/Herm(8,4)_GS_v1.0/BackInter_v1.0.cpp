@@ -11,6 +11,7 @@ extern int large_vec[choose_num][n];
 extern float test_set_ordered[2][n];
 extern int mono_order[monoTable_Zsize][monoTable_Ysize][monoTable_Xsize];	//mono_order[z-deg+1][y-deg][x-deg+1], y-deg is greater than w-1+nw/(w+1)
 
+//function: realize the Backinterpolation for Hermition code
 void BackInterpolation(int Q_com_poly[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int position)
 {
 	int i, j;
@@ -86,7 +87,7 @@ void BackInterpolation(int Q_com_poly[][interpoly_Zsize][interpoly_Ysize][interp
 						if(qResult[j]>0 && A[j]>0)
 						{
 							//update poly
-							Update2(qResult[j], Q_com_poly[j], qResult[minIndex], Q_com_poly[minIndex]);
+							BF_Update(qResult[j], Q_com_poly[j], qResult[minIndex], Q_com_poly[minIndex]);
 						}
 				}
 			}
@@ -138,7 +139,7 @@ int *ComputeResult(const int Q[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsi
 	return result;
 }
 
-void Update2(const int alpha, int Q1[][interpoly_Ysize][interpoly_Xsize], const int beta, const int Q2[][interpoly_Ysize][interpoly_Xsize])
+void BF_Update(const int alpha, int Q1[][interpoly_Ysize][interpoly_Xsize], const int beta, const int Q2[][interpoly_Ysize][interpoly_Xsize])
 {
 	//calculate alpha * Q2 + beta * Q1
 	int temp1, temp2;
@@ -255,3 +256,41 @@ void UpdatePolyWithDivision(int Q[][interpoly_Ysize][interpoly_Xsize], int alpha
 
 }
 
+/***********************************************************************
+Function:	
+	used to dectect the polynomial of group who has factor (x+a_i) 
+Argument:	
+	Q_poly	---	polynomial group
+	polyNum	---	the number of polynomial
+	ai		--- the x value of interpoint 
+************************************************************************/
+void DectectIfFactorInPoly(int Q_poly[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int polyNum, int xi)
+{
+	for (int i = 0; i < polyNum; i++)
+	{
+		for (int u = 0; u < interpoly_Zsize; ++u)
+			for (int v = 0; v < interpoly_Ysize; ++v)
+			{
+				int temp = Q_poly[i][u][v][0];
+				for (int z = 1; z < interpoly_Xsize; ++z)
+					if (Q_poly[i][u][v][z] != 0)
+					{
+						int temp1 = power(xi, z);
+						temp1 = mul(temp1, Q_poly[i][u][v][z]);
+						temp = add(temp, temp1);
+					}
+
+				if (temp != 0)
+				{
+					printf("\nQ[%d] does not have factor", i);
+					goto out;
+				}
+			}
+
+		printf("\nQ[%d] have factor", i);
+
+		out: ;
+	}
+
+	printf("\n");
+}

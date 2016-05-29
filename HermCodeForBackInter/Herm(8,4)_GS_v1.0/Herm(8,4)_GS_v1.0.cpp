@@ -40,7 +40,7 @@ int codeword[n], bi_codeword[n*p]; //codewords
 float tx_symbol[p*n][2], rx_symbol[p*n][2], sgm;
 float RM[q][n];
 //findpoint()
-int point[2][n];	//rational points[2][w^3], [0]->x, [1]->y
+int point[n][2];	//rational points[2][w^3], [0]->x, [1]->y
 //tgorder()
 int tg_order[tg_size][2];	//[promise the tg order beyond (w, max(deg_y))][2]
 //mono_table()
@@ -128,7 +128,7 @@ void main()
 /*	//***debug******
 	printf("findpoint function:\n");
 	for(i=0;i<n;i++)
-		printf("affine point[%d]=(%d,%d)\n",i,point[0][i],point[1][i]);
+		printf("affine point[%d]=(%d,%d)\n",i,point[i][0],point[i][1]);
 */	//***************
 	tgorder();
 /*	//****debug*****
@@ -319,7 +319,7 @@ void generator()
 	//generator matrix
 	for(i=0;i<k;i++)	//k
 		for(j=0;j<n;j++)	//n
-			gmatrix[i][j]=mul(power(point[0][j], tg_order[i][0]), power(point[1][j], tg_order[i][1]));
+			gmatrix[i][j]=mul(power(point[j][0], tg_order[i][0]), power(point[j][1], tg_order[i][1]));
 
 }
 
@@ -545,7 +545,7 @@ void test_vec_contruction()
 	//construct x_ordered
 	for(i=0;i<n;i++)
 		for(j=0;j<2;j++)
-			x_ordered[j][i]=point[j][(int)test_set_ordered[1][i]];
+			x_ordered[j][i]=point[(int)test_set_ordered[1][i]][j];
 
 	//*****debug*********
 	//caculate the num of diffs between codeword and test_vec[i] 
@@ -652,6 +652,9 @@ void interpolation()
 	com_elem_interpolation(Q_com_elem,com_elem_interpoint);
 	
 	//com_elem interpolation finish
+
+	//debug: dectect the Q_com_elem[i] who has factor(x+a_i)
+//	DectectIfFactorInPoly(Q_com_elem, init_polyNum, com_elem_interpoint[0][n - 1]);
 
 	//start backInterpolation Testing
 	BackInterpolation(Q_com_elem, n-1);
@@ -1063,6 +1066,9 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 				}
 			}
 		}
+
+		//debug: dectect the Q_com_elem[i] who has factor (x+a_i)
+		DectectIfFactorInPoly(g, init_polyNum, interpoint[0][i]);
 
 
 /*	//****debug**********
@@ -2132,7 +2138,7 @@ void choose()
 			printf("\n\n");
 			printf("x[]\t\t");
 			for (i = 0; i < n; ++i)
-				printf("\t(%d,%d)", point[0][i], point[1][i]);
+				printf("\t(%d,%d)", point[i][0], point[i][1]);
 
 			printf("\n\n");
 			printf("large_vec[]\t");
@@ -2305,7 +2311,7 @@ void findpoints()
 	//Initialisation
 	for(i=0;i<2;i++)
 		for(j=0;j<n;j++)	//w^3
-			point[i][j]=0;
+			point[j][i]=0;
 
 	//find points over x^3-y^2-y=0
 	u=0;
@@ -2320,8 +2326,8 @@ void findpoints()
 			a3=y;
 			if(add(a3, add(a1, a2))==0)
 			{
-				point[0][u]=x;
-				point[1][u]=y;
+				point[u][0]=x;
+				point[u][1]=y;
 				u++;
 			}
 		}
