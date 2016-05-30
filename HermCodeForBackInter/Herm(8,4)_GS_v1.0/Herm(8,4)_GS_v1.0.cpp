@@ -6,8 +6,8 @@
 #include "FiniteFieldBasisGF(4).h"
 #include "FiniteFieldBasisCal.h"
 #include "BackInter.h"
+#include "NewInter.h"
 
-#define _GS_Normal_
 //#define _Complexity_
 #define _NoReductionCom_
 //#define _NoReductionUncom_
@@ -16,19 +16,6 @@
 
 #define OpenFile fp=fopen("LCC_Herm(8,4)GS.txt","a")
 #define FrameError 209
-
-
-
-
-//conditional compile
-#ifndef _GS_Normal_
-	#define eta 3
-	#define test_vec_num 8 //the num of test_vec is 2^eta
-#else
-	#define eta 0
-	#define test_vec_num 1 //the num of test_vec is 2^eta
-#endif
-
 
 //main()
 float N0;
@@ -649,7 +636,9 @@ void interpolation()
 				for(v=0;v<interpoly_Xsize;v++)	//w+1
 					Q_com_elem[i][j][u][v]=0;
 
-	com_elem_interpolation(Q_com_elem,com_elem_interpoint);
+//	com_elem_interpolation(Q_com_elem,com_elem_interpoint);
+	NewInter(Q_com_elem, com_elem_interpoint);
+
 	
 	//com_elem interpolation finish
 
@@ -657,7 +646,7 @@ void interpolation()
 //	DectectIfFactorInPoly(Q_com_elem, init_polyNum, com_elem_interpoint[0][n - 1]);
 
 	//start backInterpolation Testing
-	BackInterpolation(Q_com_elem, n-1);
+//	BackInterpolation(Q_com_elem, n-1);
 
 
 //conditional compile
@@ -1068,7 +1057,7 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 		}
 
 		//debug: dectect the Q_com_elem[i] who has factor (x+a_i)
-		DectectIfFactorInPoly(g, init_polyNum, interpoint[0][i]);
+//		DectectIfFactorInPoly(g, init_polyNum, interpoint[0][i]);
 
 
 /*	//****debug**********

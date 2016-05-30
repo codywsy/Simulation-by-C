@@ -6,6 +6,7 @@
 #include "FiniteFieldBasisCal.h"
 #include "BackInter.h"
 
+//from Herm(8,4))_GS_v1.0.cpp
 extern int x_ordered[2][n];
 extern int large_vec[choose_num][n];
 extern float test_set_ordered[2][n];
@@ -14,7 +15,7 @@ extern int mono_order[monoTable_Zsize][monoTable_Ysize][monoTable_Xsize];	//mono
 //function: realize the Backinterpolation for Hermition code
 void BackInterpolation(int Q_com_poly[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int position)
 {
-	int i, j;
+	int j;
 	int backPoint[3];
 	int max = interpoly_Ysize-1;
 	int A[init_polyNum];
@@ -143,7 +144,7 @@ void BF_Update(const int alpha, int Q1[][interpoly_Ysize][interpoly_Xsize], cons
 {
 	//calculate alpha * Q2 + beta * Q1
 	int temp1, temp2;
-	int g[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
+//	int g[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
 
 	//start
 	for(int u=0; u<interpoly_Zsize; ++u)
