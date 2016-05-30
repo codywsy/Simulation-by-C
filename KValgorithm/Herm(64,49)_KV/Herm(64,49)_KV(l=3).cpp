@@ -1479,7 +1479,7 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 	if(deg_z==0)
 	{
 		for(u=0;u<lm+1;u++)	//rs
-			for(m=0;m<expoly_Ysize+w;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
+			for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
 				for(z=0;z<expoly_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
 					poly[u][m][z]=0;
 

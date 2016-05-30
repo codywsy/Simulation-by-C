@@ -1,84 +1,35 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
+#include "main.h"
+#include "FiniteFieldBasisGF(4).h"
+#include "FiniteFieldBasisCal.h"
+#include "BackInter.h"
+#include "NewInter.h"
 
-#define _GS_Normal_
 //#define _Complexity_
-#define _NoReduction_
+#define _NoReductionCom_
+//#define _NoReductionUncom_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
 
 #define OpenFile fp=fopen("LCC_Herm(8,4)GS.txt","a")
-
-#define q 4
-#define n 8
-#define k 4
-#define p 2
-#define w 2
-#define weiz 4
-#define iterNum 8	//when m=1, C is equal to n
-#define lm 1
-#define able_correct 1
-#define pointNum 2
-#define interval 1
-
-//conditional compile
-#ifndef _GS_Normal_
-	#define eta 3
-	#define test_vec_num 8 //the num of test_vec is 2^eta
-#else
-	#define eta 0
-	#define test_vec_num 1 //the num of test_vec is 2^eta
-#endif
-
-//test_vec_construction
-#define choose_num 2	//fixed
-
-//tgorder()
-#define tg_size 186	//more than k, tg_size represent the probably used pole basis num, (w+1)*w/2 + (w+1) * ( (w+interpoly_Ysize)-w+1 ) 
-//mono_table()
-#define weight_Zsize 4
-#define weight_XYsize 186	//equals to the tg_size
-#define mono_ordinSize 200	//choose the value with debugging, equals to max weigtdegree in weight[monoTable_Zsize][weight_XYsize]
-#define monoTable_Zsize	(lm+1) 	//equals to the interpoly_Zsize
-#define monoTable_Ysize 60	//large than interpoly_Ysize
-#define monoTable_Xsize (w+1)	//large than the interpoly_Xsize
-#define monoTable_totalSize 186 //>index of term[max(deg_y)][w] in the pole basis + 1, nearly equals to tg_size
-//interpolation()
-#define init_polyNum (w*(lm+1))	//change with diff lm, the poly num of the init polyGroup
-#define interpoly_Zsize (lm+1)	//maxValue of z is lm=1, so the Zsize should add 1 more.
-#define interpoly_Ysize 6	//maxdeg of y is (w-1) + w*(n/(w+1)), so the Ysize should add 1 more.
-#define interpoly_Xsize	(w+1)	//maxdeg of x is w, so the Xsize should add 1 more.
-//factorization()
-#define facpoly_Zsize (lm+1)// same as the interpoly_Zsize
-#define facpoly_Ysize 6		// same as the interpoly_Ysize
-#define facpoly_Xsize (w+1)	// same as the interpoly_Xsize
-//rcs()
-#define rcspoly_Ysize 11	//degY+1, degY = interpoly_Ysize + max(j_1) + w*( (max(i_1)+w)/(w+1) )
-#define rcspoly_Xsize 6	//degX+1, degX = max(i_1) + w
-#define faiMax_Ysize 2	//change with diff w and k, the max degY of probably used polebasis
-#define faiMax_Xsize 3	//change with diff w and k, the max degX of probably used polebasis
-//expoly()-->expanded polynomial
-#define expoly_Ysize (faiMax_Ysize+1)	
-#define expoly_Xsize (faiMax_Xsize+1)
-
+#define FrameError 209
 
 //main()
-unsigned long int seq_num;	//number of input binary sequences
-float SNR,N0;
-double BER, FER;
-//GF elements
-int mularray[]={1,2,3};
-int root[]={0, 1, 2, 3};	//elements in GF(4)
+float N0;
+float pi=3.141593;	// pai
+
 //*************
 int bi_message[k*p], message[k];	//transmitted messge[k]
 int codeword[n], bi_codeword[n*p]; //codewords
 float tx_symbol[p*n][2], rx_symbol[p*n][2], sgm;
 float RM[q][n];
 //findpoint()
-int point[2][n];	//rational points[2][w^3], [0]->x, [1]->y
+int point[n][2];	//rational points[2][w^3], [0]->x, [1]->y
 //tgorder()
-int tg_order_1[tg_size][2],tg_order[tg_size][2];	//[promise the tg order beyond (w, max(deg_y))][2]
+int tg_order[tg_size][2];	//[promise the tg order beyond (w, max(deg_y))][2]
 //mono_table()
 int mono_order[monoTable_Zsize][monoTable_Ysize][monoTable_Xsize];	//mono_order[z-deg+1][y-deg][x-deg+1], y-deg is greater than w-1+nw/(w+1)
 int gmatrix[k][n];	//generator matrix[k][n]
@@ -97,17 +48,14 @@ int uu;	//factorisation step index
 int l, listNum[test_vec_num];	//candidate output index
 //factorization() and rcs()
 int Q[k][facpoly_Zsize][facpoly_Ysize][facpoly_Xsize];	//sequtial deduction polynomial [number of fac steps=k][rs][y_size][w+1], y_size> maxdeg_y]+rs*(deg_¦µ(k-1))
-int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
+//int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
 int output[lm+1][k], outputList[test_vec_num][lm+1][k];	//the list of candidate message [expeced number of candidate message, >rs][length of message, k]
 int expoly[2][expoly_Ysize][expoly_Xsize];	//expanded polynomial in [z+f_k-1-u*pb_k-1-u]^rs, expoly[rs][3>(max(deg_y) in encoding functions)*(rs-1)][3>(max(deg_x) in encoding functions)*(rs-1)]
-float pi=3.141593;	// pai
+
 
 //int Q_uncom_elem[test_vec_num][init_polyNum][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
 
 	//****debug**********
-//	int com_elem_interpoint[3][(n-eta)];
-//	int uncom_elem_interpoint[eta][4];
-//	int degree_temp[test_vec_num][init_polyNum];
 	int degree_test_temp[test_vec_num][init_polyNum];  //store the degree of leading monomial of polynomial
 	int degree_test[test_vec_num];		//store the degree of the choosen polynomial
 
@@ -121,15 +69,11 @@ float pi=3.141593;	// pai
 
 	//*******************
 
-
-int mul(int, int);
-int add(int, int);
-int power(int, int);
-int inv(int);
 void findpoints(void);
 void mono_table(void);
 void polyexp1(int, int, int, int, int poly[][expoly_Ysize][expoly_Xsize]);
 //void zerobasis(void);
+//void polebasis(void);
 void tgorder(void);
 //void coefficient(void);
 void test_vec_contruction(void);
@@ -148,11 +92,13 @@ float PDF(int,int);
 
 void main()
 {
-	int i, u, m, num, value;	
-	float start, finish;
+	int i, u, m, num, value;
+	unsigned int mask = 1;
+	long int error, ferror;
+	unsigned long int seq_num;	//number of input binary sequences
 	unsigned long int j,v;
-	unsigned int mask=1;
-	long int error,ferror;
+	float start, finish, SNR;
+	double BER, FER;
 	double progress;
 	double channelError_count, successError_count;
 
@@ -169,7 +115,7 @@ void main()
 /*	//***debug******
 	printf("findpoint function:\n");
 	for(i=0;i<n;i++)
-		printf("affine point[%d]=(%d,%d)\n",i,point[0][i],point[1][i]);
+		printf("affine point[%d]=(%d,%d)\n",i,point[i][0],point[i][1]);
 */	//***************
 	tgorder();
 /*	//****debug*****
@@ -290,6 +236,7 @@ void main()
 			//interpolation
 			interpolation();
 
+
 			//factorisation
 			factorisation();
 
@@ -320,15 +267,15 @@ void main()
 			BER=(double)(error)/(double)(n*p*j);
 			FER=(double)(ferror)/(double)(j);
 			
-			CWR=(double)(ChosenWrong_SeqNum)/(double)(DecSucc_SeqNum); 
+			CWR=(double)(ChosenWrong_SeqNum)/(double)(DecSucc_SeqNum);
 
 			printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, Choice Errors=%2.1d, CWR=%E, channelError_count=%0.2f, successError_count=%0.2f\r", progress, SNR, error, BER, ferror, FER, ChosenWrong_SeqNum, CWR, channelError_count, successError_count);
 
-			if(ferror>209)
+			if(ferror>FrameError)
 				break;
 		}
 
-		if(ferror>209)
+		if(ferror>FrameError)
 		{
 			BER=(double)error/(double)(n*p*j);
 			FER=(double)(ferror)/(double)(j);
@@ -359,7 +306,7 @@ void generator()
 	//generator matrix
 	for(i=0;i<k;i++)	//k
 		for(j=0;j<n;j++)	//n
-			gmatrix[i][j]=mul(power(point[0][j], tg_order[i][0]), power(point[1][j], tg_order[i][1]));
+			gmatrix[i][j]=mul(power(point[j][0], tg_order[i][0]), power(point[j][1], tg_order[i][1]));
 
 }
 
@@ -585,7 +532,7 @@ void test_vec_contruction()
 	//construct x_ordered
 	for(i=0;i<n;i++)
 		for(j=0;j<2;j++)
-			x_ordered[j][i]=point[j][(int)test_set_ordered[1][i]];
+			x_ordered[j][i]=point[(int)test_set_ordered[1][i]][j];
 
 	//*****debug*********
 	//caculate the num of diffs between codeword and test_vec[i] 
@@ -689,22 +636,19 @@ void interpolation()
 				for(v=0;v<interpoly_Xsize;v++)	//w+1
 					Q_com_elem[i][j][u][v]=0;
 
-	com_elem_interpolation(Q_com_elem,com_elem_interpoint);
+//	com_elem_interpolation(Q_com_elem,com_elem_interpoint);
+	NewInter(Q_com_elem, com_elem_interpoint);
+
 	
 	//com_elem interpolation finish
 
-/*	//*********debug**********************
-	for(i=0;i<lm+1;i++)
-	{
-		printf("\n\nQ_com_elem[%d]:",i);
-		for(u=0;u<lm+1;u++)
-		{
-			printf("\n");
-			for(v=0;v<n+1;v++)
-				printf("\t%d",Q_com_elem[i][u][v]);
-		}
-	}
-*/	//**************************************
+	//debug: dectect the Q_com_elem[i] who has factor(x+a_i)
+//	DectectIfFactorInPoly(Q_com_elem, init_polyNum, com_elem_interpoint[0][n - 1]);
+
+	//start backInterpolation Testing
+//	BackInterpolation(Q_com_elem, n-1);
+
+
 //conditional compile
 #ifndef _GS_Normal_
 	//uncommon element interpolation
@@ -898,7 +842,8 @@ void interpolation()
 
 void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize],int interpoint[][n-eta])
 {
-	int i, j, u, v, z, delta[init_polyNum], delta_temp, J[init_polyNum], act[init_polyNum], lod_temp, lod[init_polyNum], lod_min, j_min;	//(delta, J, act, lod)[num of polys]
+	int i, j, u, v, z, delta_temp, delta_temp1, lod_temp, temp1, temp2; 
+	int delta[init_polyNum],  J[init_polyNum], act[init_polyNum], lod[init_polyNum], lod_min, j_min;	//(delta, J, act, lod)[num of polys]
 	int f[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];  //g[num_polys][z-deg+1][max(deg_y)+1][w+1], g1[z-deg+1][max(deg_y)+1][w+2], (g2, f)[z-deg+1][max(deg_y)+1][w+1]	
 	int g1[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize+1], g2[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
 
@@ -939,7 +884,7 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 			}
 		}
 			
-			
+#ifndef _NoReductionCom_
 		//Initialise the eliminator array act[num_poly]
 		for(j=0;j<init_polyNum;j++)	//num_poly
 		{
@@ -948,6 +893,10 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 			else
 				act[j]=0;
 		}
+#else
+		for(j=0;j<init_polyNum;j++)	//num_poly
+			act[j] = 1;		
+#endif
 			
 			
 		//Calculate the hasse derivative mapping of each polynomials
@@ -959,22 +908,34 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 			if(act[j]==1)	//for polynomials with leading order less of equal to C
 			{
 				//Hasse derivative mapping
-				for(u=0;u<interpoly_Zsize;u++)	//rs
+				for(u=0;u<interpoly_Zsize;u++)	//deg_z
 				{
-					for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
+					delta_temp1=0;
+
+					for(v=0;v<interpoly_Ysize;v++)	//deg_y
 					{
-						for(z=0;z<interpoly_Xsize;z++)	//w+1
-						{
-							if(g[j][u][v][z]!=0)
+						for(z=0;z<interpoly_Xsize;z++)	//deg_x
+							if(g[j][u][v][z]!=0)	//coputation num concerning coefficients
 							{
-								delta_temp=mul( mul( power(interpoint[0][i],z),power(interpoint[1][i],v) ), power(interpoint[2][i], u) );
+								delta_temp = mul( power(interpoint[0][i],z),power(interpoint[1][i],v) );
 								delta_temp=mul(delta_temp, g[j][u][v][z]);
 								//Hasse derivative mapping
-								delta[j]=add(delta[j],delta_temp);
+								delta_temp1=add( delta_temp1,delta_temp );
 							}
-						}
 					}
+
+					if(u==0)	//deg_z==0
+					{
+						delta[j] = delta_temp1;
+					}
+					else if(u>0)	//deg_z>0
+					{
+						delta_temp1 = mul( delta_temp1,power(interpoint[2][i],u) );
+						delta[j] = add( delta[j],delta_temp1 );
+					}
+
 				}
+
 				if(delta[j]!=0)
 				{
 					J[j]=1;	//record those polynomial with a nonzero hasse derivative mapping
@@ -983,7 +944,7 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 				}
 			}
 		}
-			
+
 		//Identify the minimal polynomial with a nonzero Hasse derivative evaluation
 		for(j=0;j<init_polyNum;j++)	//num_polys
 		{
@@ -1014,7 +975,28 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 						for(u=0;u<interpoly_Zsize;u++)	//rs
 							for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 								for(z=0;z<interpoly_Xsize;z++)	//w+1
-									g[j][u][v][z]=add(mul(delta[j_min],g[j][u][v][z]),mul(delta[j],f[u][v][z]));	
+								{
+									if(	g[j][u][v][z]!=0 )
+									{
+										temp1 = mul(delta[j_min],g[j][u][v][z]);
+									}
+									else
+										temp1 = 0;
+
+									if(	f[u][v][z]!=0 )
+									{
+										temp2 = mul(delta[j],f[u][v][z]);
+									}
+									else
+										temp2 = 0;
+									
+									if( temp1!=0 || temp2!=0 )
+									{
+										g[j][u][v][z]=add(temp1,temp2);	
+									}
+									else
+										g[j][u][v][z] = 0;
+								}
 					}
 					else if(j==j_min)
 					{
@@ -1033,13 +1015,17 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 						for(u=0;u<interpoly_Zsize;u++)	//rs
 							for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 								for(z=0;z<interpoly_Xsize;z++)	//w+1
-									g1[u][v][z+1]=g[j][u][v][z];
-						//convert x^5=y^4+y, difference with diff code
+									if(g[j][u][v][z]!=0)
+									{
+										g1[u][v][z+1]=g[j][u][v][z];
+									}
+
+						//convert x^w+1=y^w+y, difference with diff code
 						for(u=0;u<interpoly_Zsize;u++)	//rs
 						{
 							for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							{
-								if(g1[u][v][w+1]!=0)
+								if(g1[u][v][w+1]!=0)	//refering to two finitefield add 
 								{
 									g1[u][v+1][0]=add(g1[u][v+1][0],g1[u][v][w+1]);
 									g1[u][v+w][0]=add(g1[u][v+w][0],g1[u][v][w+1]);
@@ -1051,16 +1037,27 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 						for(u=0;u<interpoly_Zsize;u++)	//rs
 							for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 								for(z=0;z<interpoly_Xsize;z++)	//w+1
-									g2[u][v][z]=mul(interpoint[0][i],g[j][u][v][z]);
+									if(g[j][u][v][z]!=0)
+									{
+										g2[u][v][z] = mul(interpoint[0][i],g[j][u][v][z]);
+									}
 						//g=g1+g2
 						for(u=0;u<interpoly_Zsize;u++)	//rs
 							for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
-								for(z=0;z<interpoly_Xsize;z++)	//w+1
-									g[j][u][v][z]=add(g1[u][v][z],g2[u][v][z]);
+								for(z=0;z<interpoly_Xsize;z++)	//w+1	
+									if( g1[u][v][z]!=0 || g2[u][v][z]!=0 )
+									{
+										g[j][u][v][z] = add(g1[u][v][z],g2[u][v][z]);
+									}
+									else
+										g[j][u][v][z] = 0;
 					}
 				}
 			}
 		}
+
+		//debug: dectect the Q_com_elem[i] who has factor (x+a_i)
+//		DectectIfFactorInPoly(g, init_polyNum, interpoint[0][i]);
 
 
 /*	//****debug**********
@@ -1118,7 +1115,6 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize],int outGroup1[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize],int outGroup2[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize])
 {
 	int i, j, u, v, z, J[2][init_polyNum], act[init_polyNum], lod_temp, lod[init_polyNum], lod_min[2], j_min[2];	//(delta, J, act, lod)[num of polys]
-	int f[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];  //g[num_polys][z-deg+1][max(deg_y)+1][w+1], g1[z-deg+1][max(deg_y)+1][w+2], (g2, f)[z-deg+1][max(deg_y)+1][w+1]	
 	int g1[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize+1], g2[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
 	int inGroup_temp[init_polyNum][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
 	int c[init_polyNum][lm+1],result_temp[init_polyNum][2];
@@ -1165,6 +1161,7 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 		
 		
 	//Initialise the eliminator array act[num_poly]
+#ifndef _NoReductionUncom_
 	for(j=0;j<init_polyNum;j++)	//num_poly
 	{
 		if(lod[j]<=iterNum)	//C=n when multiplicity = 1
@@ -1172,7 +1169,10 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 		else
 			act[j]=0;
 	}
-		
+#else
+	for(j=0;j<init_polyNum;j++)
+		act[j]=1;
+#endif
 		
 	//Calculate the hasse derivative mapping of each polynomials
 	for(j=0;j<init_polyNum;j++)
@@ -1260,9 +1260,30 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							for(z=0;z<interpoly_Xsize;z++)	//w+1
 							{
-								poly_temp1 = mul( result_temp[index_min][0],inGroup_temp[j][u][v][z] );
-								poly_temp2 = mul( result_temp[j][0],inGroup_temp[index_min][u][v][z] ) ;
-								outGroup1[j][u][v][z]=add(poly_temp1,poly_temp2);
+								if(inGroup_temp[j][u][v][z]!=0)
+								{
+									poly_temp1 = mul( result_temp[index_min][0],inGroup_temp[j][u][v][z] );
+								}
+								else
+									poly_temp1 = 0;
+
+								if(inGroup_temp[index_min][u][v][z]!=0)
+								{
+									poly_temp2 = mul( result_temp[j][0],inGroup_temp[index_min][u][v][z] ) ;
+								}
+								else
+									poly_temp2 = 0;
+
+								if( poly_temp1!=0 || poly_temp2!=0 )
+								{
+									outGroup1[j][u][v][z] = add(poly_temp1,poly_temp2);
+								}
+								else
+									outGroup1[j][u][v][z] = 0;
+
+							//	poly_temp1 = mul( result_temp[index_min][0],inGroup_temp[j][u][v][z] );
+							//	poly_temp2 = mul( result_temp[j][0],inGroup_temp[index_min][u][v][z] ) ;
+							//	outGroup1[j][u][v][z]=add(poly_temp1,poly_temp2);
 							//	outGroup1[j][u][v][z]=add(2,2);
 							}
 				}
@@ -1284,12 +1305,13 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							for(z=0;z<interpoly_Xsize;z++)	//w+1
 								g1[u][v][z+1]=inGroup_temp[index_min][u][v][z];
-					//convert x^5=y^4+y, difference with diff code
+
+					//convert x^w+1=y^w+y, difference with diff code
 					for(u=0;u<interpoly_Zsize;u++)	//rs
 					{
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 						{
-							if(g1[u][v][w+1]!=0)
+							if(g1[u][v][w+1]!=0)	//refering to two finitefield add 
 							{
 								g1[u][v+1][0]=add(g1[u][v+1][0],g1[u][v][w+1]);
 								g1[u][v+w][0]=add(g1[u][v+w][0],g1[u][v][w+1]);
@@ -1297,16 +1319,25 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 							}
 						}
 					}
+
 					//g2=xi*f
 					for(u=0;u<interpoly_Zsize;u++)	//rs
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							for(z=0;z<interpoly_Xsize;z++)	//w+1
-								g2[u][v][z]=mul( interpoint[0],inGroup_temp[index_min][u][v][z]);
+								if(inGroup_temp[index_min][u][v][z]!=0)
+								{
+									g2[u][v][z]=mul( interpoint[0],inGroup_temp[index_min][u][v][z]);
+								}
 					//g=g1+g2
 					for(u=0;u<interpoly_Zsize;u++)	//rs
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							for(z=0;z<interpoly_Xsize;z++)	//w+1
-								outGroup1[index_min][u][v][z]=add(g1[u][v][z],g2[u][v][z]);
+								if( g1[u][v][z]!=0 || g2[u][v][z]!=0 )
+								{
+									outGroup1[index_min][u][v][z]=add(g1[u][v][z],g2[u][v][z]);
+								}
+								else
+									outGroup1[index_min][u][v][z] = 0;
 				}
 			}
 		}
@@ -1329,9 +1360,30 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							for(z=0;z<interpoly_Xsize;z++)	//w+1
 							{
-								poly_temp1 = mul( result_temp[index_min][1],inGroup_temp[j][u][v][z] );
-								poly_temp2 = mul( result_temp[j][1],inGroup_temp[index_min][u][v][z] );
-								outGroup2[j][u][v][z]=add( poly_temp1,poly_temp2 );	
+								if(inGroup_temp[j][u][v][z]!=0)
+								{
+									poly_temp1 = mul( result_temp[index_min][1],inGroup_temp[j][u][v][z] );
+								}
+								else 
+									poly_temp1 = 0;
+
+								if(inGroup_temp[index_min][u][v][z]!=0)
+								{
+									poly_temp2 = mul( result_temp[j][1],inGroup_temp[index_min][u][v][z] );
+								}
+								else
+									poly_temp2 = 0;
+
+								if( poly_temp1!=0 || poly_temp2!=0 )
+								{
+									outGroup2[j][u][v][z]=add( poly_temp1,poly_temp2 );	
+								}
+								else
+									outGroup2[j][u][v][z] = 0;
+
+							//	poly_temp1 = mul( result_temp[index_min][1],inGroup_temp[j][u][v][z] );
+							//	poly_temp2 = mul( result_temp[j][1],inGroup_temp[index_min][u][v][z] );
+							//	outGroup2[j][u][v][z]=add( poly_temp1,poly_temp2 );	
 							}
 				}
 				else if(j==j_min[1])
@@ -1352,7 +1404,8 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							for(z=0;z<interpoly_Xsize;z++)	//w+1
 								g1[u][v][z+1]=inGroup_temp[index_min][u][v][z];
-					//convert x^3=y^2+y, difference with diff code
+
+					//convert x^w+1=y^w+y, difference with diff code
 					for(u=0;u<interpoly_Zsize;u++)	//rs
 					{
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
@@ -1365,16 +1418,26 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 							}
 						}
 					}
+
 					//g2=xi*f
 					for(u=0;u<interpoly_Zsize;u++)	//rs
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							for(z=0;z<interpoly_Xsize;z++)	//w+1
-								g2[u][v][z]=mul( interpoint[0],inGroup_temp[index_min][u][v][z]);
+								if(inGroup_temp[index_min][u][v][z]!=0)
+								{
+									g2[u][v][z]=mul( interpoint[0],inGroup_temp[index_min][u][v][z]);
+								}
+
 					//g=g1+g2
 					for(u=0;u<interpoly_Zsize;u++)	//rs
 						for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 							for(z=0;z<interpoly_Xsize;z++)	//w+1
-								outGroup2[index_min][u][v][z]=add(g1[u][v][z],g2[u][v][z]);
+								if( g1[u][v][z]!=0 || g2[u][v][z]!=0 )
+								{
+									outGroup2[index_min][u][v][z]=add(g1[u][v][z],g2[u][v][z]);
+								}
+								else
+									outGroup2[index_min][u][v][z] = 0;
 				}
 			}
 		}
@@ -1477,9 +1540,9 @@ void factorisation(void)
 					for(z=0;z<facpoly_Xsize;z++)	//w+1
 						Q[j][u][v][z]=0;
 
-		for(u=0;u<k;u++)	//number of fac steps=k
-			for(v=0;v<lm+1;v++)	//5>rs=expected number of roots
-				rootlist[u][v]=-1;	
+//		for(u=0;u<k;u++)	//number of fac steps=k
+//			for(v=0;v<lm+1;v++)	//5>rs=expected number of roots
+//				rootlist[u][v]=-1;	
 
 		for(u=0;u<lm+1;u++)	//5>(rs-1)=expected number of output lists
 			for(v=0;v<k;v++)	//k
@@ -1512,44 +1575,54 @@ void factorisation(void)
 void rcs(int uu)
 {
 	int i, j, u, v, m, z, t, r, i_1, j_1, i_2, j_2, a, b, leadMono, leadMono_temp, alpha, act, temp;
-	int lc[lm+1], q_temp[lm+1][rcspoly_Ysize][rcspoly_Xsize];	//q_temp[z-deg+1][y_size>max(deg_y)+1+(rs-1)*(max(deg_y) in encoding functions)][14>w+(rs-1)*w], lc[rs]--leading coefficient polynomial
-	int d1,d2,index_flag;
+	int lc[lm+1], q_temp[lm+1][rcspoly_Ysize+w][rcspoly_Xsize];	//q_temp[z-deg+1][y_size>max(deg_y)+1+(rs-1)*(max(deg_y) in encoding functions)][14>w+(rs-1)*w], lc[rs]--leading coefficient polynomial
+	int index_flag;
 	int rcspoly_Ysize_1,rcspoly_Xsize_1;	//the q_temp size of the first step of factorization
-//	int pbY,pbX;
+	int rootlist[lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
 
 	//array size initialization
-	rcspoly_Ysize_1= faiMax_Ysize + interpoly_Ysize + 1;
-	rcspoly_Xsize_1= faiMax_Xsize + w + 1;
-//	pbY = rcspoly_Ysize+1;
-//	pbX = w+1;
+	rcspoly_Ysize_1= faiMax_Ysize + facpoly_Ysize + 1;	
+	rcspoly_Xsize_1= faiMax_Xsize + lm*facpoly_Xsize + 1;	//ensure the Xsize can let the q_temp mod curve H_w normally
 
-	//printf("\nWhen u=%d\n", u);
+	if( (rcspoly_Ysize_1>=rcspoly_Ysize) || (rcspoly_Xsize_1>=rcspoly_Xsize) )
+	{
+		printf("\n fac size.0 has error\n");
+	}
+
 	leadMono=0; leadMono_temp=0;	//leading monomial index
 	act=0;	//judge value for recursive search of each f_k-1-u
 
-	flag_addNum = 1;
-	flag_mulNum = 1;
+	//initialization
+	for(v=0;v<lm+1;v++)	//5>rs=expected number of roots
+		rootlist[v]=-1;	
+
 	//find pb_k-1-uu
 	j_1 = tg_order[k-1-uu][1];
 	i_1 = tg_order[k-1-uu][0];
 
 
 	//initialise q_temp
-	for(i=0;i<lm+1;i++)	//rs
-		for(j=0;j<rcspoly_Ysize;j++)	//y_size
-			for(u=0;u<rcspoly_Xsize;u++)	//5>w*(rs-1)+w
-				q_temp[i][j][u]=0;
-
+	//for(i=0;i<lm+1;i++)	//rs
+	//	for(j=0;j<rcspoly_Ysize;j++)	
+	//		for(u=0;u<rcspoly_Xsize;u++)	
+	//			q_temp[i][j][u]=0;
+	memset(q_temp,0,sizeof(q_temp));
 
 	//Calculate q_temp[pb_k-1-u]=q[u][pb_k-1-u]
 	for(i=0;i<facpoly_Zsize;i++)	//rs
 	{
 		for(j=0;j<facpoly_Ysize;j++)	//y_size=max(deg_y) in encoding function*(rs-1), and 31>=max(deg_y)+1
 		{
-			for(u=0;u<facpoly_Xsize;u++)	//
-			{
-				q_temp[i][j+i*j_1][u+i*i_1] = Q[uu][i][j][u];	//this time, q_temp size is [rs+1][maxY(j_1)+maxY(Q)][maxX(i_1)+maxX(Q)]
-			}
+			for(u=0;u<facpoly_Xsize;u++)
+				if( Q[uu][i][j][u]!=0 )
+				{
+					q_temp[i][j+i*j_1][u+i*i_1] = Q[uu][i][j][u];	//this time, q_temp size is [rs+1][maxY(j_1)+maxY(Q)][maxX(i_1)+maxX(Q)]
+
+					if( (j+i*j_1) > rcspoly_Ysize )
+					{
+						printf("\n fac size.1 has error__Y\n");
+					}
+				}
 		}
 	}
 
@@ -1627,22 +1700,19 @@ void rcs(int uu)
 		if(b==0)
 		{
 			act=1;
-			rootlist[uu][u]=root[i];
+			rootlist[u]=root[i];
 			u++;
-#ifndef _NoReduction_
-			break;	//jump out of the loop
-#endif
 		}
-	}
+	}		
 
 	//For each distinct root of rootlist[u]
-	if(act==1)
+	if(act==1)	//act==1 means there is at least one root in rootlist[u];
 	{
 		for(i=0;i<lm+1;i++)	//2>rs
 		{
-			if(rootlist[uu][i]!=-1)
+			if(rootlist[i]!=-1)
 			{	
-				alpha=rootlist[uu][i];
+				alpha=rootlist[i];
 				
 				output[l][k-1-uu]=alpha;	//output[l][k-1-uu]
 					
@@ -1659,31 +1729,34 @@ void rcs(int uu)
 					l++;	//locate next candidate output
 				}
 				else  //update the q[uu+1]
-				{
+				{	
 					r=uu+1;
 
-					//Initialise q_temp
+					//calculate Q[uu+1]
 					for(j=0;j<lm+1;j++)	//rs
-						for(u=0;u<rcspoly_Ysize;u++)	//y_size
-							for(m=0;m<rcspoly_Xsize;m++)	//3>w*(rs-1)+w
-								q_temp[j][u][m]=0;	
-			
-					//q_temp=q[uu][z+f_k-1-u*pb_k-1-u]
-					for(j=0;j<lm+1;j++)	//rs
-					{
-						//calculate (z+f_k-1-u*pb_k-1-u)^j
 						if(j==0)
 						{
-							for(m=0;m<facpoly_Ysize;m++)
-								for(z=0;z<facpoly_Xsize;z++)
-									q_temp[j][m][z] = Q[uu][j][m][z];
+							for(m=0;m<facpoly_Ysize;m++)	//y_size
+								for(z=0;z<facpoly_Xsize;z++)	//w+1
+									Q[r][j][m][z] = Q[uu][j][m][z];
+
+							polyexp1(alpha, i_1, j_1, j, expoly);
+
 						}
 						else if(j>0)
 						{
+							//Initialise q_temp
+							//for(u=0;u<lm+1;u++)	//rs
+							//	for(m=0;m<rcspoly_Ysize+w;m++)	//y_size
+							//		for(z=0;z<rcspoly_Xsize;z++)	//w+1
+							//			q_temp[u][m][z]=0;
+							memset(q_temp,0,sizeof(q_temp));
+
+							//calculate (z+f_k-1-u*pb_k-1-u)^j
 							polyexp1(alpha, i_1, j_1, j, expoly);
-						
-							//calculate q[uu][z+f_k-1-u*pb_k-1-u]
-							for(u=0;u<lm+1;u++)	//rs
+							
+							//calculate q_temp
+							for(u=0;u<j+1;u++)	//rs
 							{
 								for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
 								{
@@ -1698,8 +1771,11 @@ void rcs(int uu)
 													if(Q[uu][j][v][t]!=0)
 													{
 														temp = mul(expoly[u][m][z], Q[uu][j][v][t]);
-														q_temp[u][v+m][t+z] = add( q_temp[u][v+m][t+z],temp );
-													}
+
+														//if(q_temp[u][v+m][t+z]!=0)
+														//	printf("\nq_temp[u][v+m][t+z]!=0\n");
+
+														q_temp[u][v+m][t+z] = add( q_temp[u][v+m][t+z],temp ); 													}
 													// caution overflow problem of q_temp
 													// here q_temp, ysize=exploy_Ysize+facpoly_Ysize-2+1=9, xsize=expoly_Xsize+facpoly_Xsize-2+1=6
 												}
@@ -1709,52 +1785,58 @@ void rcs(int uu)
 								}
 
 								//convert x^w+1=y^w+y, difference with diff code
-								int Ysize_temp = (facpoly_Ysize-1) + (expoly_Ysize-1) + 1;	//keep universality
-								index_flag = (facpoly_Xsize-1) + (expoly_Xsize-1) ;	//the max deg_x for q_temp, rcspoly_Xsize = (expoly_Xsize-1) + (facpoly_Xsize-1) + 1
+								index_flag = rcspoly_Xsize-1;	//the max deg_x for q_temp, rcspoly_Xsize = (expoly_Xsize-1) + (facpoly_Xsize-1) + 1
 								while( index_flag>w )
 								{
 									temp = index_flag-(w+1);	// deg_x - (w+1)
-									for(m=0;m<Ysize_temp;m++)
+									for(m=0;m<rcspoly_Ysize;m++)
 										if( q_temp[u][m][index_flag]!=0 )
 										{
 											q_temp[u][m+1][temp] = add( q_temp[u][m+1][temp],q_temp[u][m][index_flag] );	//y^1
-											q_temp[u][m+w][temp] = add( q_temp[u][m+w][temp],q_temp[u][m][index_flag] );	//y^(w+1)
+											q_temp[u][m+w][temp] = add( q_temp[u][m+w][temp],q_temp[u][m][index_flag] );	//y^(w+1), may be overflow!!
 											q_temp[u][m][index_flag] = 0;
 										}
 									index_flag = index_flag-1;
 								}
 
 							}
+
+							//Q[r] = add( Q[r],q_temp )
+							for(u=0;u<lm+1;u++)	//rs
+								for(m=0;m<facpoly_Ysize;m++)	//y_size
+									for(z=0;z<facpoly_Xsize;z++)	//w+1
+										if( Q[r][u][m][z]!=0 || q_temp[u][m][z]!=0 )
+										{
+											Q[r][u][m][z]=add( Q[r][u][m][z],q_temp[u][m][z] );
+										}
+
 						}
-
-					}
-								
-					//q[u+1]=q_temp
-					for(j=0;j<lm+1;j++)	//rs
-						for(u=0;u<facpoly_Ysize;u++)	//y_size
-							for(m=0;m<facpoly_Xsize;m++)	//w+1
-								Q[r][j][u][m]=q_temp[j][u][m];
-
-					//printf("q[u+1]");
-
+				
 					//next coefficient searching
 					
 					rcs(r);
+					//make Q[r] set 0, let other branch use it
+					//for(u=0;u<facpoly_Zsize;u++)	//rs
+					//	for(m=0;m<facpoly_Ysize;m++)	//y_size
+					//		for(z=0;z<facpoly_Xsize;z++)	//w+1
+					//		{
+					//			Q[r][u][m][z]=0;
+					//		}
+					memset(Q[r],0,sizeof(Q[r]));
+
 				}
 			}
 		}
 	}
 
-	flag_addNum = 0;
-	flag_mulNum = 0; 
-	
 }
 
 void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xsize])
 {
 	int u, m, z;	//p1[rs+1][18>(max(deg_y) in encoding functions)*(rs-1)][10>(max(deg_x) in encoding functions)*(rs-1)], p2[rs][26=18+max(deg_y) in encoding functions][14=10+max(deg_x) in encoding functions]
-	int poly_temp[lm+1+1][expoly_Ysize+faiMax_Ysize][expoly_Xsize+faiMax_Xsize];
+	int poly_temp[lm+1+1][expoly_Ysize+faiMax_Ysize+w][expoly_Xsize+faiMax_Xsize];
 	int temp, temp_Ysize, temp_Xsize;
+	int index_flag;
 
 	temp_Ysize = expoly_Ysize+faiMax_Ysize;
 	temp_Xsize = expoly_Xsize+faiMax_Xsize;
@@ -1771,23 +1853,16 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 	}
 	else if(deg_z==1)	//because deg_z is equal to or less than 1, so deg_z>0 <-> deg_z==1
 	{
-		for(u=0;u<lm+1;u++)	//rs
-			for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
-				for(z=0;z<expoly_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
-					poly[u][m][z]=0;
+		poly[0][0][0]=0;
 
 		poly[1][0][0]=1;
 		poly[0][j][i]=c;
 	}
 	else if(deg_z>1)
 	{
-		printf("\n\n expoly has error!!");
-	}
-/*	else if(deg_z>1)	//when lm=1, deg_z<=1
-	{
 		for(u=0;u<lm+1+1;u++)	//rs
-			for(m=0;m<temp_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
-				for(z=0;z<temp_Ysize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
+			for(m=0;m<temp_Ysize+w;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
+				for(z=0;z<temp_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
 				{
 					poly_temp[u][m][z]=0;
 				}
@@ -1803,6 +1878,7 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 	
 		//calculate y^j*x^i*poly
 		for(u=0;u<lm+1;u++)	//rs
+		{
 			for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
 				for(z=0;z<expoly_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
 					if( poly[u][m][z]!=0 )
@@ -1811,6 +1887,23 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 						poly_temp[u][j+m][i+z] = add( poly_temp[u][j+m][i+z],temp );
 					}
 
+			//convert x^w+1=y^w+y, difference with diff code
+			index_flag = temp_Xsize-1;
+			while( index_flag>w )
+			{
+				temp = index_flag-(w+1);
+				for(m=0;m<temp_Ysize;m++)
+					if( poly_temp[u][m][index_flag]!=0 )
+					{
+						poly_temp[u][m+1][temp] = add( poly_temp[u][m+1][temp],poly_temp[u][m][index_flag] );
+						poly_temp[u][m+w][temp] = add( poly_temp[u][m+w][temp],poly_temp[u][m][index_flag] );
+						poly_temp[u][m][index_flag] = 0;
+					}
+				index_flag = index_flag-1;
+			}
+
+		}
+
 		for(u=0;u<lm+1;u++)	//rs
 			for(m=0;m<expoly_Ysize;m++)	//18>(max(deg_y) in encoding functions)*(rs-1)
 				for(z=0;z<expoly_Xsize;z++)	//10>(max(deg_x) in encoding functions)*(rs-1)
@@ -1818,21 +1911,25 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 					poly[u][m][z] = poly_temp[u][m][z];
 				}
 	}
-	*/
 }
 
 void choose()
 {
-	int i, j, u, m, v, min_num, value, flag, min_index;
+	int i, j, u, v, value, flag, min_index_1, min_index_2;
 	unsigned int mask=1;
-	float proba[lm*test_vec_num],temp_x,temp_y,proba_temp;
-	int bi_codeword_temp[n*p],codeword_temp[n];
-	int tx_symbol_temp[n*p][2];
+//	float proba[lm*test_vec_num], proba_temp, temp;
+	double proba[lm*test_vec_num], proba_temp, temp;	
+	int codeword_temp[n];
 
 	//normal mode
 	//Initialise hamming distance counter
 	for(u=0;u<lm*test_vec_num;u++)
 		proba[u]=-1.0;
+
+	proba_temp=0.0;
+	flag = 0;
+	min_index_1 = -1;
+	min_index_2 = -1;
 
 	for(i=0;i<test_vec_num;i++)
 		if( listNum[i]!=0 )
@@ -1842,55 +1939,29 @@ void choose()
 				//reencoding
 				encoder(outputList[i][j],codeword_temp);
 				//calculate the posteriori probablity
-				proba_temp=1.0;
+				temp = 1.0;
 				for(u=0;u<n;u++)
 				{
 					for(v=0;v<q;v++)
 						if(codeword_temp[u]==root[v])
-							proba_temp=proba_temp*RM[v][u];
+							temp = temp*RM[v][u];
 				}
 
-				proba[i*lm+j]=proba_temp;
+				if( proba_temp < temp )	//< or <=
+				{
+					proba_temp = temp;
+					min_index_1 = i;
+					min_index_2 = j;
+
+					for(v=0;v<n;v++)
+						dec_codeword[v] = codeword_temp[v];
+
+					flag = 1;	//exist at less one valid solution
+				}
 			}
 		}
 
-	//choose the min
-	proba_temp=0.0;
-	min_index=-1;
-	flag=0;
-	for(i=0;i<lm*test_vec_num;i++)
-		if(proba[i]!=-1.0)
-		{
-			flag=1;	//exist at less one valid solution
-
-			if(proba_temp<proba[i])
-			{
-				proba_temp=proba[i];
-				min_index=i;
-			}
-		}
-
-	//encode message[min_index]
-	encoder(outputList[min_index/lm][min_index%lm],codeword_temp);
-
-	//nonbinary --> binary
-		for(u=0;u<n;u++)
-		{	
-			value=codeword_temp[u];
-			mask=1;
-			for(v=0;v<p;v++)
-			{
-				if((value & mask)>0)
-					bi_codeword_temp[p*u+v]=1;
-				else
-					bi_codeword_temp[p*u+v]=0;
-				mask=mask<<1;
-			}
-		}
-		//******************
-
-
-	//output the correct 
+	//output the decoding result 
 	if(flag==0)	// not exist a valid solution
 	{
 		for(u=0;u<n;u++)
@@ -1913,16 +1984,46 @@ void choose()
 	}
 	else if(flag==1)	//exist a valid solution
 	{
-		for(u=0;u<n;u++)
-			dec_codeword[u]=codeword_temp[u];
-		for(u=0;u<n*p;u++)
-			dec_bicodeword[u]=bi_codeword_temp[u];
+
+		//encode message[min_index]
+//		encoder(outputList[min_index_1][min_index_2],dec_codeword);
+		//nonbinary --> binary
+			for(u=0;u<n;u++)
+			{	
+				value=dec_codeword[u];
+				mask=1;
+				for(v=0;v<p;v++)
+				{
+					if((value & mask)>0)
+						dec_bicodeword[p*u+v]=1;
+					else
+						dec_bicodeword[p*u+v]=0;
+					mask=mask<<1;
+				}
+			}
 	}
 	//*********************
 
-	//genius mode
-	flag=0;
+	//jugde CWR
 	int count_temp;
+	//calculate ChosenWrong_SeqNum
+	if(flag)	//flag: 1--> valid solution, 0--> invalid solution
+	{
+		count_temp=0;
+		for(u=0;u<k;u++)
+			if(outputList[min_index_1][min_index_2][u]!=message[u])
+			{
+				++count_temp;	
+			}
+
+		if(count_temp)	//count_temp: 0-->correct, >0-->incorrect
+		{
+			++ChosenWrong_SeqNum;
+		}
+	}
+
+	//calculate DecSucc_SeqNum
+	flag=0;
 	for(i=0;i<test_vec_num;i++)
 	{
 		for(j=0;j<lm+1;j++)
@@ -1936,8 +2037,8 @@ void choose()
 
 			if(count_temp==k)
 			{
-				flag=1;
-				DecSucc_SeqNum++;
+				flag=1;	//there is a correct answer at least
+				DecSucc_SeqNum++;	//this frame has decoded successful
 				break;
 			}
 		}
@@ -1951,36 +2052,6 @@ void choose()
 			flag=0;
 		}
 	}
-
-/*	if(flag==0)	// not exist a valid solution
-	{
-		for(u=0;u<n;u++)
-			dec_codeword[u]=large_vec[0][u];
-		
-		//nonbinary --> binary
-		for(u=0;u<n;u++)
-		{	
-			value=dec_codeword[u];
-			mask=1;
-			for(v=0;v<p;v++)
-			{
-				if((value & mask)>0)
-					dec_bicodeword[p*u+v]=1;
-				else
-					dec_bicodeword[p*u+v]=0;
-				mask=mask<<1;
-			}
-		}			
-	}
-	else if(flag==1)
-	{
-		for(u=0;u<n;u++)
-			dec_codeword[u]=codeword[u];		
-
-		for(u=0;u<n*p;u++)
-			dec_bicodeword[u]=bi_codeword[u];
-	}
-*/
 	//*****************************
 	
 	//Check Herm(64, 39)'s working perperty
@@ -2026,11 +2097,11 @@ void choose()
 			for(u=0;u<k;u++)	//k
 				printf("%d\t", message[u]);
 
-			for(m=0;m<listNum[i];m++)
+			for(u=0;u<listNum[i];u++)
 			{
-				printf("\nlist_%d:\n",m);
-				for(u=0;u<k;u++)
-					printf("%d\t",outputList[i][m][u]);
+				printf("\nlist_%d:\n",u);
+				for(v=0;v<k;v++)
+					printf("%d\t",outputList[i][u][v]);
 			}
 			printf("\n\n");
 			//***************
@@ -2056,7 +2127,7 @@ void choose()
 			printf("\n\n");
 			printf("x[]\t\t");
 			for (i = 0; i < n; ++i)
-				printf("\t(%d,%d)", point[0][i], point[1][i]);
+				printf("\t(%d,%d)", point[i][0], point[i][1]);
 
 			printf("\n\n");
 			printf("large_vec[]\t");
@@ -2096,12 +2167,12 @@ void choose()
 			for(i=0;i<test_vec_num;i++)
 			{
 				printf("\n\nlistNum[%d]=%d",i,listNum[i]);
-				for(m=0;m<listNum[i];m++)
+				for(u=0;u<listNum[i];u++)
 				{
-					printf("\n[%d][%d]",i,m);
-					for(u=0;u<k;u++)
-						printf("\t%d",outputList[i][m][u]);
-					printf("\tproba[%d][%d]=%f",i,m,proba[i*(lm+1)+m]);
+					printf("\n[%d][%d]",i,u);
+					for(v=0;v<k;v++)
+						printf("\t%d",outputList[i][u][v]);
+					printf("\tproba[%d][%d]=%f",i,u,proba[i*(lm+1)+u]);
 					
 				}
 			}
@@ -2117,35 +2188,9 @@ void choose()
 	if( epcount1<=able_correct && epcount2!=0)	//this seq_num has chosen the wrong one
 	{
 		ChosenWrong_SeqNum++;
+//		printf("\n\nChoice error\n\n");
 	}
 	
-}
-
-void tgorder()
-{
-	int i, j, u, index_temp;
-
-	for (j = 0; j<tg_size; j++)
-		for (i = 0; i<2; i++)
-			tg_order[j][i] = -1;
-
-	//judge the index's scale of coresponding tgsize
-	/*pesudo code
-	if(  0 <= index < w ) tgsize = (index+2) * (index+1) / 2
-	else if( w <= index ) tgsize = w*(w+1)/2 + (w+1)*(index-w+1)
-	*/
-	index_temp = tg_size;	//according to the last formualtion to calculate out
-
-	j = 0;
-	for (i = 0; i<index_temp; i++)
-		for (u = i; u >= 0; u--)
-			if (u <= w)
-			{
-				tg_order[j][0] = u;	// 0<deg_x<=w
-				tg_order[j][1] = i - u;	// 0<deg_y
-				j++;
-			}
-
 }
 
 void mono_table()
@@ -2255,7 +2300,7 @@ void findpoints()
 	//Initialisation
 	for(i=0;i<2;i++)
 		for(j=0;j<n;j++)	//w^3
-			point[i][j]=0;
+			point[j][i]=0;
 
 	//find points over x^3-y^2-y=0
 	u=0;
@@ -2270,8 +2315,8 @@ void findpoints()
 			a3=y;
 			if(add(a3, add(a1, a2))==0)
 			{
-				point[0][u]=x;
-				point[1][u]=y;
+				point[u][0]=x;
+				point[u][1]=y;
 				u++;
 			}
 		}
@@ -2279,100 +2324,30 @@ void findpoints()
 
 }
 
-int mul(int fac1,int fac2)
+void tgorder()
 {
-	int mulresult=0;
+	int i, j, u, index_temp;
 
-	if(fac1==0||fac2==0)
-		mulresult=0;
-	else
-	{
-		for(int i=0;i<(q-1);i++)
+	for (j = 0; j<tg_size; j++)
+		for (i = 0; i<2; i++)
+			tg_order[j][i] = -1;
+
+	//judge the index's scale of coresponding tgsize
+	/*pesudo code
+	if(  0 <= index < w ) tgsize = (index+2) * (index+1) / 2
+	else if( w <= index ) tgsize = w*(w+1)/2 + (w+1)*(index-w+1)
+	*/
+	index_temp = tg_size;	//according to the last formualtion to calculate out
+
+	j = 0;
+	for (i = 0; i<index_temp; i++)
+		for (u = i; u >= 0; u--)
+			if (u <= w)
 			{
-			for(int j=0;j<(q-1);j++)
-				{
-				if(fac1==mularray[i]&&fac2==mularray[j])
-					mulresult=mularray[(i+j)%(q-1)];
-				}
+				tg_order[j][0] = u;	// 0<deg_x<=w
+				tg_order[j][1] = i - u;	// 0<deg_y
+				j++;
 			}
-	}
-
-	return mulresult;
-}
-
-int add(int fac1,int fac2)
-{
-	int i,c[p],d[p],e[p],f;
-	unsigned int mask=1;
-
-	for(i=0;i<p;i++){
-		if((fac1 & mask)>0)
-			c[i]=1;
-		else
-			c[i]=0;
-
-		mask=mask<<1; //shift 1 bit left
-	}
-
-	mask=1;
-	for(i=0;i<p;i++){
-		if((fac2 & mask)>0)
-			d[i]=1;
-		else
-			d[i]=0;
-
-		mask=mask<<1;
-	}
-
-	for(i=0;i<p;i++)  //p=6
-		e[i]=c[i]^d[i];
-	
-	int num=1;
-	f=0;
-	for(i=0;i<p;i++)
-	{
-		f+=(e[i]*num);
-		num*=2;
-	}
-
-	return f;
-}
-
-
-int power(int a, int b)
-{
-	int i,temp,pow_result=-1;
-
-	if(b==0)
-		pow_result=1;
-	else if(a==0 && b!=0)
-		pow_result=0;
-	else if(a>0 && b!=0)
-	{
-		for(i=0;i<q-1;i++)
-			if(a==mularray[i])
-			{
-				temp=(i*b)%(q-1);
-				pow_result=mularray[temp];
-			}
-	}
-
-	return pow_result;
 
 }
-
-int inv(int fac)
-{
-	int i,invresult;
-	if(fac==0)
-		invresult=0;
-	else
-		for(i=0;i<q-1;i++){	//size of mularray
-			if(fac==mularray[i])
-			invresult=mularray[((q-1)-i)%(q-1)];	//size of mularray
-	}
-
-	return invresult;
-}
-
 
