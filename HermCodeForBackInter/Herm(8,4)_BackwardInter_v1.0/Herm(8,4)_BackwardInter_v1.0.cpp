@@ -234,7 +234,8 @@ void main()
 			//test vector construction
 			test_vec_contruction();
 			//interpolation
-			interpolation();
+			//interpolation();
+			NewInter();
 
 			//factorisation
 			factorisation();
@@ -635,8 +636,8 @@ void interpolation()
 				for(v=0;v<interpoly_Xsize;v++)	//w+1
 					Q_com_elem[i][j][u][v]=0;
 
-//	com_elem_interpolation(Q_com_elem,com_elem_interpoint);
-	NewInter(Q_com_elem, com_elem_interpoint);
+	com_elem_interpolation(Q_com_elem,com_elem_interpoint);
+//	NewInter(Q_com_elem, com_elem_interpoint);
 
 
 	//com_elem interpolation finish
@@ -2114,7 +2115,7 @@ void choose()
 				testCount2[i]++;
 	}
 
-	for(i=0;i<test_vec_num;i++)
+/*	for(i=0;i<test_vec_num;i++)
 		if( (n-testCount1[i])>degree_test[i] && testCount2[i]!=0 )
 		{
 			printf("\n\nseq_num_Now=%d, No.%d test vector factorization has failed!!, testCount1=%d, testCount2=%d, degreeOfPolynomail=%d, listNum=%d\n", seq_num_Now, i, testCount1[i], testCount2[i], degree_test[i], listNum[i]);
@@ -2225,7 +2226,7 @@ void choose()
 			printf("\n%d errors after decoding!\n\n", epcount2);
 			//***********
 		}
-
+*/
 		//*******************
 
 	if( epcount1<=able_correct && epcount2!=0)	//this seq_num has chosen the wrong one

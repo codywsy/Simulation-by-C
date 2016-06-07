@@ -7,7 +7,7 @@
 #include "BackInter.h"
 #include "NewInter.h"
 
-//from Herm(8,4))_GS_v1.0.cpp
+//from Herm(8,4))_BackwardInter_v1.0.cpp
 extern int x_ordered[2][n];
 extern int large_vec[choose_num][n];
 extern float test_set_ordered[2][n];

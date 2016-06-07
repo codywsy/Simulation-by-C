@@ -15,7 +15,7 @@ extern int large_vec[choose_num][n];
 extern float test_set_ordered[2][n];
 extern int Q_interpoly[test_vec_num][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];	//chosen interpolated polynomial [z-deg+1][max(deg_y)+1][w+1]
 extern int degree_test[test_vec_num];		//store the degree of the choosen polynomial
-
+/*
 void NewInter(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int interpoint[][n-eta])
 {
 	int i, j, u, v, z, delta_temp, lod_temp;
@@ -226,9 +226,12 @@ void NewInter(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int in
 	//convert x^w+1=y^w+y
 	ConvertX2Y(poly, g, init_polyNum, w);
 
-}
 
-/*
+
+
+}
+*/
+
 void NewInter()
 {
 	int i, j, u, v, z;
@@ -495,7 +498,7 @@ void NewInter()
 	}
 
 }
-*/
+
 
 int MonoOrderConvert(int degz, int degy, int degx)
 {

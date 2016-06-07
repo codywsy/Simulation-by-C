@@ -43,7 +43,7 @@
 
 
 //conditional compile
-#define _GS_Normal_
+//#define _GS_Normal_
 
 
 
