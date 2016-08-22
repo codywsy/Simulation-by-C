@@ -21,7 +21,7 @@ void BackInterpolation(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize
 	int max = w-1;
 	int A[init_polyNum];
 	int inverA[init_polyNum];
-
+	int g[init_polyNum][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
 
 	memset(inverA, 0, sizeof(inverA));
 	/*memset(A, 1, sizeof(int)*init_polyNum);*/
@@ -40,22 +40,51 @@ void BackInterpolation(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize
 				{
 					int minIndex;
 					int LeadingOrder[init_polyNum];
-					//caculate the LeadingOrder of each poly
-					for(j=0; j<init_polyNum; ++j)
+					////caculate the LeadingOrder of each poly
+					//for(j=0; j<init_polyNum; ++j)
+					//{
+					//	LeadingOrder[j] = -1;
+					//	if(qResult[j]>0 && A[j]>0)
+					//	{	
+					//		LeadingOrder[j] = 0;
+					//		for(int u=0; u<New_interpoly_Zsize; ++u)
+					//			for(int v=0; v<New_interpoly_Ysize; ++v)
+					//				for (int z = 0; z<New_interpoly_Xsize; ++z)
+					//					if (Q_com_poly[j][u][v][z] != 0 && MonoOrderConvert(u,v,z)>LeadingOrder[j])
+					//					{
+					//						LeadingOrder[j] = MonoOrderConvert(u, v, z);
+					//					}
+					//	}
+					//}
+
+					//Calculate each poly's leading order
+					//1st, poly converts to g
+					for (j = 0; j<init_polyNum; ++j)
+						for (int u = 0; u<interpoly_Zsize; ++u)
+							for (int v = 0; v<interpoly_Ysize; ++v)
+								for (int z = 0; z<interpoly_Xsize; ++z)
+									g[j][u][v][z] = 0;
+
+					ConvertX2Y(Q_com_poly, g, init_polyNum, w);
+
+					//2nd, use g to calculate the lod[]
+					for (j = 0; j<init_polyNum; ++j)
 					{
-						LeadingOrder[j] = -1;
-						if(qResult[j]>0 && A[j]>0)
-						{	
-							LeadingOrder[j] = 0;
-							for(int u=0; u<New_interpoly_Zsize; ++u)
-								for(int v=0; v<New_interpoly_Ysize; ++v)
-									for (int z = 0; z<New_interpoly_Xsize; ++z)
-										if (Q_com_poly[j][u][v][z] != 0 && MonoOrderConvert(u,v,z)>LeadingOrder[j])
-										{
-											LeadingOrder[j] = MonoOrderConvert(u, v, z);
-										}
-						}
+						int lod_temp = 0;
+						LeadingOrder[j] = 0;
+						for (int u = 0; u<New_interpoly_Zsize; ++u)
+							for (int v = 0; v<New_interpoly_Ysize; ++v)
+								for (int z = 0; z<New_interpoly_Xsize; ++z)
+								{
+									if (g[j][u][v][z] != 0)
+									{
+										lod_temp = mono_order[u][v][z];
+										if (lod_temp > LeadingOrder[j])
+											LeadingOrder[j] = lod_temp;
+									}
+								}
 					}
+
 
 					//find the index with the min leading order
 					minIndex = -1;
@@ -106,8 +135,134 @@ void BackInterpolation(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize
 }
 
 /******************
+Function(todo):
+BackInterpolation with choosing only one polynomial
+********************/
+void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int backPoint[3])
+{
+	int j;
+	//	int backPoint[3];
+	int max = w - 1;
+	int A[init_polyNum];
+	int inverA[init_polyNum];
+	int g[init_polyNum][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
+
+	memset(inverA, 0, sizeof(inverA));
+	/*memset(A, 1, sizeof(int)*init_polyNum);*/
+	for (int u = 0; u < init_polyNum; ++u)
+		A[u] = 1;
+
+	//Equivalent Grobner basis transformation
+	for (int a = 0; a<(lm + 1); ++a)
+		for (int b = 0; b <= max; ++b)
+			if (ItsSize(A, sizeof(A) / sizeof(int))>0)
+			{
+				int *qResult = ComputeResult(Q_com_poly, A, backPoint[0], lm - a, max - b, init_polyNum);	//reverse order
+				//int *qResult = ComputeResult(Q_com_poly, A, backPoint[0], a, b, init_polyNum);	//order
+				int temp_debug = ItsSize(qResult, init_polyNum);
+				if (temp_debug>0 && ItsSize(A, sizeof(A) / sizeof(int))>0)
+				{
+					int minIndex;
+					int LeadingOrder[init_polyNum];
+					////caculate the LeadingOrder of each poly
+					//for(j=0; j<init_polyNum; ++j)
+					//{
+					//	LeadingOrder[j] = -1;
+					//	if(qResult[j]>0 && A[j]>0)
+					//	{	
+					//		LeadingOrder[j] = 0;
+					//		for(int u=0; u<New_interpoly_Zsize; ++u)
+					//			for(int v=0; v<New_interpoly_Ysize; ++v)
+					//				for (int z = 0; z<New_interpoly_Xsize; ++z)
+					//					if (Q_com_poly[j][u][v][z] != 0 && MonoOrderConvert(u,v,z)>LeadingOrder[j])
+					//					{
+					//						LeadingOrder[j] = MonoOrderConvert(u, v, z);
+					//					}
+					//	}
+					//}
+
+					//Calculate each poly's leading order
+					//1st, poly converts to g
+					for (j = 0; j<init_polyNum; ++j)
+						for (int u = 0; u<interpoly_Zsize; ++u)
+							for (int v = 0; v<interpoly_Ysize; ++v)
+								for (int z = 0; z<interpoly_Xsize; ++z)
+									g[j][u][v][z] = 0;
+
+					ConvertX2Y(Q_com_poly, g, init_polyNum, w);
+
+					//2nd, use g to calculate the lod[]
+					for (j = 0; j<init_polyNum; ++j)
+					{
+						int lod_temp = 0;
+						LeadingOrder[j] = 0;
+						for (int u = 0; u<New_interpoly_Zsize; ++u)
+							for (int v = 0; v<New_interpoly_Ysize; ++v)
+								for (int z = 0; z<New_interpoly_Xsize; ++z)
+								{
+									if (g[j][u][v][z] != 0)
+									{
+										lod_temp = mono_order[u][v][z];
+										if (lod_temp > LeadingOrder[j])
+											LeadingOrder[j] = lod_temp;
+									}
+								}
+					}
+
+
+					//find the index with the min leading order
+					minIndex = -1;
+					for (j = 0; j<init_polyNum; ++j)
+					{
+						if (qResult[j]>0 && A[j]>0)
+						{
+							if (minIndex == -1)
+							{
+								minIndex = j;
+								continue;
+							}
+							else if (LeadingOrder[j] < LeadingOrder[minIndex])
+							{
+								minIndex = j;
+							}
+						}
+					}
+					if (minIndex == -1)
+						printf("\n\nBackInterpolation has error\n\n");
+
+					//update A and inverA
+					A[minIndex] = 0;
+					inverA[minIndex] = 1;
+
+					//update the poly group
+					for (j = 0; j < init_polyNum; ++j)
+					{
+						if (qResult[j]>0 && A[j]>0)
+						{
+							//update poly
+							BF_Update(qResult[j], Q_com_poly[j], qResult[minIndex], Q_com_poly[minIndex]);
+						}
+					}
+				}
+			}
+
+
+	//Generalized backward interpolation for m=1
+	if (ItsSize(A, sizeof(A) / sizeof(int))>0)
+	{
+		for (j = 0; j<init_polyNum; ++j)
+			if (A[j]>0)
+			{
+				UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
+			}
+	}
+}
+
+
+
+/******************
 Function:
-	Judge array is empty
+	Judge if array is empty
 ********************/
 int ItsSize(int *A, int sizeA)
 {

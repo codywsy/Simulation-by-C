@@ -234,8 +234,9 @@ void main()
 			//test vector construction
 			test_vec_contruction();
 			//interpolation
-			//interpolation();
-			NewInter();
+			//NewInter_1();
+			NewInter_2();
+			//NewInter_3();
 
 			//factorisation
 			factorisation();

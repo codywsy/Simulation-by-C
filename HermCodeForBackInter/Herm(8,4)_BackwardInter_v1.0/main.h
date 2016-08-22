@@ -48,8 +48,8 @@
 
 
 #ifndef _GS_Normal_
-#define eta 1
-#define test_vec_num 2	//the num of test_vec is 2^eta
+#define eta 2
+#define test_vec_num 4	//the num of test_vec is 2^eta
 #else
 #define eta 0
 #define test_vec_num 1 //the num of test_vec is 2^eta
