@@ -10,7 +10,7 @@
 
 //#define _Complexity_
 #define _NoReductionCom_
-#define _NoReductionUncom_
+//#define _NoReductionUncom_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
 
@@ -684,7 +684,7 @@ void interpolation()
 	//interpolation
 	for(i=0;i<eta;i++)
 	{
-		num=(int)pow((float)2.0,i);
+		num=(int)pow(2.0,i);
 		for(u=num-1;u>=0;u--)
 			uncom_elem_interpolation(uncom_elem_interpoint[i],Q_uncom_elem[u],Q_uncom_elem[2*u+0],Q_uncom_elem[2*u+1]);
 	}		
@@ -778,8 +778,6 @@ void interpolation()
 			}
 
 		degree_test[i] = degree_temp[i][temp_index];
-
-		temp_index = 2;
 
 		//assignment
 		for(u=0;u<interpoly_Zsize;u++)	//rs

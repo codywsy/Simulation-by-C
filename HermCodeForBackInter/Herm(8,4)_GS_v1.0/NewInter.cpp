@@ -187,22 +187,6 @@ void NewInter(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int in
 		}
 	}
 
-	//debug: BF for Hermitian
-	int Bpoint[3] = { 3, 3, 2 };
-	int Fpoint[3] = { 3, 3, 3 };
-	BackInterpolation(poly, Bpoint);		
-	InterOnce(poly, Fpoint);
-
-	//Bpoint[0] = 0;	Bpoint[1] = 1;	Bpoint[2] = 0;
-	//Fpoint[0] = 0;	Fpoint[1] = 1;	Fpoint[2] = 1;
-	//BackInterpolation(poly, Bpoint);
-	//InterOnce(poly, Fpoint);
-
-	//Bpoint[0] = 3;	Bpoint[1] = 3;	Bpoint[2] = 3;
-	//Fpoint[0] = 3;	Fpoint[1] = 3;	Fpoint[2] = 2;
-	//BackInterpolation(poly, Bpoint);
-	//InterOnce(poly, Fpoint);
-
 	//debug:
 	//Calculate each poly's leading order
 	for (j = 0; j<init_polyNum; ++j)
@@ -222,34 +206,26 @@ void NewInter(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int in
 				}
 	}
 
+	////debug: BF for Hermitian
+	//int Bpoint[3] = { 3, 3, 2 };
+	//int Fpoint[3] = { 3, 3, 3 };
+	//BackInterpolation(poly, Bpoint);
+	//InterOnce(poly, Fpoint);
+
+	//Bpoint[0] = 0;	Bpoint[1] = 1;	Bpoint[2] = 0;
+	//Fpoint[0] = 0;	Fpoint[1] = 1;	Fpoint[2] = 1;
+	//BackInterpolation(poly, Bpoint);
+	//InterOnce(poly, Fpoint);
+
+	//Bpoint[0] = 3;	Bpoint[1] = 3;	Bpoint[2] = 3;
+	//Fpoint[0] = 3;	Fpoint[1] = 3;	Fpoint[2] = 2;
+	//BackInterpolation(poly, Bpoint);
+	//InterOnce(poly, Fpoint);
+
+
 	//convert x^w+1=y^w+y
 	ConvertX2Y(poly, g, init_polyNum, w);
 
-	//Calulate each poly's leading order after ConvertX2Y
-	int lod_g[init_polyNum];
-	for (j = 0; j<init_polyNum; ++j)
-	{
-		lod_temp = 0;
-		lod_g[j] = 0;
-		for (u = 0; u<interpoly_Zsize; ++u)
-			for (v = 0; v<interpoly_Ysize; ++v)
-				for (z = 0; z<interpoly_Xsize; ++z)
-				{
-					if (g[j][u][v][z] != 0)
-					{
-						lod_temp = mono_order[u][v][z];
-						if (lod_temp > lod_g[j])
-							lod_g[j] = lod_temp;
-					}
-				}
-	}
-	//Judge the difference between poly[] and g[]
-	int DiffNum = 0;
-	for (j = 0; j < init_polyNum; ++j)
-		if (lod_g[j] != lod[j])
-			++DiffNum;
-	if (DiffNum != 0)
-		printf("\nlod_g[]\t{%d, %d, %d, %d}\nlod_poly[]\t{%d, %d, %d, %d}", lod_g[0], lod_g[1], lod_g[2], lod_g[3], lod[0], lod[1], lod[2], lod[3]);
 }
 
 /*
@@ -528,7 +504,7 @@ int MonoOrderConvert(int degz, int degy, int degx)
 
 	if (degx > w)
 	{
-		New_degy = (degx / (w + 1)) * w + degy;
+		New_degy = (degx / (w + 1)) * w;
 		New_degx = degx % (w + 1);
 	}
 
