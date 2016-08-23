@@ -12,6 +12,7 @@ extern int x_ordered[2][n];
 extern int large_vec[choose_num][n];
 extern float test_set_ordered[2][n];
 extern int mono_order[monoTable_Zsize][monoTable_Ysize][monoTable_Xsize];	//mono_order[z-deg+1][y-deg][x-deg+1], y-deg is greater than w-1+nw/(w+1)
+extern unsigned long int seq_num_Now;
 
 //function: realize the Backinterpolation for Hermition code
 void BackInterpolation(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int backPoint[3])
@@ -138,7 +139,7 @@ void BackInterpolation(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize
 Function(todo):
 BackInterpolation with choosing only one polynomial
 ********************/
-void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int backPoint[3])
+void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int backPoint[3], int poly_min_order[eta], int location, int lod[init_polyNum], int poly_min_order_all[n], int *location_all)
 {
 	int j;
 	//	int backPoint[3];
@@ -248,14 +249,63 @@ void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysi
 
 
 	//Generalized backward interpolation for m=1
-	if (ItsSize(A, sizeof(A) / sizeof(int))>0)
-	{
-		for (j = 0; j<init_polyNum; ++j)
-			if (A[j]>0)
+	int count_temp = ItsSize(A, sizeof(A) / sizeof(int));
+	if (count_temp>0)
+		if (count_temp == 1)	//Normally, there is only one poly in A
+		{
+			for (j = 0; j < init_polyNum; ++j)
+				if (A[j]>0)
+				{
+					UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
+					break;
+				}
+		}
+		else if (count_temp > 1)	//When BF applying in Herm code, it's possible to have more than one poly in A
+		{
+			//int flag = 0;
+			//plan1, use poly_min_order[location
+			//for (j = 0; j < init_polyNum; ++j)
+			//	if (A[j]>0 && j == poly_min_order[location])
+			//	{
+			//		UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
+			//		flag = 1;
+			//		break;
+			//	}
+			/*	else if (j==init_polyNum-1)
+					printf("\n[errorInBI]\tseq_num=%d, There is no j == poly_min_order[location]\n", seq_num_Now);*/
+			
+			//plan2, choose the poly in A with max lod to UpdatePolyWithDivision
+		/*	if (flag != 1)
 			{
-				UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
+				int lod_max = -1;
+				int index_max = -1;
+				for (j = 0; j < init_polyNum; ++j)
+					if (A[j]>0 && lod[j] > lod_max)
+					{
+						lod_max = lod[j];
+						index_max = j;
+					}
+
+				UpdatePolyWithDivision(Q_com_poly[index_max], backPoint[0]);
+			}*/
+
+			//plan3, choose the poly in A with current j_min record
+			int flag_temp = 0;
+			for (int i = n-1; i >= 0; --i)
+			{
+				for (j = 0; j < init_polyNum; ++j)
+					if (A[j] != 0 && j == poly_min_order_all[i])
+					{
+						*location_all = i;
+						UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
+						flag_temp = 1;
+						break;
+					}
+
+				if (flag_temp == 1)
+					break;
 			}
-	}
+		}
 }
 
 

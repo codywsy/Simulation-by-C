@@ -7,6 +7,7 @@
 
 
 void BackInterpolation(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int BackPoint[3]);
+void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int backPoint[3], int poly_min_order[eta], int location, int lod[init_polyNum], int poly_min_order_all[n], int *location_all);
 int ItsSize(int *A, int sizeA);
 int *ComputeResult(const int Q[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int *A, int, int, int, int);
 void BF_Update(const int alpha, int Q1[][New_interpoly_Ysize][New_interpoly_Xsize], const int beta, const int Q2[][New_interpoly_Ysize][New_interpoly_Xsize]);
