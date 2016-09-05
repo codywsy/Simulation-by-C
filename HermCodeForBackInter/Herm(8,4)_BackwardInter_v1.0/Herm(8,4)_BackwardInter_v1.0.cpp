@@ -10,7 +10,7 @@
 
 //#define _Complexity_
 #define _NoReductionCom_
-//#define _NoReductionUncom_
+#define _NoReductionUncom_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
 
@@ -51,6 +51,15 @@ int Q[k][facpoly_Zsize][facpoly_Ysize][facpoly_Xsize];	//sequtial deduction poly
 //int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
 int output[lm+1][k], outputList[test_vec_num][lm+1][k];	//the list of candidate message [expeced number of candidate message, >rs][length of message, k]
 int expoly[2][expoly_Ysize][expoly_Xsize];	//expanded polynomial in [z+f_k-1-u*pb_k-1-u]^rs, expoly[rs][3>(max(deg_y) in encoding functions)*(rs-1)][3>(max(deg_x) in encoding functions)*(rs-1)]
+//**********************
+
+//use for BackInter
+int Q_interpoly_BF[test_vec_num][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
+int dec_codeword_BF[n], dec_bicodeword_BF[n*p];
+int outputList_BF[test_vec_num][lm + 1][k];
+int listNum_BF[test_vec_num];
+
+
 
 
 //int Q_uncom_elem[test_vec_num][init_polyNum][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
@@ -80,15 +89,18 @@ void test_vec_contruction(void);
 void interpolation(void);
 void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize],int interpoint[][n-eta]);
 void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize],int outGroup1[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize],int outGroup2[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize]);
-void factorisation(void);
+//void factorisation(void);
+void factorisation(int Q_input[test_vec_num][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int output_list[test_vec_num][lm + 1][k], int list_num[test_vec_num]);
 void rcs(int);
-void choose(void);
+//void choose(void);
+void choose(int output_codeword[n], int output_bicodeword[n*p], int output_list[test_vec_num][lm + 1][k], int list_num[test_vec_num]);
 void generator(void);
 void encoder(int message_temp[], int codeword_temp[]);
 void modulation(void);
 void channel(void);
 void demodulation(void);
 float PDF(int,int);
+int result_compare(int output_list[test_vec_num][lm + 1][k], int output_codeword[n], int output_list_BF[test_vec_num][lm + 1][k], int output_codeword_BF[n]);
 
 void main()
 {
@@ -198,7 +210,7 @@ void main()
 			}
 
 			//****debug*****
-//			message[0]=0;	message[1]=0;	message[2]=0;	message[3]=0;
+			message[0]=1;	message[1]=2;	message[2]=1;	message[3]=3;
 			//**************
 
 			encoder(message,codeword);
@@ -234,15 +246,24 @@ void main()
 			//test vector construction
 			test_vec_contruction();
 			//interpolation
-			//NewInter_1();
-			NewInter_2();
-			//NewInter_3();
-
+			interpolation();
 			//factorisation
-			factorisation();
-
+			factorisation(Q_interpoly, outputList, listNum);
 			//choose
-			choose();
+			choose(dec_codeword, dec_bicodeword, outputList, listNum);
+
+			//BF inpolation
+			//NewInter_1();
+//			NewInter_2();
+			//NewInter_3();
+			//factorisation
+//			factorisation(Q_interpoly_BF, outputList_BF, listNum_BF);
+			//choose
+//			choose(dec_codeword_BF, dec_bicodeword_BF, outputList_BF, listNum_BF);
+
+			//compare result
+//			if (int compare_result = result_compare(outputList, dec_codeword, outputList_BF, dec_codeword_BF))
+//				printf("\nseq_num=%d:\tBF_interpolation has error code %d\n", seq_num_Now, compare_result);
 
 			//bit error rate calculation
 			int temp=error;
@@ -790,9 +811,10 @@ void interpolation()
 	//********************
 #endif
 	
-/*	//********debug*************
+	//********debug*************
 	//used to prove the polynomials choosen for fac equals to 0 over all the interpoint
-	//prove the efficiencies of the interpolation 
+	//prove the efficiencies of the interpolation
+	//printf("\ninterpolation check procesing result:\n");
 	int temp_x, temp_y, temp_z;
 	for(i=0;i<test_vec_num;i++)
 	{
@@ -809,11 +831,18 @@ void interpolation()
 							temp_z=power( com_elem_interpoint[2][j],u );
 							temp= add( temp, mul( Q_interpoly[i][u][v][z],mul( temp_z,mul( temp_y,temp_x ) ) ) );	
 						}
-			printf("\nQ_interpoly[%d] in point[%d](%d,%d,%d) = %d",i,j,com_elem_interpoint[0][j],com_elem_interpoint[1][j],com_elem_interpoint[2][j],temp);
+			if (temp!=0)
+				printf("\nQ_interpoly[%d] in point[%d](%d,%d,%d) = %d",i,j,com_elem_interpoint[0][j],com_elem_interpoint[1][j],com_elem_interpoint[2][j],temp);
 		}
 
+		unsigned int mask = 2;
+		int value = 0;
+
 		for(j=0;j<eta;j++)
-		{	
+		{
+			value = (i&mask)>0? 1:0;
+			mask = mask >> 1;
+
 			temp=0;
 			for(u=0;u<interpoly_Zsize;u++)	//rs
 				for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
@@ -822,14 +851,15 @@ void interpolation()
 						{
 							temp_x=power( uncom_elem_interpoint[j][0],z );
 							temp_y=power( uncom_elem_interpoint[j][1],v );
-							temp_z=power( uncom_elem_interpoint[j][i+2],u );
+							temp_z=power( uncom_elem_interpoint[j][value+2],u );
 							temp= add( temp, mul( Q_interpoly[i][u][v][z],mul( temp_z,mul( temp_y,temp_x ) ) ) );	
 						}
-			printf("\nQ_interpoly[%d] in point[%d](%d,%d,%d) = %d",i,j,uncom_elem_interpoint[j][0],uncom_elem_interpoint[j][1],uncom_elem_interpoint[j][i+2],temp);
+			if (temp!=0)
+				printf("\nQ_interpoly[%d] in point[%d](%d,%d,%d) = %d",i,j,uncom_elem_interpoint[j][0],uncom_elem_interpoint[j][1],uncom_elem_interpoint[j][value+2],temp);
 		}
 		
 	}
-*/	//**************************
+	//**************************
 
 }
 
@@ -1521,7 +1551,7 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 
 }
 
-void factorisation(void)
+void factorisation(int Q_input[test_vec_num][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int output_list[test_vec_num][lm + 1][k], int list_num[test_vec_num])
 {
 	int i, j, u, v, z;
 	
@@ -1549,7 +1579,7 @@ void factorisation(void)
 		for(u=0;u<interpoly_Zsize;u++)	//rs
 			for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
 				for(z=0;z<interpoly_Xsize;z++)	//w+1
-					Q[uu][u][v][z]=Q_interpoly[i][u][v][z];
+					Q[uu][u][v][z]=Q_input[i][u][v][z];
 
 		//recursive coefficient search
 		rcs(uu);
@@ -1557,9 +1587,9 @@ void factorisation(void)
 		//store the necessary data
 		for(u=0;u<lm+1;u++)	//5>(rs-1)=expected number of output lists
 			for(v=0;v<k;v++)	//k
-				outputList[i][u][v]=output[u][v];
+				output_list[i][u][v]=output[u][v];
 
-		listNum[i]=l;
+		list_num[i]=l;
 
 	}
 
@@ -1907,7 +1937,7 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 	}
 }
 
-void choose()
+void choose(int output_codeword[n], int output_bicodeword[n*p], int output_list[test_vec_num][lm + 1][k], int list_num[test_vec_num])
 {
 	int i, j, u, v, z, value, flag, min_index_1, min_index_2;
 	unsigned int mask=1;
@@ -1926,12 +1956,12 @@ void choose()
 	min_index_2 = -1;
 
 	for(i=0;i<test_vec_num;i++)
-		if( listNum[i]!=0 )
+		if( list_num[i]!=0 )
 		{
-			for(j=0;j<listNum[i];j++)
+			for(j=0;j<list_num[i];j++)
 			{
 				//reencoding
-				encoder(outputList[i][j],codeword_temp);
+				encoder(output_list[i][j],codeword_temp);
 				//calculate the posteriori probablity
 				temp = 1.0;
 				for(u=0;u<n;u++)
@@ -1948,7 +1978,7 @@ void choose()
 					min_index_2 = j;
 
 					for(v=0;v<n;v++)
-						dec_codeword[v] = codeword_temp[v];
+						output_codeword[v] = codeword_temp[v];
 
 					flag = 1;	//exist at less one valid solution
 				}
@@ -1959,19 +1989,19 @@ void choose()
 	if(flag==0)	// not exist a valid solution
 	{
 		for(u=0;u<n;u++)
-			dec_codeword[u]=large_vec[0][u];
+			output_codeword[u]=large_vec[0][u];
 		
 		//nonbinary --> binary
 		for(u=0;u<n;u++)
 		{	
-			value=dec_codeword[u];
+			value=output_codeword[u];
 			mask=1;
 			for(v=0;v<p;v++)
 			{
 				if((value & mask)>0)
-					dec_bicodeword[p*u+v]=1;
+					output_bicodeword[p*u+v]=1;
 				else
-					dec_bicodeword[p*u+v]=0;
+					output_bicodeword[p*u + v] = 0;
 				mask=mask<<1;
 			}
 		}			
@@ -1980,18 +2010,18 @@ void choose()
 	{
 
 		//encode message[min_index]
-//		encoder(outputList[min_index_1][min_index_2],dec_codeword);
+//		encoder(output_list[min_index_1][min_index_2],output_codeword);
 		//nonbinary --> binary
 			for(u=0;u<n;u++)
 			{	
-				value=dec_codeword[u];
+				value=output_codeword[u];
 				mask=1;
 				for(v=0;v<p;v++)
 				{
 					if((value & mask)>0)
-						dec_bicodeword[p*u+v]=1;
+						output_bicodeword[p*u + v] = 1;
 					else
-						dec_bicodeword[p*u+v]=0;
+						output_bicodeword[p*u + v] = 0;
 					mask=mask<<1;
 				}
 			}
@@ -2005,7 +2035,7 @@ void choose()
 	{
 		count_temp=0;
 		for(u=0;u<k;u++)
-			if(outputList[min_index_1][min_index_2][u]!=message[u])
+			if(output_list[min_index_1][min_index_2][u]!=message[u])
 			{
 				++count_temp;	
 			}
@@ -2024,7 +2054,7 @@ void choose()
 		{
 			count_temp=0;
 			for(u=0;u<k;u++)
-				if(outputList[i][j][u]==message[u])
+				if(output_list[i][j][u]==message[u])
 				{
 					count_temp++;
 				}
@@ -2051,7 +2081,7 @@ void choose()
 	//Check Herm(64, 39)'s working perperty
 	int epcount2=0;
 	for(u=0;u<n;u++)
-		if(codeword[u]!=dec_codeword[u])
+		if(codeword[u]!=output_codeword[u])
 			epcount2++;
 
 	//******debug*******
@@ -2071,12 +2101,6 @@ void choose()
 	}
 
 	//calculate the testCount1
-	int GrayOrder[test_vec_num];
-	for (i = 0; i < test_vec_num; ++i)
-	{
-		GrayOrder[i] = i ^ (i >> 1);
-	}
-
 	testCount1[0] = 0;
 	for (i = 0; i<n - eta; ++i)
 	{
@@ -2095,7 +2119,7 @@ void choose()
 		for (int j = n - 1; j >= n - eta - 1; j--)
 		{
 			//bit caculate
-			if ((GrayOrder[i] & mask)>0)
+			if ((i & mask)>0)
 				index_temp = 1;
 			else
 				index_temp = 0;
@@ -2112,15 +2136,15 @@ void choose()
 	{
 		testCount2[i]=0;
 		for(j=0;j<k;j++)
-			if( message[j]!=outputList[i][0][j] )
+			if( message[j]!=output_list[i][0][j] )
 				testCount2[i]++;
 	}
 
-/*	for(i=0;i<test_vec_num;i++)
+	for(i=0;i<test_vec_num;i++)
 		if( (n-testCount1[i])>degree_test[i] && testCount2[i]!=0 )
 		{
-			printf("\n\nseq_num_Now=%d, No.%d test vector factorization has failed!!, testCount1=%d, testCount2=%d, degreeOfPolynomail=%d, listNum=%d\n", seq_num_Now, i, testCount1[i], testCount2[i], degree_test[i], listNum[i]);
-//			printf("\nNo.%d test vector has error!!, testCount1=%d, testCount2=%d, testCount1_uncom=%d, listNum=%d\n\n", i, testCount1[i], testCount2[i], (testCount1[i]-testCount1_com), listNum[i]); 
+			printf("\n\nseq_num_Now=%d, No.%d test vector factorization has failed!!, testCount1=%d, testCount2=%d, degreeOfPolynomail=%d, list_num=%d\n", seq_num_Now, i, testCount1[i], testCount2[i], degree_test[i], list_num[i]);
+//			printf("\nNo.%d test vector has error!!, testCount1=%d, testCount2=%d, testCount1_uncom=%d, list_num=%d\n\n", i, testCount1[i], testCount2[i], (testCount1[i]-testCount1_com), list_num[i]); 
 //			printf("\nseq_num_Now=%d, This sequence is decoding failed， and error num is %d!\n\n", seq_num_Now, epcount1);
 			//********debug*************
 			int temp_x, temp_y, temp_z;
@@ -2142,11 +2166,11 @@ void choose()
 			for(u=0;u<k;u++)	//k
 				printf("%d\t", message[u]);
 
-			for(u=0;u<listNum[i];u++)
+			for(u=0;u<list_num[i];u++)
 			{
 				printf("\nlist_%d:\n",u);
 				for(v=0;v<k;v++)
-					printf("%d\t",outputList[i][u][v]);
+					printf("%d\t",output_list[i][u][v]);
 			}
 			printf("\n\n");
 			//***************
@@ -2211,23 +2235,23 @@ void choose()
 			
 			for(i=0;i<test_vec_num;i++)
 			{
-				printf("\n\nlistNum[%d]=%d",i,listNum[i]);
-				for(u=0;u<listNum[i];u++)
+				printf("\n\nlist_num[%d]=%d",i,list_num[i]);
+				for(u=0;u<list_num[i];u++)
 				{
 					printf("\n[%d][%d]",i,u);
 					for(v=0;v<k;v++)
-						printf("\t%d",outputList[i][u][v]);
+						printf("\t%d",output_list[i][u][v]);
 					printf("\tproba[%d][%d]=%f",i,u,proba[i*(lm+1)+u]);
 					
 				}
 			}
 			printf("\nDecoded code word is:\n");
 			for(u=0;u<n;u++)	//n
-				printf("%d ", dec_codeword[u]);
+				printf("%d ", output_codeword[u]);
 			printf("\n%d errors after decoding!\n\n", epcount2);
 			//***********
 		}
-*/
+
 		//*******************
 
 	if( epcount1<=able_correct && epcount2!=0)	//this seq_num has chosen the wrong one
@@ -2236,6 +2260,28 @@ void choose()
 //		printf("\n\nChoice error\n\n");
 	}
 	
+}
+
+int result_compare(int output_list[test_vec_num][lm + 1][k], int output_codeword[n], int output_list_BF[test_vec_num][lm + 1][k], int output_codeword_BF[n])
+{
+	int result = 0;
+	for (int i = 0; i < n; ++i)
+		if (output_codeword[i] != output_codeword_BF[i])
+		{
+			result = 1;
+			break;
+		}
+
+	for (int i = 0; i < test_vec_num; ++i)
+		for (int j = 0; j < lm + 1; ++j)
+			for (int u = 0; u < k; ++u)
+				if (output_list[i][j][u] != output_list_BF[i][j][u])
+				{
+					result += 2;
+					return result;
+				}
+
+	return result;
 }
 
 void mono_table()

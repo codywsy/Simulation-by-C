@@ -250,9 +250,10 @@ void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysi
 
 	//Generalized backward interpolation for m=1
 	int count_temp = ItsSize(A, sizeof(A) / sizeof(int));
-	if (count_temp>0)
+	if (count_temp > 0)
 		if (count_temp == 1)	//Normally, there is only one poly in A
 		{
+			*location_all = 0;
 			for (j = 0; j < init_polyNum; ++j)
 				if (A[j]>0)
 				{
@@ -262,20 +263,21 @@ void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysi
 		}
 		else if (count_temp > 1)	//When BF applying in Herm code, it's possible to have more than one poly in A
 		{
-			//int flag = 0;
+			int flag = 0;
+			*location_all = 0;
 			//plan1, use poly_min_order[location
-			//for (j = 0; j < init_polyNum; ++j)
-			//	if (A[j]>0 && j == poly_min_order[location])
-			//	{
-			//		UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
-			//		flag = 1;
-			//		break;
-			//	}
+			for (j = 0; j < init_polyNum; ++j)
+				if (A[j]>0 && j == poly_min_order[location])
+				{
+					UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
+					flag = 1;
+					break;
+				}
 			/*	else if (j==init_polyNum-1)
 					printf("\n[errorInBI]\tseq_num=%d, There is no j == poly_min_order[location]\n", seq_num_Now);*/
 			
 			//plan2, choose the poly in A with max lod to UpdatePolyWithDivision
-		/*	if (flag != 1)
+			if (flag != 1)
 			{
 				int lod_max = -1;
 				int index_max = -1;
@@ -287,24 +289,24 @@ void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysi
 					}
 
 				UpdatePolyWithDivision(Q_com_poly[index_max], backPoint[0]);
-			}*/
+			}
 
 			//plan3, choose the poly in A with current j_min record
-			int flag_temp = 0;
-			for (int i = n-1; i >= 0; --i)
-			{
-				for (j = 0; j < init_polyNum; ++j)
-					if (A[j] != 0 && j == poly_min_order_all[i])
-					{
-						*location_all = i;
-						UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
-						flag_temp = 1;
-						break;
-					}
+			//int flag_temp = 0;
+			//for (int i = n-1; i >= 0; --i)
+			//{
+			//	for (j = 0; j < init_polyNum; ++j)
+			//		if (A[j] != 0 && j == poly_min_order_all[i])
+			//		{
+			//			*location_all = i;
+			//			UpdatePolyWithDivision(Q_com_poly[j], backPoint[0]);
+			//			flag_temp = 1;
+			//			break;
+			//		}
 
-				if (flag_temp == 1)
-					break;
-			}
+			//	if (flag_temp == 1)
+			//		break;
+			//}
 		}
 }
 

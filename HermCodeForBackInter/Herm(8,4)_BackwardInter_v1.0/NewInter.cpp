@@ -13,10 +13,10 @@ extern int mono_order[monoTable_Zsize][monoTable_Ysize][monoTable_Xsize];
 extern int x_ordered[2][n];
 extern int large_vec[choose_num][n];
 extern float test_set_ordered[2][n];
-extern int Q_interpoly[test_vec_num][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];	//chosen interpolated polynomial [z-deg+1][max(deg_y)+1][w+1]
+extern int Q_interpoly_BF[test_vec_num][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];	//chosen interpolated polynomial [z-deg+1][max(deg_y)+1][w+1]
 extern int degree_test[test_vec_num];		//store the degree of the choosen polynomial
 
-/*
+
 void NewInter(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int interpoint[][n-eta])
 {
 	int i, j, u, v, z, delta_temp, lod_temp;
@@ -231,7 +231,9 @@ void NewInter(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int in
 
 
 }
-*/
+
+
+#ifndef _GS_Normal_
 
 /************************************
 Function:
@@ -240,6 +242,7 @@ Function:
 Problem:
    Have something wrong with LM(Q) judgement
 ************************************/
+
 void NewInter_1()
 {
 	int i, j, u, v, z;
@@ -259,7 +262,7 @@ void NewInter_1()
 		for (u = 0; u<interpoly_Zsize; u++)	//rs
 			for (v = 0; v<interpoly_Ysize; v++)	//max(deg_y)+1
 				for (z = 0; z<interpoly_Xsize; z++)	//w+1
-					Q_interpoly[i][u][v][z] = 0;
+					Q_interpoly_BF[i][u][v][z] = 0;
 
 	//Interpolation for first path
 
@@ -445,7 +448,7 @@ void NewInter_1()
 	for (u = 0; u < interpoly_Zsize; ++u)
 		for (v = 0; v < interpoly_Ysize; ++v)
 			for (z = 0; z < interpoly_Xsize; ++z)
-				Q_interpoly[0][u][v][z] = g[j_min][u][v][z];
+				Q_interpoly_BF[0][u][v][z] = g[j_min][u][v][z];
 	//Interpolation for first path finish
 
 
@@ -502,7 +505,7 @@ void NewInter_1()
 		for (u = 0; u<interpoly_Zsize; ++u)
 			for (v = 0; v<interpoly_Ysize; ++v)
 				for (z = 0; z<interpoly_Xsize; ++z)
-					Q_interpoly[i][u][v][z] = g[j_min][u][v][z];
+					Q_interpoly_BF[i][u][v][z] = g[j_min][u][v][z];
 	}
 
 }
@@ -517,6 +520,8 @@ void NewInter_2()
 	int i, j, u, v, z;
 	int delta_temp, delta[init_polyNum], lod_temp, lod_min, flag_lod_min, lod[init_polyNum], j_min, J[init_polyNum];
 	int com_elem_interpoint[n][3];
+	int poly_min_order[eta];
+	int poly_min_order_all[n], location_all;
 	int poly[init_polyNum][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize];
 	int f[New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize];
 	int g1[New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize + 1];
@@ -525,13 +530,12 @@ void NewInter_2()
 
 	int GrayOrder[test_vec_num];
 	int uncom_elem_interpoint[eta][4];
-
 	//Initialize
 	for (i = 0; i<test_vec_num; i++)
 		for (u = 0; u<interpoly_Zsize; u++)	//rs
 			for (v = 0; v<interpoly_Ysize; v++)	//max(deg_y)+1
 				for (z = 0; z<interpoly_Xsize; z++)	//w+1
-					Q_interpoly[i][u][v][z] = 0;
+					Q_interpoly_BF[i][u][v][z] = 0;
 
 	//Interpolation for first path
 
@@ -635,6 +639,13 @@ void NewInter_2()
 				j_min = j;
 			}
 
+		//record the j_min seq for every poly
+		if (i - n + eta >= 0)
+			poly_min_order[i - n + eta] = j_min;
+		
+		poly_min_order_all[i] = j_min;
+
+
 		//Polynomial modification
 		if (j_min != -1)
 		{
@@ -727,7 +738,7 @@ void NewInter_2()
 	for (u = 0; u < interpoly_Zsize; ++u)
 		for (v = 0; v < interpoly_Ysize; ++v)
 			for (z = 0; z < interpoly_Xsize; ++z)
-				Q_interpoly[0][u][v][z] = g[j_min][u][v][z];
+				Q_interpoly_BF[0][u][v][z] = g[j_min][u][v][z];
 	//Interpolation for first path finish
 
 
@@ -783,7 +794,7 @@ void NewInter_2()
 		}
 
 		//Backward Interpolation
-		BackInterpolation(poly, Bpoint);
+		BackInterpolation_2(poly, Bpoint, poly_min_order, location, lod, poly_min_order_all, &location_all);
 
 		//Calculate each poly's leading order
 		for (j = 0; j<init_polyNum; ++j)
@@ -804,7 +815,7 @@ void NewInter_2()
 		}
 
 		//Forward Interpolation
-		InterOnce(poly, Fpoint);
+		InterOnce_2(poly, Fpoint, poly_min_order, location, poly_min_order_all, location_all);
 
 		//Calculate each poly's leading order
 		for (j = 0; j<init_polyNum; ++j)
@@ -838,7 +849,7 @@ void NewInter_2()
 		for (u = 0; u<interpoly_Zsize; ++u)
 			for (v = 0; v<interpoly_Ysize; ++v)
 				for (z = 0; z<interpoly_Xsize; ++z)
-					Q_interpoly[i][u][v][z] = g[j_min][u][v][z];
+					Q_interpoly_BF[GrayOrder[i]][u][v][z] = g[j_min][u][v][z];
 	}
 
 }
@@ -866,7 +877,7 @@ void NewInter_3()
 		for (u = 0; u<interpoly_Zsize; u++)	//rs
 			for (v = 0; v<interpoly_Ysize; v++)	//max(deg_y)+1
 				for (z = 0; z<interpoly_Xsize; z++)	//w+1
-					Q_interpoly[i][u][v][z] = 0;
+					Q_interpoly_BF[i][u][v][z] = 0;
 
 	//Interpolation for first path
 
@@ -1062,7 +1073,7 @@ void NewInter_3()
 	for (u = 0; u < interpoly_Zsize; ++u)
 		for (v = 0; v < interpoly_Ysize; ++v)
 			for (z = 0; z < interpoly_Xsize; ++z)
-				Q_interpoly[0][u][v][z] = g[j_min][u][v][z];
+				Q_interpoly_BF[0][u][v][z] = g[j_min][u][v][z];
 	//Interpolation for first path finish
 
 
@@ -1119,11 +1130,12 @@ void NewInter_3()
 		for (u = 0; u<interpoly_Zsize; ++u)
 			for (v = 0; v<interpoly_Ysize; ++v)
 				for (z = 0; z<interpoly_Xsize; ++z)
-					Q_interpoly[i][u][v][z] = g[j_min][u][v][z];
+					Q_interpoly_BF[i][u][v][z] = g[j_min][u][v][z];
 	}
 
 }
 
+#endif
 
 int MonoOrderConvert(int degz, int degy, int degx)
 {
@@ -1300,6 +1312,169 @@ void InterOnce(int poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpol
 	}
 
 }
+
+void InterOnce_2(int poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int interpoint[3], int poly_min_order[eta], int location, int poly_min_order_all[n], int location_all)
+{
+	int j, j_min, u, v, z;
+	int lod[init_polyNum], lod_temp, lod_min, delta[init_polyNum], delta_temp, flag_lod_min;
+	int J[init_polyNum];
+	int f[New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize];
+	int g1[New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize + 1];
+	int g2[New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize];
+
+	//Calculate each poly's leading order
+	for (j = 0; j<init_polyNum; ++j)
+	{
+		lod_temp = 0;
+		lod[j] = 0;
+		for (u = 0; u<New_interpoly_Zsize; ++u)
+			for (v = 0; v<New_interpoly_Ysize; ++v)
+				for (z = 0; z<New_interpoly_Xsize; ++z)
+				{
+					if (poly[j][u][v][z] != 0)
+					{
+						lod_temp = MonoOrderConvert(u, v, z);
+						if (lod_temp > lod[j])
+							lod[j] = lod_temp;
+					}
+				}
+	}
+
+	//Calculate the hasse derivative mapping of each polynomials
+	j_min = -1;
+	for (flag_lod_min = 1, j = 0; j < init_polyNum; ++j)
+	{
+
+		delta[j] = 0;
+		J[j] = 0;
+		for (u = 0; u<New_interpoly_Zsize; ++u)
+		{
+			delta_temp = 0;
+
+			for (v = 0; v<New_interpoly_Ysize; ++v)
+				for (z = 0; z<New_interpoly_Xsize; ++z)
+					if (poly[j][u][v][z] != 0)
+					{
+						int temp = mul(power(interpoint[0], z), power(interpoint[1], v));
+						temp = mul(temp, poly[j][u][v][z]);
+						//Hasse derivative mapping
+						delta_temp = add(delta_temp, temp);
+					}
+
+			if (u == 0)
+				delta[j] = delta_temp;
+			else if (u>0)
+			{
+				delta_temp = mul(delta_temp, power(interpoint[2], u));
+				delta[j] = add(delta[j], delta_temp);
+			}
+
+		}
+
+		if (delta[j] != 0 && flag_lod_min == 1)
+		{
+			flag_lod_min = 0;
+			lod_min = lod[j];
+			j_min = j;
+		}
+
+		if (delta[j] != 0)
+			J[j] = 1;
+	}
+
+	//Identify the minimal polynomial with a nonzero Hasse derivative evaluation
+	for (j = 0; j<init_polyNum; ++j)
+		if (lod[j]<lod_min && J[j] != 0)
+		{
+			lod_min = lod[j];
+			j_min = j;
+		}
+
+	//update poly_min_order
+	poly_min_order[location] = j_min;
+	poly_min_order_all[location_all] = j_min;
+
+	//Polynomial modification
+	if (j_min != -1)
+	{
+		//f = g[j_min]
+		for (u = 0; u<New_interpoly_Zsize; ++u)
+			for (v = 0; v<New_interpoly_Ysize; ++v)
+				for (z = 0; z<New_interpoly_Xsize; ++z)
+					f[u][v][z] = poly[j_min][u][v][z];
+
+		//Modify nonzero polynomials
+		for (j = 0; j<init_polyNum; ++j)
+		{
+			int temp1, temp2;
+
+			if (J[j] != 0)
+			{
+				if (j != j_min)
+				{
+					//delta*poly_k+delta_k*f
+					for (u = 0; u < New_interpoly_Zsize; ++u)
+						for (v = 0; v < New_interpoly_Ysize; ++v)
+							for (z = 0; z < New_interpoly_Xsize; ++z)
+							{
+								if (poly[j][u][v][z] != 0)
+									temp1 = mul(delta[j_min], poly[j][u][v][z]);
+								else
+									temp1 = 0;
+
+								if (f[u][v][z] != 0)
+									temp2 = mul(delta[j], f[u][v][z]);
+								else
+									temp2 = 0;
+
+								if (temp1 != 0 || temp2 != 0)
+									poly[j][u][v][z] = add(temp1, temp2);
+								else
+									poly[j][u][v][z] = 0;
+							}
+				}
+				else if (j == j_min)
+				{
+					for (u = 0; u < New_interpoly_Zsize; ++u)
+						for (v = 0; v < New_interpoly_Ysize; ++v)
+						{
+							for (z = 0; z < (New_interpoly_Xsize + 1); ++z)
+								g1[u][v][z] = 0;
+							for (z = 0; z < New_interpoly_Xsize; ++z)
+								g2[u][v][z] = 0;
+						}
+
+
+					//g1 = x * f
+					for (u = 0; u < New_interpoly_Zsize; ++u)
+						for (v = 0; v < New_interpoly_Ysize; ++v)
+							for (z = 0; z < New_interpoly_Xsize; ++z)
+								if (poly[j][u][v][z] != 0)
+									g1[u][v][z + 1] = poly[j][u][v][z];
+
+					//g2 = xi * f
+					for (u = 0; u < New_interpoly_Zsize; ++u)
+						for (v = 0; v < New_interpoly_Ysize; ++v)
+							for (z = 0; z < New_interpoly_Xsize; ++z)
+								if (poly[j][u][v][z] != 0)
+									g2[u][v][z] = mul(interpoint[0], poly[j][u][v][z]);
+
+					//poly = g1 + g2
+					for (u = 0; u < New_interpoly_Zsize; ++u)
+						for (v = 0; v < New_interpoly_Ysize; ++v)
+							for (z = 0; z < New_interpoly_Xsize; ++z)
+								if (g1[u][v][z] != 0 || g2[u][v][z] != 0)
+									poly[j][u][v][z] = add(g1[u][v][z], g2[u][v][z]);
+								else
+									poly[j][u][v][z] = 0;
+				}
+			}
+		}
+	}
+
+}
+
+
 
 /***********************************
 Function:
