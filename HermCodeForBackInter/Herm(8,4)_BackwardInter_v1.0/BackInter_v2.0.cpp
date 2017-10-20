@@ -238,11 +238,22 @@ void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysi
 					//update the poly group
 					for (j = 0; j < init_polyNum; ++j)
 					{
-						if (qResult[j]>0 && A[j]>0)
-						{
-							//update poly
-							BF_Update(qResult[j], Q_com_poly[j], qResult[minIndex], Q_com_poly[minIndex]);
-						}
+						//if (seq_num_Now != 13)
+						//{
+							if (qResult[j] > 0 && A[j]>0)		//here, we choose the poly in A with qResult!=0 to update
+							{
+								//update poly
+								BF_Update(qResult[j], Q_com_poly[j], qResult[minIndex], Q_com_poly[minIndex]);
+							}
+						//}
+						//else if (seq_num_Now == 13)
+						//{
+						//	if (A[j] > 0)
+						//	{
+						//		//update poly
+						//		BF_Update(qResult[j], Q_com_poly[j], qResult[minIndex], Q_com_poly[minIndex]);
+						//	}
+						//}
 					}
 				}
 			}
@@ -265,7 +276,7 @@ void BackInterpolation_2(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysi
 		{
 			int flag = 0;
 			*location_all = 0;
-			//plan1, use poly_min_order[location
+			//plan1, use poly_min_order[location]
 			for (j = 0; j < init_polyNum; ++j)
 				if (A[j]>0 && j == poly_min_order[location])
 				{
@@ -328,7 +339,7 @@ int ItsSize(int *A, int sizeA)
 
 int *ComputeResult(const int Q[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int *A, int alpha, int Zindex, int Yindex, int polyNum)
 {
-	int *result = (int *)malloc(polyNum * sizeof(int));
+	int *result = (int *)malloc(polyNum * sizeof(int));		//TODO: 这里可以会导致内存泄露，因为result没有delete
 	for(int i=0; i<polyNum; ++i)
 	{
 		result[i] = -1;

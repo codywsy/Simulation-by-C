@@ -1805,6 +1805,7 @@ void generator()
 
 void mono_table()
 {
+	mono_order_1大小有误！！！
 	int i, j, u, v, z, weight[weight_Zsize][weight_XYsize], mono_order_1[monoTable_Zsize][weight_XYsize];	//26=(100/weight(z))+1, 100=pre-set size, promise term[rs-1][max(deg_y)][w] is convered, so does every term in array[rs][max(deg_y)+1][w+1]
 
 	//Initialisation

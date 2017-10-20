@@ -21,7 +21,7 @@
     <ClCompile Include="..\FiniteFieldBasisGF(16).cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\Herm(64,49)_KV(l=3).cpp">
+    <ClCompile Include="..\Herm(64,49)_KV(l=1).cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

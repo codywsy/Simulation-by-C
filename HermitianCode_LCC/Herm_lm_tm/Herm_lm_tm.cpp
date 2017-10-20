@@ -32,7 +32,7 @@ void main(void)
 	scanf("%d",&k);
 //	printf("Enter m:");
 //	scanf("%d",&m_temp);
-	m_temp=1;
+	m_temp=2;
 	//**********
 	//calculate w
 	w=-1;

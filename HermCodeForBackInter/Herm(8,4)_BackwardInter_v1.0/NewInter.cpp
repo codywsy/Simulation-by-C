@@ -7,6 +7,7 @@
 #include "FiniteFieldBasisCal.h"
 #include "BackInter.h"
 #include "NewInter.h"
+#include "test_LM_validity.h"
 
 //from Herm(8,4)_GS_v1.0.cpp
 extern int mono_order[monoTable_Zsize][monoTable_Ysize][monoTable_Xsize];
@@ -15,6 +16,7 @@ extern int large_vec[choose_num][n];
 extern float test_set_ordered[2][n];
 extern int Q_interpoly_BF[test_vec_num][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];	//chosen interpolated polynomial [z-deg+1][max(deg_y)+1][w+1]
 extern int degree_test[test_vec_num];		//store the degree of the choosen polynomial
+extern unsigned long int seq_num_Now;
 
 
 void NewInter(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int interpoint[][n-eta])
@@ -530,6 +532,11 @@ void NewInter_2()
 
 	int GrayOrder[test_vec_num];
 	int uncom_elem_interpoint[eta][4];
+	
+	//****debug***
+	int LeadingMono[init_polyNum][3];
+	//*********
+
 	//Initialize
 	for (i = 0; i<test_vec_num; i++)
 		for (u = 0; u<interpoly_Zsize; u++)	//rs
@@ -544,9 +551,46 @@ void NewInter_2()
 	{
 		com_elem_interpoint[i][0] = x_ordered[0][i];
 		com_elem_interpoint[i][1] = x_ordered[1][i];
-		com_elem_interpoint[i][2] = large_vec[0][(int)test_set_ordered[1][i]];;
+		com_elem_interpoint[i][2] = large_vec[0][(int)test_set_ordered[1][i]];
 	}
 
+	//debug - BF test
+	//if (seq_num_Now == 13)
+	//{
+	//	com_elem_interpoint[n - 1][2] = large_vec[1][(int)test_set_ordered[1][i - 1]];
+	//	//com_elem_interpoint[n - 2][2] = large_vec[1][(int)test_set_ordered[1][i - 2]];
+
+	//	//int temp;
+	//	//temp = com_elem_interpoint[n - 2][0];
+	//	//com_elem_interpoint[n - 2][0] = com_elem_interpoint[n - 1][0];
+	//	//com_elem_interpoint[n - 1][0] = temp;
+
+	//	//temp = com_elem_interpoint[n - 2][1];
+	//	//com_elem_interpoint[n - 2][1] = com_elem_interpoint[n - 1][1];
+	//	//com_elem_interpoint[n - 1][1] = temp;
+
+	//	//temp = com_elem_interpoint[n - 2][2];
+	//	//com_elem_interpoint[n - 2][2] = com_elem_interpoint[n - 1][2];
+	//	//com_elem_interpoint[n - 1][2] = temp;
+	//	
+	//}
+
+	////debug - random order
+	//com_elem_interpoint[0][0] = 0;	com_elem_interpoint[0][1] = 0;	com_elem_interpoint[0][2] = 1;
+	//com_elem_interpoint[1][0] = 2;	com_elem_interpoint[1][1] = 2;	com_elem_interpoint[1][2] = 3;
+	//com_elem_interpoint[2][0] = 1;	com_elem_interpoint[2][1] = 3;  com_elem_interpoint[2][2] = 3;
+	//com_elem_interpoint[3][0] = 2;	com_elem_interpoint[3][1] = 3;	com_elem_interpoint[3][2] = 1;
+	//com_elem_interpoint[4][0] = 3;	com_elem_interpoint[4][1] = 3;	com_elem_interpoint[4][2] = 3;
+	//com_elem_interpoint[5][0] = 3;	com_elem_interpoint[5][1] = 2;	com_elem_interpoint[5][2] = 1;
+	//com_elem_interpoint[6][0] = 1;	com_elem_interpoint[6][1] = 2;	com_elem_interpoint[6][2] = 0;
+	//com_elem_interpoint[7][0] = 0;	com_elem_interpoint[7][1] = 1;	com_elem_interpoint[7][2] = 2;
+	//
+	////random num without repeat
+	//int unorder_set[n];
+	//for (j = 0; j < n; j++)
+	//	unorder_set[j] = 0;
+
+	
 	//Initialization
 	for (j = 0; j<init_polyNum; ++j)
 		for (u = 0; u<New_interpoly_Zsize; ++u)
@@ -733,13 +777,25 @@ void NewInter_2()
 
 	ConvertX2Y(poly, g, init_polyNum, w);
 
-
 	j_min = ChooseTheMinPoly(g, init_polyNum);
 	for (u = 0; u < interpoly_Zsize; ++u)
 		for (v = 0; v < interpoly_Ysize; ++v)
 			for (z = 0; z < interpoly_Xsize; ++z)
 				Q_interpoly_BF[0][u][v][z] = g[j_min][u][v][z];
 	//Interpolation for first path finish
+
+
+	////debug
+	//if (seq_num_Now == 13)
+	//{
+	//	int poly_min_order_temp[eta] = { 0, 2 };
+	//	int location = 0;
+	//	int point_BF[3] = { 1, 2, 0 };
+	//	int point_FI[3] = { 1, 2, 1 };
+	//	test_LM_validity(poly, point_BF, point_FI, poly_min_order_temp, location);
+	//	
+	//}
+
 
 
 	//Produce GrayCode used by the ordering of BFinterpolation
@@ -793,6 +849,7 @@ void NewInter_2()
 					}
 		}
 
+
 		//Backward Interpolation
 		BackInterpolation_2(poly, Bpoint, poly_min_order, location, lod, poly_min_order_all, &location_all);
 
@@ -813,6 +870,12 @@ void NewInter_2()
 						}
 					}
 		}
+
+
+		//debug: print the lod after BF
+#ifdef _PrintGroupLod_
+		printf("\nAfter %dst BI, the lod =\t{%d,\t%d,\t%d,\t%d}-->", i, lod[0], lod[1], lod[2], lod[3]);
+#endif
 
 		//Forward Interpolation
 		InterOnce_2(poly, Fpoint, poly_min_order, location, poly_min_order_all, location_all);
@@ -835,6 +898,11 @@ void NewInter_2()
 					}
 		}
 
+		//debug: print the lod after BF
+#ifdef _PrintGroupLod_
+		printf("After %dst FI, the lod =\t{%d,\t%d,\t%d,\t%d}", i, lod[0], lod[1], lod[2], lod[3]);
+#endif
+
 		//find the min polynomial
 		for (j = 0; j<init_polyNum; ++j)
 			for (u = 0; u<interpoly_Zsize; ++u)
@@ -851,6 +919,9 @@ void NewInter_2()
 				for (z = 0; z<interpoly_Xsize; ++z)
 					Q_interpoly_BF[GrayOrder[i]][u][v][z] = g[j_min][u][v][z];
 	}
+#ifdef _PrintGroupLod_
+	printf("\n\n");
+#endif
 
 }
 

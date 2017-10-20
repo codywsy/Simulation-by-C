@@ -19,11 +19,15 @@
 //#define checkPrint
 //#define checkInterpolation	
 
+#define OpenFile fp=fopen("LCC(15,11)¦Ç=1.txt","a")
+#define FrameError 229
+
+
 //************variable define***************
-#define k 7  //length of message
-#define eta 2 // chosen num
-#define test_vec_num 4 //the num of test_vec is 2^eta
-#define able_correct_num ((n-k+1)/2)
+#define k 11  //length of message
+#define eta 1 // chosen num
+#define test_vec_num 2 //the num of test_vec is 2^eta
+#define able_correct_num ((n-k)/2)
 #define m 1 // the multiplicity of LCC algorithm is 1
 #define lm 1 // LCC's lm is equal to 1, solid!!
 #define V 1 //projected basic function BPSK=1, QPSK=2
@@ -83,7 +87,7 @@ int logNum[] = {-1,0,1,6,2,12,7,26,3,32,13,35,8,48,27,18,
 #endif
 //******************************
 //**************basic var*****************
-unsigned long int seq_num;	//number of input binary sequences
+unsigned long long int seq_num;	//number of input binary sequences
 float SNR;
 double BER, FER;
 
@@ -156,7 +160,7 @@ void main()
 	double addNum_count, mulNum_count, totalNum_count;
 
 	FILE *fp;
-	if((fp=fopen("LCC(15,7)¦Ç=2.txt","a"))==NULL)
+	if((OpenFile)==NULL)
 	{
 		printf("Can't open the data.txt\n");
 		exit(0);
@@ -255,8 +259,17 @@ void main()
 			decoding();	
 
 			////////////////////////////////
-			
-			//bit error rate calculation
+
+			//frame error rate calculation directly
+			for(i=0;i<n;i++)
+				if(codeword[i] != dec_codeword[i])
+				{
+					ferror++;
+					break;
+				}
+
+
+/*			//bit error rate calculation
 			int temp = error;
 			for(i=0;i<p*n;i++)
 			{
@@ -269,6 +282,7 @@ void main()
 			//frame error rate calculation
 			if( error>temp )
 				ferror++;
+*/
 /*			
 			if(f_error_temp==1)
 				printf("\nerror=%d\n",error);
@@ -286,12 +300,12 @@ void main()
 			BER=(double)(error)/(double)(n*p*j);
 			FER=(double)(ferror)/(double)(j);
 			printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f\r", progress, SNR, error, BER, ferror, FER, addNum_count, mulNum_count, totalNum_count);
-			if(ferror>309)
+			if(ferror>FrameError)
 				break;
 
 		}
 
-		if(ferror>309)
+		if(ferror>FrameError)
 		{
 			BER=(double)error/(double)(n*p*j);
 			FER=(double)(ferror)/(double)(j);
@@ -304,7 +318,7 @@ void main()
 
 		printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f\n", progress, SNR, error, BER, ferror, FER, addNum_count, mulNum_count, totalNum_count);
 
-		fp=fopen("LCC(15,7)¦Ç=2.txt","a");
+		OpenFile;
 		fprintf(fp,"Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f\n",progress, SNR, error, BER, ferror, FER, addNum_count, mulNum_count, totalNum_count);
 		fclose(fp);
 
@@ -736,19 +750,19 @@ void decoding(void)
 		}
 
 		//Convert the codeword into binary
-		for(i=0;i<n;i++)
-			{
-				value=dec_codeword[i];
-				mask=1;
-				for(v=0;v<p;v++)
-				{
-					if((value & mask)>0)
-						dec_bicodeword[p*i+v]=1;
-					else
-						dec_bicodeword[p*i+v]=0;
-					mask=mask<<1;
-				}
-			}
+		//for(i=0;i<n;i++)
+		//	{
+		//		value=dec_codeword[i];
+		//		mask=1;
+		//		for(v=0;v<p;v++)
+		//		{
+		//			if((value & mask)>0)
+		//				dec_bicodeword[p*i+v]=1;
+		//			else
+		//				dec_bicodeword[p*i+v]=0;
+		//			mask=mask<<1;
+		//		}
+		//	}
 	}
 
 

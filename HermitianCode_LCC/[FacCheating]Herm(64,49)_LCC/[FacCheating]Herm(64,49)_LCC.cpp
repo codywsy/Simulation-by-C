@@ -7,7 +7,7 @@
 //#define _GS_Normal_
 //#define _Complexity_
 //#define _NoReduction_
-//#define cheatingEncoding
+#define cheatingEncoding
 #define cheatingDec
 
 //#define _PolyCoeffNumUncom_
@@ -15,7 +15,7 @@
 //#define printfMonotable
 //#define printfDemodulation
 
-#define OpenFile fp=fopen("[cheatingAll]LCC_Herm(64,49)_η=2.txt","a")
+#define OpenFile fp=fopen("[cheatingAll]LCC_Herm(64,49)_η=4.txt","a")
 #define FrameError 309
 
 #define w 4	//genius = w*(w-1)/2 = 28
@@ -24,12 +24,12 @@
 #define iterNum 64	//when m=1, C is equal to n
 #define able_correct 4
 #define pointNum 2
-#define interval 1
+#define interval 0.5
 
 //conditional compile
 #ifndef _GS_Normal_
-	#define eta 2
-	#define test_vec_num 4 //the num of test_vec is 2^eta
+	#define eta 4
+	#define test_vec_num 16 //the num of test_vec is 2^eta
 #else
 	#define eta 0
 	#define test_vec_num 1 //the num of test_vec is 2^eta
@@ -226,9 +226,10 @@ void main()
 	//*******************************
 
 #ifdef cheatingEncoding
+			//读入文件的内容
 			int file_index;
 			FILE *fin1;
-			if((fin1=fopen("bi_message.txt","a"))==NULL)
+			if((fin1=fopen("bi_message.txt","r"))==NULL)
 			{	
 				printf("bi_message.txt open filed");
 			}
@@ -242,7 +243,7 @@ void main()
 			}
 			fclose(fin1);
 
-			if((fin1=fopen("message.txt","a"))==NULL)
+			if((fin1=fopen("message.txt","r"))==NULL)
 			{	
 				printf("message.txt open filed");
 			}
@@ -256,7 +257,7 @@ void main()
 			}
 			fclose(fin1);
 
-			if((fin1=fopen("codeword.txt","a"))==NULL)
+			if((fin1=fopen("codeword.txt","r"))==NULL)
 			{	
 				printf("codeword.txt open filed");
 			}
@@ -264,6 +265,20 @@ void main()
 			{
 				file_index=0;
 				while(fscanf(fin1,"%d",&codeword[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+			if((fin1=fopen("bi_codeword.txt","r"))==NULL)
+			{	
+				printf("bi_codeword.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&bi_codeword[file_index])!=-1)
 				{
 					++file_index;
 				}
@@ -340,6 +355,60 @@ void main()
 					mask=mask<<1;
 				}
 			}
+
+			////debug: output a (64,49) Hermitian code
+			//FILE *fout1; 
+			//if((fout1=fopen("bi_message.txt","a"))==NULL)
+			//{	
+			//	printf("bi_message.txt open filed");
+			//}
+			//else
+			//{
+			//	for(u=0;u<k*p;u++)
+			//	{
+			//		fprintf(fout1,"%d\n",bi_message[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
+			//if((fout1=fopen("message.txt","a"))==NULL)
+			//{	
+			//	printf("message.txt open filed");
+			//}
+			//else
+			//{
+			//	for(u=0;u<k;u++)
+			//	{
+			//		fprintf(fout1,"%d\n",message[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
+			//if((fout1=fopen("codeword.txt","a"))==NULL)
+			//{	
+			//	printf("codeword.txt open filed");
+			//}
+			//else
+			//{
+			//	for(u=0;u<n;u++)
+			//	{
+			//		fprintf(fout1,"%d\n",codeword[u]);
+			//	}
+			//}
+			//fclose(fout1);
+			//if((fout1=fopen("bi_codeword.txt","a"))==NULL)
+			//{	
+			//	printf("bi_codeword.txt open filed");
+			//}
+			//else
+			//{
+			//	for(u=0;u<n*p;u++)
+			//	{
+			//		fprintf(fout1,"%d\n",bi_codeword[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
 #endif
 
 			//modulation
@@ -358,22 +427,30 @@ void main()
 #ifdef cheatingDec
 			//cheatingDec
 			cheatDecoding();
+
+			//frame error rate calculation
+			int temp = ferror;
+			for(u=0;u<n;u++)
+				if(dec_codeword[u]!=codeword[u])
+				{
+					ferror++;
+					break;
+				}
+				
+			if(temp==ferror)
+					v++;
+
 #else
 			//interpolation
 			interpolation();
 
-	#ifndef cheatingFac
+#ifndef cheatingFac
 			//factorisation
 			factorisation();
 
 			//choose
 			choose();
-	#else
-			//cheatingFac
-			cheatFac();
-	#endif
 
-#endif
 			//bit error rate calculation
 			int temp=error;
 			for(u=0;u<n*p;u++)	//n*4
@@ -392,6 +469,26 @@ void main()
 			//	successError_count = successError_count + (epcount1-successError_count)/(double)(v);
 			}
 
+#else
+			//cheatingFac
+			cheatFac();
+
+			//frame error rate calculation
+			int temp = ferror;
+			for(u=0;u<n;u++)
+				if(dec_codeword[u]!=codeword[u])
+				{
+					ferror++;
+					break;
+				}
+				
+			if(temp==ferror)
+					v++;
+
+#endif
+
+
+#endif
 			//channelError_count = channelError_count + (epcount1-channelError_count)/(double)(j);
 			addNum_count = addNum_count + (addNum-addNum_count)/(double)(j);
 			mulNum_count = mulNum_count + (mulNum-mulNum_count)/(double)(j);
@@ -2008,20 +2105,20 @@ void cheatFac()
 				dec_codeword[u]=codeword[u];
 			}
 
-			//nonbinary --> binary
-			for(u=0;u<n;u++)
-			{	
-				value=dec_codeword[u];
-				mask=1;
-				for(v=0;v<p;v++)
-				{
-					if((value & mask)>0)
-						dec_bicodeword[p*u+v]=1;
-					else
-						dec_bicodeword[p*u+v]=0;
-					mask=mask<<1;
-				}
-			}	
+			////nonbinary --> binary
+			//for(u=0;u<n;u++)
+			//{	
+			//	value=dec_codeword[u];
+			//	mask=1;
+			//	for(v=0;v<p;v++)
+			//	{
+			//		if((value & mask)>0)
+			//			dec_bicodeword[p*u+v]=1;
+			//		else
+			//			dec_bicodeword[p*u+v]=0;
+			//		mask=mask<<1;
+			//	}
+			//}	
 
 			break;
 		}
@@ -2033,20 +2130,20 @@ void cheatFac()
 			dec_codeword[u] = large_vec[0][u];
 		}	
 		
-		//nonbinary --> binary
-		for(u=0;u<n;u++)
-		{	
-			value=dec_codeword[u];
-			mask=1;
-			for(v=0;v<p;v++)
-			{
-				if((value & mask)>0)
-					dec_bicodeword[p*u+v]=1;
-				else
-					dec_bicodeword[p*u+v]=0;
-				mask=mask<<1;
-			}
-		}	
+		////nonbinary --> binary
+		//for(u=0;u<n;u++)
+		//{	
+		//	value=dec_codeword[u];
+		//	mask=1;
+		//	for(v=0;v<p;v++)
+		//	{
+		//		if((value & mask)>0)
+		//			dec_bicodeword[p*u+v]=1;
+		//		else
+		//			dec_bicodeword[p*u+v]=0;
+		//		mask=mask<<1;
+		//	}
+		//}	
 	}
 
 }
@@ -2591,20 +2688,20 @@ void cheatDecoding(void)
 				dec_codeword[u]=codeword[u];
 			}
 
-			//nonbinary --> binary
-			for(u=0;u<n;u++)
-			{	
-				value=dec_codeword[u];
-				mask=1;
-				for(v=0;v<p;v++)
-				{
-					if((value & mask)>0)
-						dec_bicodeword[p*u+v]=1;
-					else
-						dec_bicodeword[p*u+v]=0;
-					mask=mask<<1;
-				}
-			}	
+			////nonbinary --> binary
+			//for(u=0;u<n;u++)
+			//{	
+			//	value=dec_codeword[u];
+			//	mask=1;
+			//	for(v=0;v<p;v++)
+			//	{
+			//		if((value & mask)>0)
+			//			dec_bicodeword[p*u+v]=1;
+			//		else
+			//			dec_bicodeword[p*u+v]=0;
+			//		mask=mask<<1;
+			//	}
+			//}	
 
 			break;
 		}
@@ -2616,20 +2713,20 @@ void cheatDecoding(void)
 			dec_codeword[u] = large_vec[0][u];
 		}	
 		
-		//nonbinary --> binary
-		for(u=0;u<n;u++)
-		{	
-			value=dec_codeword[u];
-			mask=1;
-			for(v=0;v<p;v++)
-			{
-				if((value & mask)>0)
-					dec_bicodeword[p*u+v]=1;
-				else
-					dec_bicodeword[p*u+v]=0;
-				mask=mask<<1;
-			}
-		}	
+		////nonbinary --> binary
+		//for(u=0;u<n;u++)
+		//{	
+		//	value=dec_codeword[u];
+		//	mask=1;
+		//	for(v=0;v<p;v++)
+		//	{
+		//		if((value & mask)>0)
+		//			dec_bicodeword[p*u+v]=1;
+		//		else
+		//			dec_bicodeword[p*u+v]=0;
+		//		mask=mask<<1;
+		//	}
+		//}	
 	}		
 
 }

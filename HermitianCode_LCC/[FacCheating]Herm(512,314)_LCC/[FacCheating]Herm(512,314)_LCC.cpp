@@ -28,8 +28,8 @@
 
 //conditional compile
 #ifndef _GS_Normal_
-	#define eta 3
-	#define test_vec_num 8 //the num of test_vec is 2^eta
+	#define eta 2
+	#define test_vec_num 4 //the num of test_vec is 2^eta
 #else
 	#define eta 0
 	#define test_vec_num 1 //the num of test_vec is 2^eta
@@ -109,7 +109,7 @@ int uu;	//factorisation step index
 int l, listNum[test_vec_num];	//candidate output index
 //factorization() and rcs()
 int Q[k][facpoly_Zsize][facpoly_Ysize][facpoly_Xsize];	//sequtial deduction polynomial [number of fac steps=k][rs][y_size][w+1], y_size> maxdeg_y]+rs*(deg_¦µ(k-1))
-int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
+//int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
 int output[lm+1][k], outputList[test_vec_num][lm+1][k];	//the list of candidate message [expeced number of candidate message, >rs][length of message, k]
 int expoly[2][expoly_Ysize][expoly_Xsize];	//expanded polynomial in [z+f_k-1-u*pb_k-1-u]^rs, expoly[rs][3>(max(deg_y) in encoding functions)*(rs-1)][3>(max(deg_x) in encoding functions)*(rs-1)]
 
@@ -228,42 +228,42 @@ void main()
 #ifdef cheatingEncoding
 			int file_index;
 			FILE *fin1;
-			if((fin1=fopen("bi_message.txt","a"))==NULL)
+			if((fin1=fopen("bi_message.txt","r"))==NULL)
 			{	
 				printf("bi_message.txt open filed");
 			}
 			else
 			{
 				file_index=0;
-				while(fscanf(fin1,"%d",&bi_message[file_index])!=-1)
+				while(fscanf(fin1,"%d\n",&bi_message[file_index])!=-1)
 				{
 					++file_index;
 				}
 			}
 			fclose(fin1);
 
-			if((fin1=fopen("message.txt","a"))==NULL)
+			if((fin1=fopen("message.txt","r"))==NULL)
 			{	
 				printf("message.txt open filed");
 			}
 			else
 			{
 				file_index=0;
-				while(fscanf(fin1,"%d",&message[file_index])!=-1)
+				while(fscanf(fin1,"%d\n",&message[file_index])!=-1)
 				{
 					++file_index;
 				}
 			}
 			fclose(fin1);
 
-			if((fin1=fopen("codeword.txt","a"))==NULL)
+			if((fin1=fopen("codeword.txt","r"))==NULL)
 			{	
 				printf("codeword.txt open filed");
 			}
 			else
 			{
 				file_index=0;
-				while(fscanf(fin1,"%d",&codeword[file_index])!=-1)
+				while(fscanf(fin1,"%d\n",&codeword[file_index])!=-1)
 				{
 					++file_index;
 				}
@@ -322,7 +322,7 @@ void main()
 			//**************
 
 			encoder(message,codeword);
-
+#endif
 			//convert to binary 
 			for(u=0;u<n*p;u++)	//n*4
 				bi_codeword[u]=0;
@@ -340,7 +340,7 @@ void main()
 					mask=mask<<1;
 				}
 			}
-#endif
+
 
 			//modulation
 			modulation();

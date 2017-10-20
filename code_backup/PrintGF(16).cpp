@@ -40,7 +40,7 @@ int main(void)
 		poly[j]=1;
 		for(i=q-1;i>=p;i--)
 			if(poly[i]!=0)
-			{	//primitive polynomial x^9=x^4+1
+			{	//primitive polynomial x^4=x^2+1
 				poly[i-3] = (poly[i-3]+1)%2;
 				poly[i-4] = (poly[i-4]+1)%2;
 				poly[i] = 0;

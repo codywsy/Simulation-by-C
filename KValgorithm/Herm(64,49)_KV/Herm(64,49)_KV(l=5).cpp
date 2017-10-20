@@ -6,12 +6,12 @@
 #include "FiniteFieldBasisGF(16).h"
 #include "FiniteFieldBasisCal.h"
 
-//#define _NoReduction_
+#define _NoReduction_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
 #define myWay
 #define OpenFile fp=fopen("Herm(64,49)_KV_l=5.txt","a")
-#define FrameError 310
+#define FrameError 5000
 
 //#define checkInter
 #define checkFac
@@ -129,7 +129,7 @@ int uu;	//factorisation step index
 int l, listNum;	//candidate output index
 //factorization() and rcs()
 int Q[k][facpoly_Zsize][facpoly_Ysize][facpoly_Xsize];	//sequtial deduction polynomial [number of fac steps=k][rs][y_size][w+1], y_size> maxdeg_y]+rs*(deg_¦µ(k-1))
-int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
+//int rootlist[k][lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
 int output[lm+1][k];	//the list of candidate message [expeced number of candidate message, >rs][length of message, k]
 int expoly[lm+1][expoly_Ysize][expoly_Xsize];	//expanded polynomial in [z+f_k-1-u*pb_k-1-u]^rs, expoly[rs][3>(max(deg_y) in encoding functions)*(rs-1)][3>(max(deg_x) in encoding functions)*(rs-1)]
 
@@ -292,8 +292,8 @@ void main()
 		mulNum_count=0.0;
 		totalNum_count=0.0;
 
-		flag_addNum=1; 
-		flag_mulNum=1;
+		flag_addNum=0; 
+		flag_mulNum=0;
 
 		for(j=1;j<=seq_num;j++)
 		{
@@ -785,6 +785,9 @@ void interpolation()
 	interpoint_num++;
 */	//************************
 
+	flag_addNum=1; 
+	flag_mulNum=1;
+
 	//set Group initialization
 	for(i=0;i<(lm+1);i++)	//rs
 		for(j=0;j<w;j++)	//w
@@ -1033,6 +1036,8 @@ void interpolation()
 
 	}
 
+	flag_addNum=0; 
+	flag_mulNum=0;
 
 	//find out the poly for factorization
 	//calculate the lod of poly
@@ -1056,12 +1061,21 @@ void interpolation()
 	//choose the min dgree
 	index_temp = -1;
 	temp = INT_MAX;	//must be set a biggest number;
+#ifndef _NoReduction_
 	for(j=0;j<init_polyNum;j++)
 		if( (temp>degree_temp[j]) && (degree_temp[j]<=iterNum) )
 		{
 			temp = degree_temp[j];	//min_poly leading order
 			index_temp = j;	//min_poly index
 		}
+#else
+	for(j=0;j<init_polyNum;j++)
+		if( temp>degree_temp[j])
+		{
+			temp = degree_temp[j];	//min_poly leading order
+			index_temp = j;	//min_poly index
+		}
+#endif
 
 	if(index_temp==-1)	//interpolation error
 	{
@@ -1137,11 +1151,13 @@ void factorisation()	//output: output[lm+1][k], listNum
 {
 	int i, j, u, v, z;
 
+	flag_addNum=1; 
+	flag_mulNum=1;
 
 	//initialization
-	for(u=0;u<k;u++)	//number of fac steps=k
+/*	for(u=0;u<k;u++)	//number of fac steps=k
 		for(v=0;v<lm+1;v++)	//5>rs=expected number of roots
-			rootlist[u][v]=-1;	
+			rootlist[u][v]=-1;	*/
 
 	for(u=0;u<lm+1;u++)	//5>(rs-1)=expected number of output lists
 		for(v=0;v<k;v++)	//k
@@ -1174,6 +1190,9 @@ void factorisation()	//output: output[lm+1][k], listNum
 
 	listNum = l;
 
+	flag_addNum=0; 
+	flag_mulNum=0;
+
 }
 
 void rcs(int uu)
@@ -1184,6 +1203,7 @@ void rcs(int uu)
 	int q_temp[lm+1][rcspoly_Ysize+w][rcspoly_Xsize];	//q_temp[z-deg+1][y_size>max(deg_y)+1+(rs-1)*(max(deg_y) in encoding functions)][14>w+(rs-1)*w], lc[rs]--leading coefficient polynomial
 	int index_flag;
 	int rcspoly_Ysize_1,rcspoly_Xsize_1;	//the q_temp size of the first step of factorization
+	int rootlist[lm+1];	//the list of roots [number of fac steps=k][expected number of roots in each solution, 5>rs]
 
 	//array size initialization
 	rcspoly_Ysize_1= faiMax_Ysize + facpoly_Ysize + 1;	
@@ -1196,6 +1216,10 @@ void rcs(int uu)
 
 	leadMono=0; leadMono_temp=0;	//leading monomial index
 	act=0;	//judge value for recursive search of each f_k-1-u
+
+	//initialization
+	for(v=0;v<lm+1;v++)	//5>rs=expected number of roots
+		rootlist[v]=-1;	
 
 	//find pb_k-1-uu
 	j_1 = tg_order[k-1-uu][1];
@@ -1324,10 +1348,10 @@ void rcs(int uu)
 			a=mul(lc[j], power(root[i], j));
 			b=add(a, b);
 		}
-		if(b==0)	//the root is found out, and set in rootlist[uu]
+		if(b==0)	//the root is found out, and set in rootlist[u]
 		{
 			act=1;
-			rootlist[uu][u]=root[i];
+			rootlist[u]=root[i];
 			u++;
 		}
 	}		
@@ -1337,9 +1361,9 @@ void rcs(int uu)
 	{
 		for(i=0;i<lm+1;i++)	//2>rs
 		{
-			if(rootlist[uu][i]!=-1)
+			if(rootlist[i]!=-1)
 			{	
-				alpha=rootlist[uu][i];
+				alpha=rootlist[i];
 				
 				output[l][k-1-uu]=alpha;	//output[l][k-1-uu]
 					
@@ -1546,7 +1570,8 @@ void choose()
 	double proba[lm+1], proba_temp, temp;
 	int codeword_temp[n];
 
-
+	flag_addNum=1; 
+	flag_mulNum=1;
 	//normal mode
 	//Initialise hamming distance counter
 	for(u=0;u<lm+1;u++)
@@ -1634,6 +1659,9 @@ void choose()
 		}		
 
 	}
+
+	flag_addNum=0; 
+	flag_mulNum=0;
 
 #ifdef checkFac
 	if( flag==0 && (codewordScore>Deg_iterNum) )	//Sm(c) > delta(Cm)

@@ -8,13 +8,17 @@
 
 //#define _GS_Normal_
 //#define _Complexity_
-//#define _NoReduction_
+#define _NoReduction_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
 
 //#define printfMonotable
 
-#define OpenFile fp=fopen("LCC_Herm(64,49)_eta=7.txt","a")
+#define cheatingEncoding
+
+
+#define OpenFile fp=fopen("LCC_Herm(64,49)_eta=1.txt","a")
+//#define OpenFile fp=fopen("GS_Herm(64,49).txt","a")
 #define FrameError 309
 
 #define w 4
@@ -27,8 +31,8 @@
 
 //conditional compile
 #ifndef _GS_Normal_
-	#define eta 7
-	#define test_vec_num 128 //the num of test_vec is 2^eta
+	#define eta 1
+	#define test_vec_num 2 //the num of test_vec is 2^eta
 #else
 	#define eta 0
 	#define test_vec_num 1 //the num of test_vec is 2^eta
@@ -218,6 +222,68 @@ void main()
 	printf("seq_num: %d\n", seq_num);
 	//*******************************
 
+#ifdef cheatingEncoding
+	//以读入文件方式进行预编码，而不进行真正的编码
+	int file_index;
+	FILE *fin1;
+	if ((fin1 = fopen("bi_message.txt", "r")) == NULL)
+	{
+		printf("bi_message.txt open filed");
+	}
+	else
+	{
+		file_index = 0;
+		while (fscanf(fin1, "%d", &bi_message[file_index]) != -1)
+		{
+			++file_index;
+		}
+	}
+	fclose(fin1);
+
+	if ((fin1 = fopen("message.txt", "r")) == NULL)
+	{
+		printf("message.txt open filed");
+	}
+	else
+	{
+		file_index = 0;
+		while (fscanf(fin1, "%d", &message[file_index]) != -1)
+		{
+			++file_index;
+		}
+	}
+	fclose(fin1);
+
+	if ((fin1 = fopen("codeword.txt", "r")) == NULL)
+	{
+		printf("codeword.txt open filed");
+	}
+	else
+	{
+		file_index = 0;
+		while (fscanf(fin1, "%d", &codeword[file_index]) != -1)
+		{
+			++file_index;
+		}
+	}
+	fclose(fin1);
+
+	if ((fin1 = fopen("bi_codeword.txt", "r")) == NULL)
+	{
+		printf("bi_codeword.txt open filed");
+	}
+	else
+	{
+		file_index = 0;
+		while (fscanf(fin1, "%d", &bi_codeword[file_index]) != -1)
+		{
+			++file_index;
+		}
+	}
+	fclose(fin1);
+
+#endif
+
 	for(SNR=start; SNR<=finish; SNR=SNR+interval)
 	{
 		N0=(1.0/((float)k/(float)n))/pow(10.0, SNR/10.0);
@@ -244,7 +310,7 @@ void main()
 			//*****debug*****
 			seq_num_Now=j;
 			//***************
-
+#ifndef cheatingEncoding
 			//generate binary input sequence
 			for(u=0;u<k*p;u++)	//k*4
 				bi_message[u]=rand()%2;
@@ -284,7 +350,7 @@ void main()
 					mask=mask<<1;
 				}
 			}
-
+#endif
 			//modulation
 			modulation();
 
@@ -335,7 +401,7 @@ void main()
 			
 			CWR=(double)(ChosenWrong_SeqNum)/(double)(DecSucc_SeqNum);
 			
-			printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f, Choice Errors=%2.1d, CWR=%E, Time=%.2f\r", progress, SNR, error, BER, ferror, FER,	addNum_count, mulNum_count, totalNum_count, ChosenWrong_SeqNum, CWR, (double)clock()/CLOCKS_PER_SEC);
+			printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f, Choice Errors=%2.1d, CWR=%E, Time=%.2f\r", progress, SNR, error, BER, ferror, FER, addNum_count, mulNum_count, totalNum_count, ChosenWrong_SeqNum, CWR, (double)clock()/CLOCKS_PER_SEC);
 
 			if(ferror>FrameError)
 				break;

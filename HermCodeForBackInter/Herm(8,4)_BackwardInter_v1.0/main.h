@@ -16,9 +16,9 @@
 //tgorder()
 #define tg_size 186	//more than k, tg_size represent the probably used pole basis num, (w+1)*w/2 + (w+1) * ( (w+interpoly_Ysize)-w+1 ) 
 //mono_table()
-#define weight_Zsize 4
+#define weight_Zsize 6
 #define weight_XYsize tg_size	//equals to the tg_size
-#define mono_ordinSize 200	//choose the value with debugging, equals to max weigtdegree in weight[monoTable_Zsize][weight_XYsize]
+#define mono_ordinSize 17	//choose the value with debugging, equals to max weigtdegree in weight[monoTable_Zsize][weight_XYsize]
 #define monoTable_Zsize	(lm+1) 	//equals to the interpoly_Zsize
 #define monoTable_Ysize 60	//large than interpoly_Ysize
 #define monoTable_Xsize (w+1)	//large than the interpoly_Xsize
@@ -43,9 +43,7 @@
 
 
 //conditional compile
-#//define _GS_Normal_
-
-
+//#define _GS_Normal_
 
 #ifndef _GS_Normal_
 #define eta 2
@@ -55,5 +53,9 @@
 #define test_vec_num 1 //the num of test_vec is 2^eta
 #endif
 
+
+#define _PrintGroupLod_
+
+//#define _PrintLCCLod_
 
 #endif

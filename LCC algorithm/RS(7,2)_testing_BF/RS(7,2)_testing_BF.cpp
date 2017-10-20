@@ -1319,7 +1319,7 @@ void choose(int output_codeword[n], int output_bicodeword[n*p], int output_list[
 	{
 		int index_temp;
 		mask = 1;
-		for (int j = n - 1; j >= n - eta - 1; j--)
+		for (int j = n - 1; j > n - eta - 1; j--)
 		{
 			//bit caculate
 			if ((i & mask) > 0)
