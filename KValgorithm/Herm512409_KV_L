@@ -1,0 +1,90 @@
+﻿生成启动时间为 2017/4/16 17:16:45。
+     1>项目“E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm512409_KV_L=1\Herm512409_KV_L=1\Herm512409_KV_L=1.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug\Herm512409_KV_L=1.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         D:\software\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Herm512409_KV_L=1.cpp
+         Herm512409_KV_L=1.cpp
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(104): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(223): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(270): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(283): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(287): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(352): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(354): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(355): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(356): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(371): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(378): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(385): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(392): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(399): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(406): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(413): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(420): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(253) : 参见“fscanf”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(430): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(432): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(697): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(702): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\software\microsoft visual studio 10.0\vc\include\stdio.h(234) : 参见“fopen”的声明
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(209): warning C4101: “value”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(209): warning C4101: “num”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(728): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(746): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(747): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(751): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(834): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(843): warning C4101: “v”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(846): warning C4101: “tempMM”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(845): warning C4101: “tempRM”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(1444): warning C4101: “i”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(1444): warning C4101: “z”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(1444): warning C4101: “j”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(1879): warning C4101: “value”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(1879): warning C4101: “i”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(2300): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(2300): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(2360): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(2377): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(2631): warning C4101: “v_temp”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(2631): warning C4101: “u_temp”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(2860): warning C4101: “value”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm512409_kv_l=1\herm512409_kv_l=1.cpp(2953): warning C4101: “v”: 未引用的局部变量
+       ManifestResourceCompile:
+         所有输出均为最新。
+       Link:
+         D:\software\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm512409_KV_L=1\Debug\Herm512409_KV_L=1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Herm512409_KV_L=1.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm512409_KV_L=1\Debug\Herm512409_KV_L=1.pdb" /SUBSYSTEM:CONSOLE /STACK:"20971520" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm512409_KV_L=1\Debug\Herm512409_KV_L=1.lib" /MACHINE:X86 Debug\Herm512409_KV_L=1.exe.embed.manifest.res
+         Debug\FiniteFieldBasisCal.obj
+         "Debug\FiniteFieldBasisGF(64).obj"
+         Debug\Herm512409_KV_L=1.obj
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Herm512409_KV_L=1.exe.embed.manifest" /manifest Debug\Herm512409_KV_L=1.exe.intermediate.manifest
+         所有输出均为最新。
+       LinkEmbedManifest:
+         所有输出均为最新。
+         Herm512409_KV_L=1.vcxproj -> E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm512409_KV_L=1\Debug\Herm512409_KV_L=1.exe
+       FinalizeBuildStatus:
+         正在删除文件“Debug\Herm512409_KV_L=1.unsuccessfulbuild”。
+         正在对“Debug\Herm512409_KV_L=1.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm512409_KV_L=1\Herm512409_KV_L=1\Herm512409_KV_L=1.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.91

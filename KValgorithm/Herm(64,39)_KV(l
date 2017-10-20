@@ -1,0 +1,42 @@
+﻿生成启动时间为 2017/4/17 14:29:40。
+     1>项目“E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm(64,39)_KV(l=2)\Herm(64,39)_KV(l=2)\Herm(64,39)_KV(l=2).vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>ClCompile:
+         D:\software\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\FiniteFieldBasisCal.cpp "..\FiniteFieldBasisGF(16).cpp" "..\Herm(64,39)_KV(l=2) .cpp"
+         Herm(64,39)_KV(l=2) .cpp
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(113): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(404): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(406): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(206): warning C4101: “value”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(206): warning C4101: “num”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(613): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(631): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(632): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(636): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(719): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(728): warning C4101: “v”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(731): warning C4101: “tempMM”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(730): warning C4101: “tempRM”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(1402): warning C4101: “i”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(1402): warning C4101: “z”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(1402): warning C4101: “j”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(1822): warning C4101: “value”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(1822): warning C4101: “i”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(2234): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(2294): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(2311): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(2565): warning C4101: “v_temp”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\herm(64,39)_kv(l=2)\herm(64,39)_kv(l=2) .cpp(2565): warning C4101: “u_temp”: 未引用的局部变量
+         FiniteFieldBasisGF(16).cpp
+         FiniteFieldBasisCal.cpp
+         正在生成代码...
+       Link:
+         D:\software\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm(64,39)_KV(l=2)\Debug\Herm(64,39)_KV(l=2).exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm(64,39)_KV(l=2)\Debug\Herm(64,39)_KV(l=2).pdb" /SUBSYSTEM:CONSOLE /STACK:"1073741824" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm(64,39)_KV(l=2)\Debug\Herm(64,39)_KV(l=2).lib" /MACHINE:X86 Debug\FiniteFieldBasisCal.obj
+         "Debug\FiniteFieldBasisGF(16).obj"
+         "Debug\Herm(64,39)_KV(l=2) .obj"
+         Herm(64,39)_KV(l=2).vcxproj -> E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm(64,39)_KV(l=2)\Debug\Herm(64,39)_KV(l=2).exe
+     1>已完成生成项目“E:\424实验室工作\424实验室\Simulation by C\KValgorithm\Herm(64,39)_KV(l=2)\Herm(64,39)_KV(l=2)\Herm(64,39)_KV(l=2).vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:01.60
