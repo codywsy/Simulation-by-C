@@ -20,7 +20,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Herm(512,314)_KVoptimal.cpp">
+    <ClCompile Include="..\..\Herm(64,39)_KVoptimal.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

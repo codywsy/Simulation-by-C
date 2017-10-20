@@ -6,7 +6,7 @@
 #include "FiniteFieldBasisGF(64).h"
 #include "FiniteFieldBasisCal.h"
 
-//#define _NoReduction_
+#define _NoReduction_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
 #define myWay
@@ -15,8 +15,10 @@
 
 //#define checkInter
 #define checkFac
-//#define cheatingDecoding
 #define cheatingEncoding
+
+#define cheatFac
+
 
 //#define printCoeffTable_file
 //#define printDemodulation
@@ -189,8 +191,8 @@ float comb(float, float);
 int *** Create3DActiveArray(int ***pArr, int x, int y, int z);
 void Free3DActiveArray(int ***pArr, int x, int y, int z);
 
-#ifdef cheatingDecoding
-void decoding(void);
+#ifdef cheatFac
+void cheatingFac(void);
 #endif
 
 
@@ -379,6 +381,20 @@ void main()
 			}
 			fclose(fin1);
 
+			if((fin1=fopen("bi_codeword.txt","a"))==NULL)
+			{	
+				printf("bi_codeword.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&bi_codeword[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
 #endif
 
 
@@ -404,8 +420,8 @@ void main()
 		mulNum_count=0.0;
 		totalNum_count=0.0;
 
-		flag_addNum=1; 
-		flag_mulNum=1;
+		flag_addNum=0; 
+		flag_mulNum=0;
 
 		for(j=1;j<=seq_num;j++)
 		{
@@ -456,6 +472,60 @@ void main()
 					mask=mask<<1;
 				}
 			}
+
+			////debug: output a (512, 409) Hermitian code
+			//FILE *fout1;
+			//if ((fout1 = fopen("bi_message.txt", "a")) == NULL)
+			//{
+			//	printf("bi_message.txt open filed");
+			//}
+			//else
+			//{
+			//	for (u = 0; u<k*p; u++)
+			//	{
+			//		fprintf(fout1, "%d\n", bi_message[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
+			//if ((fout1 = fopen("message.txt", "a")) == NULL)
+			//{
+			//	printf("message.txt open filed");
+			//}
+			//else
+			//{
+			//	for (u = 0; u<k; u++)
+			//	{
+			//		fprintf(fout1, "%d\n", message[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
+			//if ((fout1 = fopen("codeword.txt", "a")) == NULL)
+			//{
+			//	printf("codeword.txt open filed");
+			//}
+			//else
+			//{
+			//	for (u = 0; u<n; u++)
+			//	{
+			//		fprintf(fout1, "%d\n", codeword[u]);
+			//	}
+			//}
+			//fclose(fout1);
+			//if ((fout1 = fopen("bi_codeword.txt", "a")) == NULL)
+			//{
+			//	printf("bi_codeword.txt open filed");
+			//}
+			//else
+			//{
+			//	for (u = 0; u<n*p; u++)
+			//	{
+			//		fprintf(fout1, "%d\n", bi_codeword[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
 #endif
 
 			//modulation
@@ -471,24 +541,22 @@ void main()
 			iterNum = 0;
 			MatrixConvert();
 
+
+
+
+
 			//LIST DECODER
 			//test vector construction
 //			test_vec_contruction();
 			//interpolation
 			interpolation();
 
-#ifndef cheatingDecoding
+#ifndef cheatFac
 			//factorisation
 			factorisation();
 
 			//choose
 			choose();
-#endif
-
-#ifdef cheatingDecoding
-			//cheating decoding
-			decoding();
-#endif
 
 			//bit error rate calculation
 			int temp=error;
@@ -509,6 +577,24 @@ void main()
 			//	v++;
 			//	successError_count = successError_count + (epcount1-successError_count)/(double)(v);
 			}
+
+#else
+			//cheating decoding
+			cheatingFac();
+
+			//frame error rate calculation
+			int temp = ferror;
+			for(u=0;u<n;u++)
+				if(dec_codeword[u]!=codeword[u])
+				{
+					ferror++;
+					break;
+				}
+
+			if(temp==ferror)
+				v++;
+
+#endif
 
 			//channelError_count = channelError_count + (epcount1-channelError_count)/(double)(j);
 			addNum_count = addNum_count + (addNum-addNum_count)/(double)(j);
@@ -900,6 +986,9 @@ void interpolation()
 	interpoint_num++;
 */	//************************
 
+	flag_addNum=1; 
+	flag_mulNum=1;
+
 	//set Group initialization
 	for(i=0;i<(lm+1);i++)	//rs
 		for(j=0;j<w;j++)	//w
@@ -1148,13 +1237,15 @@ void interpolation()
 
 	}
 
+	flag_addNum=0; 
+	flag_mulNum=0;
 
 	//find out the poly for factorization
 	//calculate the lod of poly
 	for(j=0;j<init_polyNum;j++)
 	{
 		temp = -1;
-		degree_temp[j] = 0;
+		degree_temp[j] = 0;	//leading order
 	
 		for(u=0;u<interpoly_Zsize;u++)	//rs
 			for(v=0;v<interpoly_Ysize;v++)	//max(deg_y)+1
@@ -1171,12 +1262,21 @@ void interpolation()
 	//choose the min dgree
 	index_temp = -1;
 	temp = INT_MAX;	//must be set a biggest number;
+#ifndef _NoReduction_
 	for(j=0;j<init_polyNum;j++)
 		if( (temp>degree_temp[j]) && (degree_temp[j]<=iterNum) )
 		{
 			temp = degree_temp[j];	//min_poly leading order
 			index_temp = j;	//min_poly index
 		}
+#else
+	for(j=0;j<init_polyNum;j++)
+		if( temp>degree_temp[j])
+		{
+			temp = degree_temp[j];	//min_poly leading order
+			index_temp = j;	//min_poly index
+		}
+#endif
 
 	if(index_temp==-1)	//interpolation error
 	{
@@ -1252,6 +1352,8 @@ void factorisation()	//output: output[lm+1][k], listNum
 {
 	int i, j, u, v, z;
 
+	flag_addNum=1; 
+	flag_mulNum=1;
 
 	//initialization
 	//for(u=0;u<k;u++)	//number of fac steps=k
@@ -1294,6 +1396,9 @@ void factorisation()	//output: output[lm+1][k], listNum
 		printf("\n\nIn %d frame, output size = %d is larger than (lm+1)", seq_num_Now, l);
 	}
 
+	flag_addNum=0; 
+	flag_mulNum=0;
+
 }
 
 void rcs(int uu)
@@ -1332,10 +1437,10 @@ void rcs(int uu)
 	i_1 = tg_order[k-1-uu][0];
 
 	//initialise q_temp
-	//for(i=0;i<lm+1;i++)	//rs
-	//	for(j=0;j<rcspoly_Ysize;j++)	
-	//		for(u=0;u<rcspoly_Xsize;u++)	
-	//			q_temp[i][j][u]=0;
+	for(i=0;i<lm+1;i++)	//rs
+		for(j=0;j<rcspoly_Ysize+w;j++)	
+			for(u=0;u<rcspoly_Xsize;u++)	
+				q_temp[i][j][u]=0;
 	//memset(q_temp,0,sizeof(q_temp));
 
 	//Calculate q_temp[pb_k-1-u]=q[u][pb_k-1-u]
@@ -1677,7 +1782,8 @@ void choose()
 	double proba[lm+1], proba_temp, temp;
 	int codeword_temp[n];
 
-
+	flag_addNum=1; 
+	flag_mulNum=1;
 	//normal mode
 	//Initialise hamming distance counter
 	for(u=0;u<lm+1;u++)
@@ -1765,6 +1871,9 @@ void choose()
 		}		
 
 	}
+
+	flag_addNum=0; 
+	flag_mulNum=0;
 
 #ifdef checkFac
 	if( flag==0 && (codewordScore>Deg_iterNum) )	//Sm(c) > delta(Cm)
@@ -2468,11 +2577,11 @@ void coefficientSearch(int effTable[][tableSize_alpha][tableSize_a])	//input the
 					{
 						effTable[i][z][j]=1;
 					}
-/*					else
+					else
 					{
 						printf("\n\n0.tableSize_alpha is not large enough\n\n");
 					}
-*/					
+					
 					break;
 				}
 
@@ -2540,11 +2649,11 @@ void coefficientSearch(int effTable[][tableSize_alpha][tableSize_a])	//input the
 						{
 							effTable[i][z][j] = poly[index_y][index_x];
 						}
-/*						else
+						else
 						{
 							printf("\n\n1.tableSize_alpha is not large enough\n\n");
 						}
-*/						break;
+						break;
 					}
 
 				if(z==-1)	//detecting if the zb_alpha is not large enough to finde the corresponind monomial
@@ -2635,14 +2744,13 @@ void coefficientSearch(int effTable[][tableSize_alpha][tableSize_a])	//input the
 }	
 //********************************
 
-#ifdef cheatingDecoding
-void decoding(void)
+void cheatingFac(void)
 {
 	int i, j, value;
 	unsigned int mask=1;
 	float proba_temp;
 
-	//cal the deg(1,wz) corresponding to Q_min
+	//cal the deg(1,wz) corresponding to C_M
 	Deg_iterNum = -1;
 	int	flag_iterNum = 1;	//make the search part more effciency
 		for(int u=0; u<(lm+1) && flag_iterNum ;u++)
@@ -2685,25 +2793,25 @@ void decoding(void)
 		}
 
 		//bi_codeword[n*p]
-		//nonbinary --> binary
-		for(i=0;i<n;i++)
-		{	
-			value=dec_codeword[i];
-			mask=1;
-			for(j=0;j<p;j++)
-			{
-				if((value & mask)>0)
-					dec_bicodeword[p*i+j]=1;
-				else
-					dec_bicodeword[p*i+j]=0;
-				mask=mask<<1;
-			}
-		}	
+		////nonbinary --> binary
+		//for(i=0;i<n;i++)
+		//{	
+		//	value=dec_codeword[i];
+		//	mask=1;
+		//	for(j=0;j<p;j++)
+		//	{
+		//		if((value & mask)>0)
+		//			dec_bicodeword[p*i+j]=1;
+		//		else
+		//			dec_bicodeword[p*i+j]=0;
+		//		mask=mask<<1;
+		//	}
+		//}	
 
 	}
 
 }
-#endif
+
 
 
 int *** Create3DActiveArray(int ***pArr, int x, int y, int z)

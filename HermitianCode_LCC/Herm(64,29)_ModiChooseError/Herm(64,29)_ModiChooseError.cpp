@@ -9,8 +9,12 @@
 #define _NoReduction_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
+#define _PrintComplexity_
 
-#define OpenFile fp=fopen("LCC_Herm(64,29)_eta=1.txt","a")
+#define cheatingEncoding
+
+#define OpenFile fp=fopen("LCC_Herm(64,29)_eta=3.txt","a")
+#define FrameError 2000
 
 #define w 4
 #define weiz 34
@@ -18,12 +22,12 @@
 #define iterNum 64	//when m=1, C is equal to n
 #define able_correct 14
 #define pointNum 2
-#define interval 1
+#define interval 0.5
 
 //conditional compile
 #ifndef _GS_Normal_
-	#define eta 1
-	#define test_vec_num 2 //the num of test_vec is 2^eta
+	#define eta 3
+	#define test_vec_num 8 //the num of test_vec is 2^eta
 #else
 	#define eta 0
 	#define test_vec_num 1 //the num of test_vec is 2^eta
@@ -122,7 +126,9 @@ int Q_uncom_elem[test_vec_num][init_polyNum][interpoly_Zsize][interpoly_Ysize][i
 	//some var about computation complexity
 	unsigned long int addNum, mulNum, addNum_temp, mulNum_temp;
 	int flag_addNum=0, flag_mulNum=0;
-
+#ifdef	_PrintComplexity_
+	unsigned long int commonNum, uncommonNum, facNum;
+#endif
 	//*******************
 
 void findpoints(void);
@@ -157,6 +163,10 @@ void main()
 	double progress;
 	double channelError_count, successError_count;
 	double addNum_count, mulNum_count, totalNum_count;
+
+#ifdef	_PrintComplexity_
+	double commonNum_count, uncommonNum_count, facNum_count;
+#endif
 
 	FILE *fp;
 	if((OpenFile)==NULL)
@@ -214,6 +224,68 @@ void main()
 	printf("seq_num: %d\n", seq_num);
 	//*******************************
 
+#ifdef cheatingEncoding
+			//读入文件的内容
+			int file_index;
+			FILE *fin1;
+			if((fin1=fopen("bi_message.txt","r"))==NULL)
+			{	
+				printf("bi_message.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&bi_message[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+			if((fin1=fopen("message.txt","r"))==NULL)
+			{	
+				printf("message.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&message[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+			if((fin1=fopen("codeword.txt","r"))==NULL)
+			{	
+				printf("codeword.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&codeword[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+			if((fin1=fopen("bi_codeword.txt","r"))==NULL)
+			{	
+				printf("bi_codeword.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&bi_codeword[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+#endif
+
 	for(SNR=start; SNR<=finish; SNR=SNR+interval)
 	{
 		N0=(1.0/((float)k/(float)n))/pow(10.0, SNR/10.0);
@@ -230,18 +302,31 @@ void main()
 		ChosenWrong_SeqNum=0;
 		CWR=0.0;
 
+
 		addNum_count=0.0;
 		mulNum_count=0.0;
 		totalNum_count=0.0;
+
+#ifdef	_PrintComplexity_
+		commonNum_count = 0.0;
+		uncommonNum_count = 0.0;
+		facNum_count = 0.0;
+#endif
 
 		for(j=1;j<=seq_num;j++)
 		{
 			addNum=0;
 			mulNum=0;
+#ifdef	_PrintComplexity_
+			commonNum = 0;
+			uncommonNum = 0;
+			facNum = 0;
+#endif
 			//*****debug*****
 			seq_num_Now=j;
 			//***************
 
+#ifndef cheatingEncoding
 			//generate binary input sequence
 			for(u=0;u<k*p;u++)	//k*4
 				bi_message[u]=rand()%2;
@@ -257,10 +342,6 @@ void main()
 					num=num*2;
 				}
 			}
-
-			//****debug*****
-//			message[0]=0;	message[1]=0;	message[2]=0;	message[3]=0;
-			//**************
 
 			encoder(message,codeword);
 
@@ -281,6 +362,60 @@ void main()
 					mask=mask<<1;
 				}
 			}
+
+			////debug: output a (64,49) Hermitian code
+			//FILE *fout1; 
+			//if((fout1=fopen("bi_message.txt","a"))==NULL)
+			//{	
+			//	printf("bi_message.txt open filed");
+			//}
+			//else
+			//{
+			//	for(u=0;u<k*p;u++)
+			//	{
+			//		fprintf(fout1,"%d\n",bi_message[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
+			//if((fout1=fopen("message.txt","a"))==NULL)
+			//{	
+			//	printf("message.txt open filed");
+			//}
+			//else
+			//{
+			//	for(u=0;u<k;u++)
+			//	{
+			//		fprintf(fout1,"%d\n",message[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
+			//if((fout1=fopen("codeword.txt","a"))==NULL)
+			//{	
+			//	printf("codeword.txt open filed");
+			//}
+			//else
+			//{
+			//	for(u=0;u<n;u++)
+			//	{
+			//		fprintf(fout1,"%d\n",codeword[u]);
+			//	}
+			//}
+			//fclose(fout1);
+			//if((fout1=fopen("bi_codeword.txt","a"))==NULL)
+			//{	
+			//	printf("bi_codeword.txt open filed");
+			//}
+			//else
+			//{
+			//	for(u=0;u<n*p;u++)
+			//	{
+			//		fprintf(fout1,"%d\n",bi_codeword[u]);
+			//	}
+			//}
+			//fclose(fout1);
+#endif
 
 			//modulation
 			modulation();
@@ -326,6 +461,12 @@ void main()
 			mulNum_count = mulNum_count + (mulNum-mulNum_count)/(double)(j);
 			totalNum_count = addNum_count + mulNum_count;
 
+#ifdef	_PrintComplexity_
+			commonNum_count = commonNum_count + (commonNum - commonNum_count) / (double)(j);
+			uncommonNum_count = uncommonNum_count + (uncommonNum - uncommonNum_count) / (double)(j);
+			facNum_count = facNum_count + (facNum - facNum_count) / (double)(j);
+#endif
+
 			progress=(double)(j*100)/(double)seq_num;
 			BER=(double)(error)/(double)(n*p*j);
 			FER=(double)(ferror)/(double)(j);
@@ -334,11 +475,11 @@ void main()
 			
 			printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f, Choice Errors=%2.1d, CWR=%E\r", progress, SNR, error, BER, ferror, FER,	addNum_count, mulNum_count, totalNum_count, ChosenWrong_SeqNum, CWR);
 
-			if(ferror>209)
+			if(ferror>FrameError)
 				break;
 		}
 
-		if(ferror>209)
+		if(ferror>FrameError)
 		{
 			BER=(double)error/(double)(n*p*j);
 			FER=(double)(ferror)/(double)(j);
@@ -354,6 +495,12 @@ void main()
 		OpenFile;
 		fprintf(fp,"Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f, Choice Errors=%2.1d, CWR=%E\n", progress, SNR, error, BER, ferror, FER, addNum_count, mulNum_count, totalNum_count, ChosenWrong_SeqNum, CWR);
 		fclose(fp);
+
+#ifdef	_PrintComplexity_
+		FILE *fp= fopen("3parts Complexity.txt", "a");
+		fprintf(fp, "commonNum = %0.2f\tuncommonNum = %0.2f\tfacNum = %0.2f\n", commonNum_count, uncommonNum_count, facNum_count);
+		fclose(fp);
+#endif
 
 	}
 
@@ -971,6 +1118,12 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 			
 		flag_addNum=1;
 		flag_mulNum=1;
+
+#ifdef _PrintComplexity_
+		addNum_temp = addNum;
+		mulNum_temp = mulNum;
+#endif
+
 		//Calculate the hasse derivative mapping of each polynomials
 		j_min=-1;
 		for(j=0;j<init_polyNum;j++)	//wrt each polynomial
@@ -1129,6 +1282,10 @@ void com_elem_interpolation(int g[][interpoly_Zsize][interpoly_Ysize][interpoly_
 			}
 		}
 
+#ifdef _PrintComplexity_
+		commonNum += (addNum - addNum_temp) + (mulNum - mulNum_temp);
+#endif
+
 		flag_addNum = 0;
 		flag_mulNum = 0;
 	
@@ -1258,7 +1415,13 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 		act[j]=1;
 #endif
 	flag_addNum=1;
-	flag_mulNum=1;		
+	flag_mulNum=1;	
+
+#ifdef _PrintComplexity_
+	addNum_temp = addNum;
+	mulNum_temp = mulNum;
+#endif    
+
 	//Calculate the hasse derivative mapping of each polynomials
 	for(j=0;j<init_polyNum;j++)
 		if(act[j]==1)
@@ -1531,6 +1694,10 @@ void uncom_elem_interpolation(int interpoint[4],int inGroup[][interpoly_Zsize][i
 		}
 	}
 
+#ifdef _PrintComplexity_
+	uncommonNum += (addNum - addNum_temp) + (mulNum - mulNum_temp);
+#endif    
+
 	flag_addNum = 0;
 	flag_mulNum = 0;	
 	
@@ -1666,8 +1833,23 @@ void factorisation(void)
 		#endif
 
 
+		flag_addNum = 1;
+		flag_mulNum = 1;
+
+#ifdef _PrintComplexity_
+		addNum_temp = addNum;
+		mulNum_temp = mulNum;
+#endif    
+
 		//recursive coefficient search
 		rcs(uu);
+
+#ifdef _PrintComplexity_
+		facNum += (addNum - addNum_temp) + (mulNum - mulNum_temp);
+#endif    
+			
+		flag_addNum = 0;
+		flag_mulNum = 0;
 
 		//store the necessary data
 		for(u=0;u<lm+1;u++)	//5>(rs-1)=expected number of output lists
@@ -1707,8 +1889,6 @@ void rcs(int uu)
 	leadMono=0; leadMono_temp=0;	//leading monomial index
 	act=0;	//judge value for recursive search of each f_k-1-u
 
-	flag_addNum = 1;
-	flag_mulNum = 1;
 	//find pb_k-1-uu
 	j_1 = tg_order[k-1-uu][1];
 	i_1 = tg_order[k-1-uu][0];
@@ -1925,9 +2105,6 @@ void rcs(int uu)
 		}
 	}
 
-	flag_addNum = 0;
-	flag_mulNum = 0; 
-	
 }
 
 void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xsize])

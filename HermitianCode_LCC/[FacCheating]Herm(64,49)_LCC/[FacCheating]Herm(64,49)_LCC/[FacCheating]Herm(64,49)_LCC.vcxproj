@@ -82,6 +82,9 @@
     <ClInclude Include="..\FiniteFieldBasisCal.h" />
     <ClInclude Include="..\FiniteFieldBasisGF(16).h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="basic_input.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

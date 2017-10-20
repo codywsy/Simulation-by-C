@@ -44,6 +44,19 @@ int power(int a, int b)
 {
 	int temp,pow_result=-1;
 
+	if (flag_mulNum == 1)
+	{
+		if (b>1)
+			mulNum += (b - 1);
+	}
+
+	//mulNum increasing one
+	if (flag_mulNum == 1)
+	{
+		if (b>1)
+			mulNum += (b - 1);
+	}
+
 	if(b==0)
 	{
 		pow_result=1;

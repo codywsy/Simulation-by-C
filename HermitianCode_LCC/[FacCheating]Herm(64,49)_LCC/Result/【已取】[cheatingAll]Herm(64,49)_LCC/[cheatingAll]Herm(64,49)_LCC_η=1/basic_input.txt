@@ -1,3 +1,3 @@
-start SNR:0
-finish SNR:7
-seq_num:800000000
+start SNR:8
+finish SNR:8
+seq_num:2100000000

@@ -78,7 +78,7 @@
     <None Include="basic_input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Herm(512,314)_KVoptimal.cpp" />
+    <ClCompile Include="..\..\Herm(64,39)_KVoptimal.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

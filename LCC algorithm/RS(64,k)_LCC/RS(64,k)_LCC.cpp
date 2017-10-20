@@ -20,9 +20,10 @@
 //mode_genius				mode = 4
 #define mode 2
 #define finiteField 64
-#define OpenFile fp=fopen("LCC(63,49)η=1.txt","a")
-#define FrameError 309
+#define OpenFile fp=fopen("LCC(63,47)η=1.txt","a")
+#define FrameError 249
 //#define _GS_Normal_	//GS mode has error
+#define cheatingEncoding
 
 //conditional compile
 #ifndef _GS_Normal_
@@ -41,7 +42,7 @@
 #define checkChoose	
 
 //************variable define***************
-#define k 49  //length of message
+#define k 47  //length of message
 //#define eta 7 // chosen num
 //#define test_vec_num 128 //the num of test_vec is 2^eta
 #define able_correct_num ((n-k+1)/2)
@@ -51,7 +52,7 @@
 #define pointNum 2 // the number of constell point == 2^V
 #define choose_num 2 //the num of codeword choice, choose 2 in BASIC LCC algorithm
 
-#define interval 1
+#define interval 0.5
  
 //****modify variable**********
 #define monoTable_Ysize 2	//designed to cover fully, larger than monoOrder_Ysize
@@ -207,9 +208,6 @@ void main()
 
 	srand(1977);
 
-	flag_addNum=1;
-	flag_mulNum=1;
-
 	mono_table();
 
 	generator();
@@ -231,6 +229,68 @@ void main()
 	printf("seq_num: %d\n", seq_num);
 	//*******************************
 
+#ifdef cheatingEncoding
+	//以读入文件方式进行预编码，而不进行真正的编码
+	int file_index;
+	FILE *fin1;
+	if ((fin1 = fopen("bi_message.txt", "r")) == NULL)
+	{
+		printf("bi_message.txt open filed");
+	}
+	else
+	{
+		file_index = 0;
+		while (fscanf(fin1, "%d", &bi_message[file_index]) != -1)
+		{
+			++file_index;
+		}
+	}
+	fclose(fin1);
+
+	if ((fin1 = fopen("message.txt", "r")) == NULL)
+	{
+		printf("message.txt open filed");
+	}
+	else
+	{
+		file_index = 0;
+		while (fscanf(fin1, "%d", &message[file_index]) != -1)
+		{
+			++file_index;
+		}
+	}
+	fclose(fin1);
+
+	if ((fin1 = fopen("codeword.txt", "r")) == NULL)
+	{
+		printf("codeword.txt open filed");
+	}
+	else
+	{
+		file_index = 0;
+		while (fscanf(fin1, "%d", &codeword[file_index]) != -1)
+		{
+			++file_index;
+		}
+	}
+	fclose(fin1);
+
+	if ((fin1 = fopen("bi_codeword.txt", "r")) == NULL)
+	{
+		printf("bi_codeword.txt open filed");
+	}
+	else
+	{
+		file_index = 0;
+		while (fscanf(fin1, "%d", &bi_codeword[file_index]) != -1)
+		{
+			++file_index;
+		}
+	}
+	fclose(fin1);
+
+#endif
+
 	for(SNR=start;SNR<=finish;SNR+=interval)
 	{	
 		N0=(1.0/(float(k)/float(n)))/pow(10.0, SNR/10.0);
@@ -250,8 +310,13 @@ void main()
 
 		for(j=1;j<=seq_num;j++)
 		{
+			flag_addNum=1;
+			flag_mulNum=1;
+
 			addNum=0;
 			mulNum=0;
+
+#ifndef cheatingEncoding
 			//printf("\n\n*************For the %dth frame*************:\n", j);
 			//Generate binary message
 			for(i=0;i<k*p;i++)
@@ -287,9 +352,61 @@ void main()
 					mask=mask<<1;
 				}
 			}
-			
 
+			////debug: output a (63, k) Hermitian code
+			//FILE *fout1;
+			//if ((fout1 = fopen("bi_message.txt", "a")) == NULL)
+			//{
+			//	printf("bi_message.txt open filed");
+			//}
+			//else
+			//{
+			//	for (u = 0; u<k*p; u++)
+			//	{
+			//		fprintf(fout1, "%d\n", bi_message[u]);
+			//	}
+			//}
+			//fclose(fout1);
 
+			//if ((fout1 = fopen("message.txt", "a")) == NULL)
+			//{
+			//	printf("message.txt open filed");
+			//}
+			//else
+			//{
+			//	for (u = 0; u<k; u++)
+			//	{
+			//		fprintf(fout1, "%d\n", message[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
+			//if ((fout1 = fopen("codeword.txt", "a")) == NULL)
+			//{
+			//	printf("codeword.txt open filed");
+			//}
+			//else
+			//{
+			//	for (u = 0; u<n; u++)
+			//	{
+			//		fprintf(fout1, "%d\n", codeword[u]);
+			//	}
+			//}
+			//fclose(fout1);
+			//if ((fout1 = fopen("bi_codeword.txt", "a")) == NULL)
+			//{
+			//	printf("bi_codeword.txt open filed");
+			//}
+			//else
+			//{
+			//	for (u = 0; u<n*p; u++)
+			//	{
+			//		fprintf(fout1, "%d\n", bi_codeword[u]);
+			//	}
+			//}
+			//fclose(fout1);
+
+#endif			
 
 			modulation();
 			
@@ -350,10 +467,16 @@ void main()
 
 			BER=(double)(error)/(double)(n*p*j);
 			FER=(double)(ferror)/(double)(j);
-			printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f, CWR=%E\r", progress, SNR, error, BER, ferror, FER, addNum_count, mulNum_count, totalNum_count, ChosenWrong_Rate);
+
+			if(j%300==0)
+				printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f, CWR=%E\r", progress, SNR, error, BER, ferror, FER, addNum_count, mulNum_count, totalNum_count, ChosenWrong_Rate);
 
 			if(ferror>FrameError)
 				break;
+
+			flag_addNum=0;
+			flag_mulNum=0;
+
 		}
 
 
@@ -401,6 +524,12 @@ int power(int a, int b)
 {
 	int temp,pow_result=-1;
 
+	if (flag_mulNum)
+	{
+		if (b>1)
+			mulNum += (b - 1);
+	}
+
 	if(b==0)
 	{
 		pow_result=1;
@@ -412,11 +541,7 @@ int power(int a, int b)
 		return pow_result;
 	}
 	else if(a>0 && b!=0)
-	{
-		if(flag_mulNum==1)
-		{
-			mulNum += b;
-		}		
+	{		
 		temp = (logNum[a]*b) % (q-1);
 		pow_result=mularray[temp];
 		return pow_result;
@@ -1391,6 +1516,8 @@ void com_elem_interpolation(int Q_temp[][interpoly_Ysize][interpoly_Xsize],int i
 		}
 #ifdef checkInterpolation
 		//********debug***************
+		flag_addNum=0;
+		flag_mulNum=0;
 		for(int h=0;h<lm+1;h++)
 		{
 			temp1=0;
@@ -1409,6 +1536,9 @@ void com_elem_interpolation(int Q_temp[][interpoly_Ysize][interpoly_Xsize],int i
 //				printf("\nsucceed");
 		
 		}
+		flag_addNum=1;
+		flag_mulNum=1;
+
 	//***************************
 #endif
 	}	
@@ -1648,6 +1778,8 @@ void uncom_elem_interpolation(int interpoint[3],int inGroup[][lm+1][n+1],int out
 
 #ifdef checkInterpolation
 	//*******debug************
+	flag_addNum=0;
+	flag_mulNum=0;
 	for(j=0;j<lm+1;j++)
 	{
 		temp1=0;
@@ -1684,6 +1816,8 @@ void uncom_elem_interpolation(int interpoint[3],int inGroup[][lm+1][n+1],int out
 //		else if(temp1==0)
 //			printf("\nsucceed");
 	}
+	flag_addNum=1;
+	flag_mulNum=1;
 	//*********************
 #endif
 
@@ -1744,6 +1878,9 @@ void factorization(void)
 		int test_poly[test_vec_num][lm+1][n+k+1];
 		int errorCheck_temp;
 
+		flag_addNum=0;
+		flag_mulNum=0;
+
 		for(u=0;u<lm+1;u++)
 			for(v=0;v<X_poly_size;v++)
 				test_poly[j][u][v]=0;
@@ -1786,6 +1923,9 @@ void factorization(void)
 		{
 			checkFac_flag[j]=1;
 		}
+	
+		flag_addNum=1;
+		flag_mulNum=1;
 		//***************************
 #endif
 
@@ -2088,27 +2228,36 @@ void choose(void)
 		//***********************
 #elif mode == 2		
 		//mode2: posteriori probablility
-		float proba[test_vec_num];
-		float proba_temp=0.0;
+		float log_proba[test_vec_num];
+		float log_proba_temp=0.0;
+		int flag_proba = 0;
 		min_num=-1;
 		for(j=0;j<test_vec_num;j++)
 			if(valid_flag[j]==1)
 			{
-				proba[j]=1.0;
+				log_proba[j]=0.0;
 				for(i=0;i<n;i++)
 				{
 					for(u=0;u<q;u++)
 						if(codeword_temp[j][i]==root[u])
 						{	
-							proba[j] = proba[j]*RM[u][i];
+							log_proba[j] = log_proba[j] + log(RM[u][i]);
 							break;
 						}
 				}
 
-				if(proba_temp < proba[j])
+				if(flag_proba == 0)
 				{
-					proba_temp=proba[j];
-					min_num=j;
+					log_proba_temp = log_proba[j];
+					min_num = j;
+					flag_proba = 1;
+				}
+				else {
+					if(log_proba_temp < log_proba[j])
+					{
+						log_proba_temp=log_proba[j];
+						min_num=j;
+					}
 				}
 
 			}

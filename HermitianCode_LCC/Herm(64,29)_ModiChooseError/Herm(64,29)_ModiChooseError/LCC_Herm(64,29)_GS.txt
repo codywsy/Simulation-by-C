@@ -1,0 +1,3 @@
+Progress=100.0, SNR=10.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, addNum=27091.16, mulNum=142422.02, total_num=169513.18, Choice Errors= 0, CWR=0.000000E+000
+Progress=100.0, SNR=10.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, addNum=27091.16, mulNum=142422.02, total_num=169513.18, Choice Errors= 0, CWR=0.000000E+000
+Progress=100.0, SNR=10.00, Bit Errors= 0, BER=0.000000E+000, Frame Errors= 0, FER=0.000000E+000, addNum=27091.16, mulNum=142422.02, total_num=169513.18, Choice Errors= 0, CWR=0.000000E+000

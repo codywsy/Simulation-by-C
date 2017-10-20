@@ -4,13 +4,20 @@
 #include "FiniteFieldBasisGF(16).h"
 #include "FiniteFieldBasisCal.h"
 
-//#define _GS_Normal_
+#define _GS_Normal_
 //#define _Complexity_
 #define _NoReduction_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
 
-#define OpenFile fp=fopen("LCC_Herm(64,39)_eta=1.txt","a")
+#define cheatingEncoding
+//#define cheatingDec
+//#define cheatingFac
+
+//#define OpenFile fp=fopen("LCC_Herm(64,39)_eta=1.txt","a")
+#define OpenFile fp=fopen("LCC_Herm(64,39)_GS.txt","a")
+
+#define FrameError 5000
 
 #define w 4
 #define weiz 44
@@ -18,7 +25,7 @@
 #define iterNum 64	//when m=1, C is equal to n
 #define able_correct 9
 #define pointNum 2
-#define interval 1
+#define interval 0.25
 
 //conditional compile
 #ifndef _GS_Normal_
@@ -57,12 +64,13 @@
 //rcs()
 #define rcspoly_Ysize 67	//degY+1, degY = interpoly_Ysize + max(j_1) + w*( (max(i_1)+w)/(w+1) )
 #define rcspoly_Xsize 9	//degX+1, degX = max(i_1) + w
-#define faiMax_Ysize 9	//change with diff w and k, the max degY of probably used polebasis
-#define faiMax_Xsize 4	//change with diff w and k, the max degX of probably used polebasis
+
 //expoly()-->expanded polynomial
 #define expoly_Ysize (faiMax_Ysize+1)	
 #define expoly_Xsize (faiMax_Xsize+1)
-
+//polebasis
+#define faiMax_Ysize 7	//change with diff w and k, the max degY of probably used polebasis
+#define faiMax_Xsize 4	//change with diff w and k, the max degX of probably used polebasis
 
 //main()
 unsigned long int seq_num;	//number of input binary sequences
@@ -77,7 +85,7 @@ float pi=3.141593;	// pai
 int bi_message[k*p], message[k];	//transmitted messge[k]
 int codeword[n], bi_codeword[n*p]; //codewords
 float tx_symbol[p*n][2], rx_symbol[p*n][2], sgm;
-float RM[q][n];
+float RM[q][n];	//Reliability Matrix
 //polebasis()
 
 
@@ -145,6 +153,9 @@ void channel(void);
 void demodulation(void);
 float PDF(int,int);
 
+//cheating
+void cheatDec(void);
+void cheatFac(void);
 
 void main()
 {
@@ -213,6 +224,68 @@ void main()
 	printf("seq_num: %d\n", seq_num);
 	//*******************************
 
+#ifdef cheatingEncoding
+			//读入文件的内容
+			int file_index;
+			FILE *fin1;
+			if((fin1=fopen("bi_message.txt","r"))==NULL)
+			{	
+				printf("bi_message.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&bi_message[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+			if((fin1=fopen("message.txt","r"))==NULL)
+			{	
+				printf("message.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&message[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+			if((fin1=fopen("codeword.txt","r"))==NULL)
+			{	
+				printf("codeword.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&codeword[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+			if((fin1=fopen("bi_codeword.txt","r"))==NULL)
+			{	
+				printf("bi_codeword.txt open filed");
+			}
+			else
+			{
+				file_index=0;
+				while(fscanf(fin1,"%d",&bi_codeword[file_index])!=-1)
+				{
+					++file_index;
+				}
+			}
+			fclose(fin1);
+
+#endif
+
 	for(SNR=start; SNR<=finish; SNR=SNR+interval)
 	{
 		N0=(1.0/((float)k/(float)n))/pow(10.0, SNR/10.0);
@@ -240,6 +313,7 @@ void main()
 			seq_num_Now=j;
 			//***************
 
+#ifndef cheatingEncoding
 			//generate binary input sequence
 			for(u=0;u<k*p;u++)	//k*4
 				bi_message[u]=rand()%2;
@@ -279,7 +353,7 @@ void main()
 					mask=mask<<1;
 				}
 			}
-
+#endif
 			//modulation
 			modulation();
 
@@ -292,9 +366,30 @@ void main()
 			//LIST DECODER
 			//test vector construction
 			test_vec_contruction();
+
+#ifdef cheatingDec
+			//********LCC interpolation*****************
+			//cheatingDecoding
+			cheatDec();
+
+			//frame error rate calculation
+			int temp = ferror;
+			for(u=0;u<n;u++)
+				if(dec_codeword[u]!=codeword[u])
+				{
+					ferror++;
+					break;
+				}
+
+			if(temp==ferror)
+				v++;
+
+#else
+
 			//interpolation
 			interpolation();
 
+#ifndef cheatingFac
 			//factorisation
 			factorisation();
 
@@ -318,6 +413,25 @@ void main()
 				v++;
 			//	successError_count = successError_count + (epcount1-successError_count)/(double)(v);
 			}
+#else
+			//cheatingFac
+			cheatFac();
+
+			//frame error rate calculation
+			int temp = ferror;
+			for(u=0;u<n;u++)
+				if(dec_codeword[u]!=codeword[u])
+				{
+					ferror++;
+					break;
+				}
+
+			if(temp==ferror)
+				v++;
+#endif
+
+
+#endif
 
 			//channelError_count = channelError_count + (epcount1-channelError_count)/(double)(j);
 			addNum_count = addNum_count + (addNum-addNum_count)/(double)(j);
@@ -332,11 +446,11 @@ void main()
 			
 			printf("Progress=%0.1f, SNR=%2.2f, Bit Errors=%2.1d, BER=%E, Frame Errors=%2.1d, FER=%E, addNum=%0.2f, mulNum=%0.2f, total_num=%0.2f, Choice Errors=%2.1d, CWR=%E\r", progress, SNR, error, BER, ferror, FER,	addNum_count, mulNum_count, totalNum_count, ChosenWrong_SeqNum, CWR);
 
-			if(ferror>209)
+			if(ferror>FrameError)
 				break;
 		}
 
-		if(ferror>209)
+		if(ferror>FrameError)
 		{
 			BER=(double)error/(double)(n*p*j);
 			FER=(double)(ferror)/(double)(j);
@@ -2282,12 +2396,138 @@ void choose()
 */
 			//*******************
 
-	if( epcount1<=able_correct && epcount2!=0)	//this seq_num has chosen the wrong one
-	{
-		printf("\n\nDecoding is error\n\n");
-	}
+	//if( epcount1<=able_correct && epcount2!=0)	//this seq_num has chosen the wrong one
+	//{
+	//	printf("\n\nDecoding is error\n\n");
+	//}
 	
 }
+
+
+void cheatFac(void)
+{
+	int i, u, v, value;
+	unsigned int mask = 1;
+	int flag_judge;	//used to judge if there is correct codeword 
+
+	//start
+	flag_judge = 0;
+	for (i = 0; i<test_vec_num; i++)
+		if ((n - testCount1[i])>degree_test[i])
+		{
+			flag_judge = 1;
+			for (u = 0; u<n; u++)
+			{
+				dec_codeword[u] = codeword[u];
+			}
+
+			//nonbinary --> binary
+			for (u = 0; u<n; u++)
+			{
+				value = dec_codeword[u];
+				mask = 1;
+				for (v = 0; v<p; v++)
+				{
+					if ((value & mask)>0)
+						dec_bicodeword[p*u + v] = 1;
+					else
+						dec_bicodeword[p*u + v] = 0;
+					mask = mask << 1;
+				}
+			}
+
+			break;
+		}
+
+	if (!flag_judge)	//flag_judge==0 means that there is not correct codeword
+	{
+		for (u = 0; u<n; u++)
+		{
+			dec_codeword[u] = large_vec[0][u];
+		}
+
+		//nonbinary --> binary
+		for (u = 0; u<n; u++)
+		{
+			value = dec_codeword[u];
+			mask = 1;
+			for (v = 0; v<p; v++)
+			{
+				if ((value & mask)>0)
+					dec_bicodeword[p*u + v] = 1;
+				else
+					dec_bicodeword[p*u + v] = 0;
+				mask = mask << 1;
+			}
+		}
+	}
+
+}
+
+void cheatDec(void)
+{
+	int i, u, v, value, flag_judge;
+	unsigned int mask = 1;
+	int genius, errorCorrectionNum;
+
+	//calculate the error correction ability
+	genius = w*(w - 1) / 2;
+	errorCorrectionNum = (n - k - genius) / 2;
+
+	//start judgment
+	flag_judge = 0;		//used to judge if there is correct codeword, 0-->No, 1-->Yes
+	for (i = 0; i<test_vec_num; i++)
+		if (testCount1[i] <= errorCorrectionNum)
+		{
+			flag_judge = 1;
+			for (u = 0; u<n; u++)
+			{
+				dec_codeword[u] = codeword[u];
+			}
+
+			//nonbinary --> binary
+			//for (u = 0; u<n; u++)
+			//{
+			//	value = dec_codeword[u];
+			//	mask = 1;
+			//	for (v = 0; v<p; v++)
+			//	{
+			//		if ((value & mask)>0)
+			//			dec_bicodeword[p*u + v] = 1;
+			//		else
+			//			dec_bicodeword[p*u + v] = 0;
+			//		mask = mask << 1;
+			//	}
+			//}
+
+			break;
+		}
+
+	if (!flag_judge)	//flag_judge==0 means that there is not correct codeword
+	{
+		for (u = 0; u<n; u++)
+		{
+			dec_codeword[u] = large_vec[0][u];
+		}
+
+		//nonbinary --> binary
+		//for (u = 0; u<n; u++)
+		//{
+		//	value = dec_codeword[u];
+		//	mask = 1;
+		//	for (v = 0; v<p; v++)
+		//	{
+		//		if ((value & mask)>0)
+		//			dec_bicodeword[p*u + v] = 1;
+		//		else
+		//			dec_bicodeword[p*u + v] = 0;
+		//		mask = mask << 1;
+		//	}
+		//}
+	}
+}
+
+
 
 void mono_table()
 {

@@ -1,0 +1,41 @@
+﻿生成启动时间为 2017/4/13 9:31:15。
+     1>项目“E:\424实验室工作\424实验室\Simulation by C\GS\Herm(64,49)_GS(m=2)\Herm(64,49)_GS\Herm(64,49)_GS.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>ClCompile:
+         D:\software\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\FiniteFieldBasisCal.cpp "..\FiniteFieldBasisGF(16).cpp" "..\Herm(64,49)_GS.cpp"
+         Herm(64,49)_GS.cpp
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(104): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(395): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(397): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(200): warning C4101: “value”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(200): warning C4101: “num”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(597): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(615): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(616): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(620): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(723): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(732): warning C4101: “v”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(735): warning C4101: “tempMM”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(734): warning C4101: “tempRM”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(1194): warning C4101: “i”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(1194): warning C4101: “z”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(1194): warning C4101: “j”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(1582): warning C4101: “i”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(1969): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(2029): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(2046): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(2296): warning C4101: “v_temp”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\herm(64,49)_gs.cpp(2296): warning C4101: “u_temp”: 未引用的局部变量
+         FiniteFieldBasisGF(16).cpp
+         FiniteFieldBasisCal.cpp
+         正在生成代码...
+     1>e:\424实验室工作\424实验室\simulation by c\gs\herm(64,49)_gs(m=2)\finitefieldbasiscal.cpp(76): warning C4715: “power”: 不是所有的控件路径都返回值
+       Link:
+         D:\software\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\424实验室工作\424实验室\Simulation by C\GS\Herm(64,49)_GS(m=2)\Debug\Herm(64,49)_GS.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\424实验室工作\424实验室\Simulation by C\GS\Herm(64,49)_GS(m=2)\Debug\Herm(64,49)_GS.pdb" /SUBSYSTEM:CONSOLE /STACK:"1073741824" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\424实验室工作\424实验室\Simulation by C\GS\Herm(64,49)_GS(m=2)\Debug\Herm(64,49)_GS.lib" /MACHINE:X86 Debug\FiniteFieldBasisCal.obj
+         "Debug\FiniteFieldBasisGF(16).obj"
+         "Debug\Herm(64,49)_GS.obj"
+         Herm(64,49)_GS.vcxproj -> E:\424实验室工作\424实验室\Simulation by C\GS\Herm(64,49)_GS(m=2)\Debug\Herm(64,49)_GS.exe
+     1>已完成生成项目“E:\424实验室工作\424实验室\Simulation by C\GS\Herm(64,49)_GS(m=2)\Herm(64,49)_GS\Herm(64,49)_GS.vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:01.97

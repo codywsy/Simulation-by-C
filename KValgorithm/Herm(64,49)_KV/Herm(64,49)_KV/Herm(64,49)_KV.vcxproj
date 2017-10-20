@@ -77,7 +77,7 @@
   <ItemGroup>
     <ClCompile Include="..\FiniteFieldBasisCal.cpp" />
     <ClCompile Include="..\FiniteFieldBasisGF(16).cpp" />
-    <ClCompile Include="..\Herm(64,49)_KV(l=3).cpp" />
+    <ClCompile Include="..\Herm(64,49)_KV(l=1).cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\FiniteFieldBasisCal.h" />

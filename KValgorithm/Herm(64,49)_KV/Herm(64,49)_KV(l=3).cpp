@@ -6,12 +6,12 @@
 #include "FiniteFieldBasisGF(16).h"
 #include "FiniteFieldBasisCal.h"
 
-//#define _NoReduction_
+#define _NoReduction_
 //#define _PolyCoeffNumUncom_
 //#define _PolyCoeffNumFac_
 #define myWay
 #define OpenFile fp=fopen("Herm(64,49)_KV_l=3.txt","a")
-#define FrameError 310
+#define FrameError 5000
 
 //#define checkInter
 #define checkFac
@@ -29,7 +29,7 @@
 #define lm 3	//design length
 #define able_correct 4
 #define pointNum 2
-#define interval 0.25
+#define interval 1
 
 //*****need to be modify_first**************
 //coefficientSearch()
@@ -292,8 +292,8 @@ void main()
 		mulNum_count=0.0;
 		totalNum_count=0.0;
 
-		flag_addNum=1; 
-		flag_mulNum=1;
+		flag_addNum=0; 
+		flag_mulNum=0;
 
 		for(j=1;j<=seq_num;j++)
 		{
@@ -785,6 +785,9 @@ void interpolation()
 	interpoint_num++;
 */	//************************
 
+	flag_addNum=1; 
+	flag_mulNum=1;
+
 	//set Group initialization
 	for(i=0;i<(lm+1);i++)	//rs
 		for(j=0;j<w;j++)	//w
@@ -997,6 +1000,8 @@ void interpolation()
 
 			}
 
+
+
 #ifdef checkInter
 
 	flag_addNum=0; 
@@ -1033,6 +1038,8 @@ void interpolation()
 
 	}
 
+	flag_addNum=0; 
+	flag_mulNum=0;
 
 	//find out the poly for factorization
 	//calculate the lod of poly
@@ -1137,6 +1144,8 @@ void factorisation()	//output: output[lm+1][k], listNum
 {
 	int i, j, u, v, z;
 
+	flag_addNum=1; 
+	flag_mulNum=1;
 
 	//initialization
 /*	for(u=0;u<k;u++)	//number of fac steps=k
@@ -1178,6 +1187,9 @@ void factorisation()	//output: output[lm+1][k], listNum
 	{
 		printf("\n\nIn %d frame, output size = %d is larger than (lm+1)", seq_num_Now, l);
 	}
+
+	flag_addNum=0; 
+	flag_mulNum=0;
 
 }
 
@@ -1556,7 +1568,8 @@ void choose()
 	double proba[lm+1], proba_temp, temp;
 	int codeword_temp[n];
 
-
+	flag_addNum=1; 
+	flag_mulNum=1;
 	//normal mode
 	//Initialise hamming distance counter
 	for(u=0;u<lm+1;u++)
@@ -1644,6 +1657,9 @@ void choose()
 		}		
 
 	}
+
+	flag_addNum=0; 
+	flag_mulNum=0;
 
 #ifdef checkFac
 	if( flag==0 && (codewordScore>Deg_iterNum) )	//Sm(c) > delta(Cm)

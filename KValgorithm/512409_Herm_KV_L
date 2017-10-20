@@ -1,0 +1,28 @@
+﻿生成启动时间为 2017/4/15 23:56:13。
+     1>项目“E:\424实验室工作\424实验室\Simulation by C\KValgorithm\512409_Herm_KV_L=1\512409_Herm_KV_L=1\512409_Herm_KV_L=1.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         D:\software\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\512409_Herm_KV_L=1.cpp
+         512409_Herm_KV_L=1.cpp
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(88): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(153): warning C4101: “ferror”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(151): warning C4101: “v”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(150): warning C4101: “finish”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(149): warning C4101: “value”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(149): warning C4101: “i”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(149): warning C4101: “num”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(149): warning C4101: “u”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(154): warning C4101: “progress”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(153): warning C4101: “error”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(150): warning C4101: “start”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(151): warning C4101: “j”: 未引用的局部变量
+     1>e:\424实验室工作\424实验室\simulation by c\kvalgorithm\512409_herm_kv_l=1\512409_herm_kv_l=1.cpp(149): warning C4101: “m”: 未引用的局部变量
+       Link:
+         D:\software\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\512409_Herm_KV_L=1\Debug\512409_Herm_KV_L=1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\512409_Herm_KV_L=1\Debug\512409_Herm_KV_L=1.pdb" /SUBSYSTEM:CONSOLE /STACK:"20971520" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\424实验室工作\424实验室\Simulation by C\KValgorithm\512409_Herm_KV_L=1\Debug\512409_Herm_KV_L=1.lib" /MACHINE:X86 Debug\512409_Herm_KV_L=1.obj
+         Debug\FiniteFieldBasisCal.obj
+         "Debug\FiniteFieldBasisGF(64).obj"
+         512409_Herm_KV_L=1.vcxproj -> E:\424实验室工作\424实验室\Simulation by C\KValgorithm\512409_Herm_KV_L=1\Debug\512409_Herm_KV_L=1.exe
+     1>已完成生成项目“E:\424实验室工作\424实验室\Simulation by C\KValgorithm\512409_Herm_KV_L=1\512409_Herm_KV_L=1\512409_Herm_KV_L=1.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.94

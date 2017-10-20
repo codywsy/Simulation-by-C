@@ -5,6 +5,7 @@
 #include "FiniteFieldBasisGF(4).h"
 #include "FiniteFieldBasisCal.h"
 #include "BackInter.h"
+#include "NewInter.h"
 
 //from Herm(8,4))_GS_v1.0.cpp
 extern int x_ordered[2][n];
@@ -13,30 +14,27 @@ extern float test_set_ordered[2][n];
 extern int mono_order[monoTable_Zsize][monoTable_Ysize][monoTable_Xsize];	//mono_order[z-deg+1][y-deg][x-deg+1], y-deg is greater than w-1+nw/(w+1)
 
 //function: realize the Backinterpolation for Hermition code
-void BackInterpolation(int Q_com_poly[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int position)
+void BackInterpolation(int Q_com_poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int backPoint[3])
 {
 	int j;
-	int backPoint[3];
-	int max = interpoly_Ysize-1;
+//	int backPoint[3];
+	int max = w-1;
 	int A[init_polyNum];
 	int inverA[init_polyNum];
 
-	
-	backPoint[0] = x_ordered[0][position];
-	backPoint[1] = x_ordered[1][position];
-	backPoint[2] = large_vec[1][(int)test_set_ordered[1][position]];
+
 	memset(inverA, 0, sizeof(inverA));
 	/*memset(A, 1, sizeof(int)*init_polyNum);*/
 	for (int u = 0; u < init_polyNum; ++u)
 		A[u] = 1;
 
 	//Equivalent Grobner basis transformation
-	for(int a=0; a<=lm; ++a)
+	for(int a=0; a<(lm+1); ++a)
 		for(int b=0; b<=max; ++b)
 			if(ItsSize(A, sizeof(A)/sizeof(int))>0)
 			{
-				int *qResult = ComputeResult(Q_com_poly, A, backPoint[0], lm-a, max-b, init_polyNum); 
-				//int *qResult = ComputeResult(Q_com_poly, A, backPoint[0], 0, 0, init_polyNum);
+				int *qResult = ComputeResult(Q_com_poly, A, backPoint[0], lm-a, max-b, init_polyNum);	//reverse order
+				//int *qResult = ComputeResult(Q_com_poly, A, backPoint[0], a, b, init_polyNum);	//order
 				int temp_debug = ItsSize(qResult, init_polyNum);
 				if (temp_debug>0 && ItsSize(A, sizeof(A) / sizeof(int))>0)
 				{
@@ -49,12 +47,12 @@ void BackInterpolation(int Q_com_poly[][interpoly_Zsize][interpoly_Ysize][interp
 						if(qResult[j]>0 && A[j]>0)
 						{	
 							LeadingOrder[j] = 0;
-							for(int u=0; u<interpoly_Zsize; ++u)
-								for(int v=0; v<interpoly_Ysize; ++v)
-									for(int z=0; z<interpoly_Xsize; ++z)
-										if(Q_com_poly[j][u][v][z]!=0 && mono_order[u][v][z]>LeadingOrder[j])
+							for(int u=0; u<New_interpoly_Zsize; ++u)
+								for(int v=0; v<New_interpoly_Ysize; ++v)
+									for (int z = 0; z<New_interpoly_Xsize; ++z)
+										if (Q_com_poly[j][u][v][z] != 0 && MonoOrderConvert(u,v,z)>LeadingOrder[j])
 										{
-											LeadingOrder[j] = mono_order[u][v][z];
+											LeadingOrder[j] = MonoOrderConvert(u, v, z);
 										}
 						}
 					}
@@ -84,12 +82,14 @@ void BackInterpolation(int Q_com_poly[][interpoly_Zsize][interpoly_Ysize][interp
 					inverA[minIndex] = 1;
 					
 					//update the poly group
-					for(j=0; j<init_polyNum; ++j)
+					for (j = 0; j < init_polyNum; ++j)
+					{
 						if(qResult[j]>0 && A[j]>0)
 						{
 							//update poly
 							BF_Update(qResult[j], Q_com_poly[j], qResult[minIndex], Q_com_poly[minIndex]);
 						}
+					}
 				}
 			}
 
@@ -105,8 +105,11 @@ void BackInterpolation(int Q_com_poly[][interpoly_Zsize][interpoly_Ysize][interp
 	}
 }
 
-
-int ItsSize(int *A, int sizeA)	//judge array is empty?
+/******************
+Function:
+	Judge array is empty
+********************/
+int ItsSize(int *A, int sizeA)
 {
 	int count = 0;
 	for(int i=0; i<sizeA; ++i)
@@ -116,7 +119,7 @@ int ItsSize(int *A, int sizeA)	//judge array is empty?
 	return count;
 }
 
-int *ComputeResult(const int Q[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int *A, int alpha, int Zindex, int Yindex, int polyNum)
+int *ComputeResult(const int Q[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int *A, int alpha, int Zindex, int Yindex, int polyNum)
 {
 	int *result = (int *)malloc(polyNum * sizeof(int));
 	for(int i=0; i<polyNum; ++i)
@@ -125,7 +128,7 @@ int *ComputeResult(const int Q[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsi
 		if(A[i]==1)
 		{
 			result[i] = 0;
-			for(int z=0; z<=w ; ++z)
+			for(int z=0; z < New_interpoly_Xsize ; ++z)
 				if (Q[i][Zindex][Yindex][z]!=0)
 				{
 					int temp = power(alpha,z);
@@ -140,16 +143,16 @@ int *ComputeResult(const int Q[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsi
 	return result;
 }
 
-void BF_Update(const int alpha, int Q1[][interpoly_Ysize][interpoly_Xsize], const int beta, const int Q2[][interpoly_Ysize][interpoly_Xsize])
+void BF_Update(const int alpha, int Q1[][New_interpoly_Ysize][New_interpoly_Xsize], const int beta, const int Q2[][New_interpoly_Ysize][New_interpoly_Xsize])
 {
 	//calculate alpha * Q2 + beta * Q1
 	int temp1, temp2;
 //	int g[interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];
 
 	//start
-	for(int u=0; u<interpoly_Zsize; ++u)
-		for(int v=0; v<interpoly_Ysize; ++v)
-			for(int z=0; z<interpoly_Xsize; ++z)
+	for(int u=0; u<New_interpoly_Zsize; ++u)
+		for(int v=0; v<New_interpoly_Ysize; ++v)
+			for(int z=0; z<New_interpoly_Xsize; ++z)
 			{
 				if(Q1[u][v][z]!=0)
 					temp1 = mul(beta,Q1[u][v][z]);
@@ -169,21 +172,21 @@ void BF_Update(const int alpha, int Q1[][interpoly_Ysize][interpoly_Xsize], cons
 
 }
 
-void UpdatePolyWithDivision(int Q[][interpoly_Ysize][interpoly_Xsize], int alpha)
+void UpdatePolyWithDivision(int Q[][New_interpoly_Ysize][New_interpoly_Xsize], int alpha)
 {
-	int X_poly[interpoly_Xsize], div_poly[interpoly_Xsize], poly[2];
+	int X_poly[New_interpoly_Xsize], div_poly[New_interpoly_Xsize], poly[2];
 	int divisor[2], dividend[2], quo[2];
 	int valid_flag;
-	int result[interpoly_Xsize];
+	int result[New_interpoly_Xsize];
 
 	poly[0] = alpha;
 	poly[1] = 1;
 
-	for(int j=0; j<interpoly_Zsize; ++j)
-		for(int i=0; i<interpoly_Ysize; ++i)
+	for(int j=0; j<New_interpoly_Zsize; ++j)
+		for(int i=0; i<New_interpoly_Ysize; ++i)
 		{
 			int v;
-			for(v=0; v<interpoly_Xsize; ++v)
+			for(v=0; v<New_interpoly_Xsize; ++v)
 			{
 				X_poly[v] = Q[j][i][v];
 				result[v] = 0;
@@ -194,15 +197,15 @@ void UpdatePolyWithDivision(int Q[][interpoly_Ysize][interpoly_Xsize], int alpha
 
 			valid_flag = 0;
 			quo[0] = quo[1] = 0;
-			for(int u=0; u<interpoly_Xsize-1; ++u)
+			for(int u=0; u<New_interpoly_Xsize-1; ++u)
 			{
-				for(v=0; v<interpoly_Xsize; ++v)
+				for(v=0; v<New_interpoly_Xsize; ++v)
 					div_poly[v] = 0;
 
 				//find the dividend[2]
 				dividend[0] = 0;
 				dividend[1] = 0;
-				for(v=interpoly_Xsize-1; v>=0; --v)
+				for(v=New_interpoly_Xsize-1; v>=0; --v)
 					if(X_poly[v]!=0)
 					{
 						dividend[0] = X_poly[v];
@@ -228,7 +231,7 @@ void UpdatePolyWithDivision(int Q[][interpoly_Ysize][interpoly_Xsize], int alpha
 				quo[0] = mul(dividend[0], inv(divisor[0]));
 				quo[1] = dividend[1] - divisor[1];
 
-				if((0<=quo[1]) && (quo[1]<=interpoly_Xsize-1))
+				if((0<=quo[1]) && (quo[1]<=New_interpoly_Xsize-1))
 				{
 					result[quo[1]] = quo[0];	
 					
@@ -238,10 +241,10 @@ void UpdatePolyWithDivision(int Q[][interpoly_Ysize][interpoly_Xsize], int alpha
 							div_poly[v+quo[1]] = mul(quo[0],poly[v]);
 
 					//dividend-div_poly
-					for(v=0; v<interpoly_Xsize; ++v)
+					for(v=0; v<New_interpoly_Xsize; ++v)
 						X_poly[v] = add(X_poly[v],div_poly[v]);
 				}
-				else if(quo[1]<0 || quo[1]>(interpoly_Xsize-1))
+				else if(quo[1]<0 || quo[1]>(New_interpoly_Xsize-1))
 				{
 					valid_flag = 0;
 					break;
@@ -251,7 +254,7 @@ void UpdatePolyWithDivision(int Q[][interpoly_Ysize][interpoly_Xsize], int alpha
 				printf("\n\ndivision (x+ai) failed\n\n");
 			
 			//if division is effective, then update the Q
-			for(v=0; v<interpoly_Xsize; v++)
+			for(v=0; v<New_interpoly_Xsize; v++)
 				Q[j][i][v] = result[v];
 		}
 
@@ -265,7 +268,7 @@ Argument:
 	polyNum	---	the number of polynomial
 	ai		--- the x value of interpoint 
 ************************************************************************/
-void DectectIfFactorInPoly(int Q_poly[][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize], int polyNum, int xi)
+void DectectIfFactorInPoly(int Q_poly[][New_interpoly_Zsize][New_interpoly_Ysize][New_interpoly_Xsize], int polyNum, int xi)
 {
 	for (int i = 0; i < polyNum; i++)
 	{

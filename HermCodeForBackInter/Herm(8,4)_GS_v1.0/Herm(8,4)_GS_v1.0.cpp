@@ -15,7 +15,7 @@
 //#define _PolyCoeffNumFac_
 
 #define OpenFile fp=fopen("LCC_Herm(8,4)GS.txt","a")
-#define FrameError 209
+#define FrameError 309
 
 //main()
 float N0;
@@ -42,7 +42,7 @@ int test_vec_com[n-eta];
 int x_ordered[2][n];
 //interpolation
 int bi_rxword[p*n], rxword[n]; //received wordss
-int epcount1, epcount2, testCount1[test_vec_num], testCount2[test_vec_num], testCount1_com;
+int epcount1, testCount1[test_vec_num], testCount2[test_vec_num], testCount1_com;
 int Q_interpoly[test_vec_num][interpoly_Zsize][interpoly_Ysize][interpoly_Xsize];	//chosen interpolated polynomial [z-deg+1][max(deg_y)+1][w+1]
 int uu;	//factorisation step index
 int l, listNum[test_vec_num];	//candidate output index
@@ -235,7 +235,6 @@ void main()
 			test_vec_contruction();
 			//interpolation
 			interpolation();
-
 
 			//factorisation
 			factorisation();
@@ -534,7 +533,7 @@ void test_vec_contruction()
 		for(j=0;j<2;j++)
 			x_ordered[j][i]=point[(int)test_set_ordered[1][i]][j];
 
-	//*****debug*********
+/*	//*****debug*********
 	//caculate the num of diffs between codeword and test_vec[i] 
 	testCount1[0]=0;
 	for(i=0;i<n-eta;i++)
@@ -566,7 +565,7 @@ void test_vec_contruction()
 			mask=mask<<1;
 		}	
 	}
-	//*******************
+*/	//*******************
 
 
 /*	//************debug***************
@@ -639,15 +638,8 @@ void interpolation()
 //	com_elem_interpolation(Q_com_elem,com_elem_interpoint);
 	NewInter(Q_com_elem, com_elem_interpoint);
 
-	
+
 	//com_elem interpolation finish
-
-	//debug: dectect the Q_com_elem[i] who has factor(x+a_i)
-//	DectectIfFactorInPoly(Q_com_elem, init_polyNum, com_elem_interpoint[0][n - 1]);
-
-	//start backInterpolation Testing
-//	BackInterpolation(Q_com_elem, n-1);
-
 
 //conditional compile
 #ifndef _GS_Normal_
@@ -692,7 +684,7 @@ void interpolation()
 	//interpolation
 	for(i=0;i<eta;i++)
 	{
-		num=(int)pow(2.0,i);
+		num=(int)pow((float)2.0,i);
 		for(u=num-1;u>=0;u--)
 			uncom_elem_interpolation(uncom_elem_interpoint[i],Q_uncom_elem[u],Q_uncom_elem[2*u+0],Q_uncom_elem[2*u+1]);
 	}		
@@ -786,6 +778,8 @@ void interpolation()
 			}
 
 		degree_test[i] = degree_temp[i][temp_index];
+
+		temp_index = 2;
 
 		//assignment
 		for(u=0;u<interpoly_Zsize;u++)	//rs
@@ -1915,7 +1909,7 @@ void polyexp1(int c, int i, int j, int deg_z, int poly[][expoly_Ysize][expoly_Xs
 
 void choose()
 {
-	int i, j, u, v, value, flag, min_index_1, min_index_2;
+	int i, j, u, v, z, value, flag, min_index_1, min_index_2;
 	unsigned int mask=1;
 //	float proba[lm*test_vec_num], proba_temp, temp;
 	double proba[lm*test_vec_num], proba_temp, temp;	
@@ -2055,13 +2049,64 @@ void choose()
 	//*****************************
 	
 	//Check Herm(64, 39)'s working perperty
-	epcount2=0;
+	int epcount2=0;
 	for(u=0;u<n;u++)
 		if(codeword[u]!=dec_codeword[u])
 			epcount2++;
-	//printf("\nepcount2=%d\n", epcount2);
 
 	//******debug*******
+	//caculate the degree_test[i]
+	for (i = 0; i < test_vec_num; ++i)
+	{
+		int mono_temp = -1;
+		degree_test[i] = 0;
+		for (u = 0; u<interpoly_Zsize; u++)	//rs
+			for (v = 0; v<interpoly_Ysize; v++)	//max(deg_y)+1
+				for (z = 0; z<interpoly_Xsize; z++)	//w+1
+					if (Q_interpoly[i][u][v][z] != 0 && mono_temp < mono_order[u][v][z])
+					{
+						mono_temp = mono_order[u][v][z];
+						degree_test[i] = z*w + v*(w + 1) + u*weiz;
+					}
+	}
+
+	//calculate the testCount1
+	int GrayOrder[test_vec_num];
+	for (i = 0; i < test_vec_num; ++i)
+	{
+		GrayOrder[i] = i ^ (i >> 1);
+	}
+
+	testCount1[0] = 0;
+	for (i = 0; i<n - eta; ++i)
+	{
+		int index_temp = (int)test_set_ordered[1][i];
+		if (codeword[index_temp] != large_vec[0][index_temp])
+			testCount1[0]++;
+	}
+
+	for (i = 1; i<test_vec_num; ++i)
+		testCount1[i] = testCount1[0];
+
+	for (i = 0; i<test_vec_num; i++)
+	{
+		int index_temp;
+		mask = 1;
+		for (int j = n - 1; j >= n - eta - 1; j--)
+		{
+			//bit caculate
+			if ((GrayOrder[i] & mask)>0)
+				index_temp = 1;
+			else
+				index_temp = 0;
+
+			if (codeword[(int)test_set_ordered[1][j]] != large_vec[index_temp][(int)test_set_ordered[1][j]])
+				testCount1[i]++;
+
+			mask = mask << 1;
+		}
+	}
+	
 	//caculate the testCount2
 	for(i=0;i<test_vec_num;i++)
 	{
@@ -2183,7 +2228,7 @@ void choose()
 			//***********
 		}
 
-			//*******************
+		//*******************
 
 	if( epcount1<=able_correct && epcount2!=0)	//this seq_num has chosen the wrong one
 	{
